@@ -1,0 +1,34 @@
+@inject CabinetStateService State
+@implements IDisposable
+
+<div class="info-bar">
+    <div class="info-cell bsc-cell">
+        <span class="info-value bsc">@State.BscDisplay</span>
+    </div>
+    <div class="info-cell">
+        <span class="info-value">@State.OperatorName</span>
+    </div>
+    <div class="info-cell">
+        <span class="info-value">@State.TemperatureText</span>
+    </div>
+    <div class="info-cell">
+        <span class="info-value">@State.TimeText</span>
+    </div>
+    <div class="info-cell">
+        <span class="info-value">@State.DateText</span>
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        State.OnChange += OnStateChanged;
+    }
+
+    private void OnStateChanged() => InvokeAsync(StateHasChanged);
+
+    public void Dispose()
+    {
+        State.OnChange -= OnStateChanged;
+    }
+}

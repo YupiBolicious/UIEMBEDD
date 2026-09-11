@@ -1,0 +1,67 @@
+.dock {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+    background: #011936;
+    padding: 10px 8px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.dock-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 78px;
+    background: #032042;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.08s, border-color 0.15s;
+}
+
+.dock-btn:hover {
+    background: #0a2e5c;
+    border-color: rgba(255,255,255,0.18);
+}
+
+.dock-btn:active {
+    transform: scale(0.97);
+    background: #18A904;
+}
+
+.dock-label {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    color: #cfe0ff;
+    line-height: 1;
+}
+
+.icon-yellow {
+    color: #ffcc00;
+}
+
+.icon-muted {
+    color: #8ea2c0;
+    opacity: 0.85;
+}
+
+.light-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1;
+}
+
+.light-pct {
+    font-size: 9px;
+    font-weight: 800;
+    color: #ffd54d;
+    margin-top: 1px;
+}
+
+:deep(.rz-icon) {
+    line-height: 1;
+}

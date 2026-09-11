@@ -1,0 +1,31 @@
+@inject CabinetStateService State
+
+<div class="header-banner">
+    <div class="header-left">
+        <img src="@LogoPath" alt="Brand Logo" class="brand-logo" @onerror="HandleLogoError" />
+        <div class="brand-text">
+            <span class="class-label">CLASS II AC2</span>
+        </div>
+    </div>
+    <div class="header-right">
+        <span class="safe-text">CABINET IS SAFE</span>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string LogoPath { get; set; } = "/images/esco-logo.png";
+
+    private void HandleLogoError() { }
+
+    protected override void OnInitialized()
+    {
+        State.OnChange += HandleStateChanged;
+    }
+
+    private void HandleStateChanged() => InvokeAsync(StateHasChanged);
+
+    public void Dispose()
+    {
+        State.OnChange -= HandleStateChanged;
+    }
+}

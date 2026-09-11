@@ -1,0 +1,33 @@
+<div class="dock">
+    <button class="dock-btn" @onclick='() => OnAction.InvokeAsync("menu")' aria-label="Menu">
+        <RadzenIcon Icon="apps" Style="font-size: 28px; color: #e6f0ff;" />
+        <span class="dock-label">MENU</span>
+    </button>
+    <button class="dock-btn" @onclick='() => OnAction.InvokeAsync("blower")' aria-label="Blower">
+        <span class="icon-yellow"><RadzenIcon Icon="air" Style="font-size: 28px;" /></span>
+        <span class="dock-label">BLOWER</span>
+    </button>
+    <button class="dock-btn" @onclick='() => OnAction.InvokeAsync("light")' aria-label="Light">
+        <span class="light-wrap">
+            <RadzenIcon Icon="lightbulb" Style="font-size: 26px; color: #ffd54d;" />
+            <span class="light-pct">100%</span>
+        </span>
+        <span class="dock-label">LIGHT</span>
+    </button>
+    <button class="dock-btn" @onclick='() => OnAction.InvokeAsync("power")' aria-label="Power">
+        <RadzenIcon Icon="power_settings_new" Style="font-size: 28px; color: #ff5252;" />
+        <span class="dock-label">POWER</span>
+    </button>
+    <button class="dock-btn" @onclick='() => OnAction.InvokeAsync("uv")' aria-label="UV">
+        <RadzenIcon Icon="wb_sunny" Style="font-size: 28px; color: #b388ff;" />
+        <span class="dock-label">UV</span>
+    </button>
+    <button class="dock-btn" @onclick='() => OnAction.InvokeAsync("alarm")' aria-label="Alarm">
+        <span class="icon-muted"><RadzenIcon Icon="volume_off" Style="font-size: 28px;" /></span>
+        <span class="dock-label">ALARM</span>
+    </button>
+</div>
+
+@code {
+    [Parameter] public EventCallback<string> OnAction { get; set; }
+}

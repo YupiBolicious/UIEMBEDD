@@ -1,0 +1,31 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": ".NET Server + Chrome Launch",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/bin/Debug/net8.0/UiEmbed.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "http://localhost:5001"
+      },
+      "serverReadyAction": {
+        "action": "startDebugging",
+        "pattern": "Now listening on:\\s+(http://\\S+)",
+        "name": "Launch Chrome HMI Window"
+      }
+    },
+    {
+      "name": "Launch Chrome HMI Window",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:5001",
+      "webRoot": "${workspaceFolder}"
+    }
+  ]
+}

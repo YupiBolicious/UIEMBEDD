@@ -1,0 +1,25 @@
+@inject CabinetStateService State
+
+<div class="hmi-shell">
+    <HeaderBanner LogoPath="@LogoPath" />
+    <InfoSubBar />
+    <div class="center-grid">
+        <div class="graphic-col">
+            <CabinetGraphic MachineGraphicPath="@MachineGraphicPath" />
+        </div>
+        <div class="telemetry-col">
+            <TelemetryList />
+        </div>
+    </div>
+    <BottomDock OnAction="HandleDockAction" />
+</div>
+
+@code {
+    [Parameter] public string LogoPath { get; set; } = "/images/esco-logo.png";
+    [Parameter] public string MachineGraphicPath { get; set; } = "/images/cabinet-graphic.png";
+
+    private void HandleDockAction(string action)
+    {
+        State.NotifyChanged();
+    }
+}

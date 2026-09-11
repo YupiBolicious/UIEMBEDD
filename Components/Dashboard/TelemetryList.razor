@@ -1,0 +1,31 @@
+@inject CabinetStateService State
+@implements IDisposable
+
+<div class="telemetry-list">
+    <div class="metric-row sash-row">
+        <span class="metric-label">Sash : <span class="value-cyan">@State.SashStatus</span></span>
+    </div>
+    <div class="metric-row filter-row">
+        <span class="metric-label">Filter Life : <span class="value-green">@State.FilterLifePercent% (@State.FilterLifeLabel)</span></span>
+    </div>
+    <div class="metric-row downflow-row active-green">
+        <span class="metric-label metric-white">Downflow : @State.DownflowMs.ToString("F2") m/s</span>
+    </div>
+    <div class="metric-row inflow-row">
+        <span class="metric-label">Inflow : <span class="value-green">@State.InflowMs.ToString("F2") m/s</span></span>
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        State.OnChange += OnStateChanged;
+    }
+
+    private void OnStateChanged() => InvokeAsync(StateHasChanged);
+
+    public void Dispose()
+    {
+        State.OnChange -= OnStateChanged;
+    }
+}

@@ -1,0 +1,57 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\UiEmbed.bundle.scp.css",
+      "PackagePath": "staticwebassets\\UiEmbed.bundle.scp.css"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\app.css",
+      "PackagePath": "staticwebassets\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\cabinet-graphic.png",
+      "PackagePath": "staticwebassets\\images\\cabinet-graphic.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\cabinet-graphic.svg",
+      "PackagePath": "staticwebassets\\images\\cabinet-graphic.svg"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\esco-logo.png",
+      "PackagePath": "staticwebassets\\images\\esco-logo.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\esco-logo.png.svg",
+      "PackagePath": "staticwebassets\\images\\esco-logo.png.svg"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.UiEmbed.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.UiEmbed.props",
+      "PackagePath": "build\\UiEmbed.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.UiEmbed.props",
+      "PackagePath": "buildMultiTargeting\\UiEmbed.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.UiEmbed.props",
+      "PackagePath": "buildTransitive\\UiEmbed.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

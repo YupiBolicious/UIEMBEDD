@@ -1,0 +1,41 @@
+@inject CabinetStateService State
+
+<div class="cabinet-panel">
+    <div class="graphic-wrap">
+        <img src="@MachineGraphicPath" alt="Biosafety Cabinet" class="cabinet-img" @onerror="HandleImageError" />
+        @if (_useFallback && MachineGraphicPath != FallbackPath)
+        {
+            <img src="@FallbackPath" alt="Cabinet Fallback" class="cabinet-img fallback" />
+        }
+
+        <div class="check-badge">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="11" fill="#18A904" stroke="white" stroke-width="1.5" />
+                <path d="M7 12.5L10.5 16L17 8.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </div>
+
+        <div class="airflow-arrows">
+            <div class="arrow downflow-arrow">
+                <svg viewBox="0 0 24 36" width="18" height="28"><path d="M12 2 L12 28 M12 28 L6 22 M12 28 L18 22" stroke="#4fc3ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none" /><path d="M10 32 L14 32" stroke="#4fc3ff" stroke-width="1.5" stroke-linecap="round" /></svg>
+                <span>0.32</span>
+            </div>
+            <div class="arrow inflow-arrow">
+                <svg viewBox="0 0 24 36" width="18" height="28"><path d="M12 2 L12 28 M12 28 L6 22 M12 28 L18 22" stroke="#ffb84d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none" /></svg>
+                <span>0.45</span>
+            </div>
+        </div>
+    </div>
+    <div class="graphic-caption">AIRFLOW VISUALIZATION</div>
+</div>
+
+@code {
+    [Parameter] public string MachineGraphicPath { get; set; } = "/images/cabinet-graphic.png";
+    private const string FallbackPath = "/images/cabinet-graphic.png";
+    private bool _useFallback;
+
+    private void HandleImageError()
+    {
+        _useFallback = true;
+    }
+}
