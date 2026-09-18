@@ -1,25 +1,79 @@
 @inject CabinetStateService State
+@inject HeaderStateService Header
+@inject NavigationManager Nav
+@inject AppAuthStateProvider Auth
+@implements IDisposable
 
 <div class="hmi-shell">
-    <HeaderBanner LogoPath="@LogoPath" />
+    <div aria-hidden="true" class="screen-glow-arc"></div>
     <InfoSubBar />
     <div class="center-grid">
         <div class="graphic-col">
             <CabinetGraphic MachineGraphicPath="@MachineGraphicPath" />
         </div>
         <div class="telemetry-col">
-            <TelemetryList />
+            <ContentList />
         </div>
     </div>
     <BottomDock OnAction="HandleDockAction" />
+    @if (State.ShowCalendar)
+    {
+        <DatePickerOverlay />
+    }
 </div>
 
 @code {
     [Parameter] public string LogoPath { get; set; } = "/images/esco-logo.png";
     [Parameter] public string MachineGraphicPath { get; set; } = "/images/cabinet-graphic.png";
 
-    private void HandleDockAction(string action)
+    protected override void OnInitialized()
     {
+        State.OnChange += OnStateChanged;
+        Header.ShowStatus();
+    }
+
+    private void OnStateChanged() => InvokeAsync(StateHasChanged);
+
+    public void Dispose()
+    {
+        State.OnChange -= OnStateChanged;
+        Header.ShowLogoOnly();
+    }
+
+    private async Task HandleDockAction(string action)
+    {
+        if (action == "menu")
+        {
+            var authState = await Auth.GetAuthenticationStateAsync();
+            var user = authState.User;
+
+            if (user.Identity is { IsAuthenticated: true })
+            {
+                // Route based on user role hierarchy
+                if (user.IsInRole("Admin"))
+                {
+                    Nav.NavigateTo("/admin");
+                }
+                else if (user.IsInRole("Service") || user.IsInRole("service"))
+                {
+                    Nav.NavigateTo("/service");
+                }
+                else if (user.IsInRole("Operator"))
+                {
+                    Nav.NavigateTo("/operator");
+                }
+                else
+                {
+                    Nav.NavigateTo("/unauthorized");
+                }
+            }
+            else
+            {
+                Nav.NavigateTo("/login");
+            }
+            return;
+        }
+
         State.NotifyChanged();
     }
 }

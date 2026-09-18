@@ -1,31 +1,38 @@
-@inject CabinetStateService State
+@inject CabinetStateService Cabinet
+@inject HeaderStateService Header
+@implements IDisposable
 
-<div class="header-banner">
-    <div class="header-left">
-        <img src="@LogoPath" alt="Brand Logo" class="brand-logo" @onerror="HandleLogoError" />
-        <div class="brand-text">
-            <span class="class-label">CLASS II AC2</span>
+<header class="top-status-bar">
+    <div class="brand-slot">
+        <EscoBrand />
+    </div>
+    @if (Header.Mode == HeaderMode.Status)
+    {
+        <div class="safety-banner @(Cabinet.IsSafe ? "safe" : "alarm")">
+            <span class="safety-text">@(Cabinet.IsSafe ? "CABINET IS SAFE" : "CABINET ALARM")</span>
         </div>
-    </div>
-    <div class="header-right">
-        <span class="safe-text">CABINET IS SAFE</span>
-    </div>
-</div>
+    }
+    else if (Header.Mode == HeaderMode.Title)
+    {
+        <div class="title-banner">
+            <span class="title-text">@Header.Title</span>
+            <span class="title-date">@Cabinet.DateText</span>
+        </div>
+    }
+</header>
 
 @code {
-    [Parameter] public string LogoPath { get; set; } = "/images/esco-logo.png";
-
-    private void HandleLogoError() { }
-
     protected override void OnInitialized()
     {
-        State.OnChange += HandleStateChanged;
+        Cabinet.OnChange += HandleStateChanged;
+        Header.OnChange += HandleStateChanged;
     }
 
     private void HandleStateChanged() => InvokeAsync(StateHasChanged);
 
     public void Dispose()
     {
-        State.OnChange -= HandleStateChanged;
+        Cabinet.OnChange -= HandleStateChanged;
+        Header.OnChange -= HandleStateChanged;
     }
 }

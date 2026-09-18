@@ -1,0 +1,225 @@
+/* Full-shell date picker overlay (InfoSubBar date button).
+   Same HMI theme as dock/telemetry: navy panels, cyan borders, bevel buttons. */
+.calendar-overlay[b-e01mxdfhhl] {
+    position: absolute;
+    inset: 0;
+    z-index: 60;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px 12px;
+    background: radial-gradient(130% 100% at 50% 115%, #1978ca 0%, #083b7f 40%, #03214f 85%);
+    font-family: Inter, system-ui, sans-serif;
+    color: #fff;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Header: brand | Calendar title | date + time */
+.cal-header[b-e01mxdfhhl] {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+}
+
+.cal-brand-slot[b-e01mxdfhhl] {
+    width: 30%;
+    min-width: 210px;
+    display: flex;
+    align-items: stretch;
+}
+
+.cal-title[b-e01mxdfhhl] {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: linear-gradient(180deg, #114c8a 0%, #082d5a 100%);
+    border: 2px solid #1a6ab5;
+    border-radius: 2px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.cal-clock[b-e01mxdfhhl] {
+    width: 30%;
+    min-width: 210px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    background: rgba(5, 40, 87, 0.8);
+    border: 1px solid #1b6cb7;
+    border-radius: 2px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #e2e8f0;
+}
+
+/* Month / year steppers */
+.cal-nav[b-e01mxdfhhl] {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 2px 0;
+}
+
+.cal-stepper[b-e01mxdfhhl] {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.hmi-btn[b-e01mxdfhhl] {
+    position: relative;
+    background: linear-gradient(180deg, #114c8a 0%, #082d5a 50%, #041f42 100%);
+    border: 1.5px solid #1a6ab5;
+    box-shadow: inset 1px 1px 1px rgba(255, 255, 255, 0.25), inset -1px -1px 2px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.4);
+    transition: all 0.08s ease-in-out;
+    cursor: pointer;
+    color: #f1f5f9;
+}
+
+.hmi-btn:active[b-e01mxdfhhl] {
+    transform: translateY(1px);
+    background: linear-gradient(180deg, #062349 0%, #0b396b 100%);
+}
+
+.step-btn[b-e01mxdfhhl] {
+    width: 40px;
+    min-height: 36px;
+    border-radius: 4px;
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.step-value[b-e01mxdfhhl] {
+    min-width: 150px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+}
+
+.step-value.year[b-e01mxdfhhl] {
+    min-width: 80px;
+}
+
+/* Weekday header + 6x7 day grid */
+.cal-grid[b-e01mxdfhhl] {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    border: 1px solid #1b6cb7;
+    background: rgba(5, 40, 87, 0.6);
+    border-radius: 2px;
+}
+
+.cal-weekdays[b-e01mxdfhhl] {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border-bottom: 1px solid #1d74b9;
+}
+
+.cal-weekdays span[b-e01mxdfhhl] {
+    padding: 5px 2px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: #bae6fd;
+    border-right: 1px solid rgba(29, 116, 185, 0.5);
+}
+
+.cal-weekdays span:last-child[b-e01mxdfhhl] {
+    border-right: none;
+}
+
+.cal-days[b-e01mxdfhhl] {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    min-height: 0;
+}
+
+.day[b-e01mxdfhhl] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    background: transparent;
+    border: none;
+    border-right: 1px solid rgba(29, 116, 185, 0.4);
+    border-bottom: 1px solid rgba(29, 116, 185, 0.4);
+    cursor: pointer;
+    min-height: 0;
+}
+
+.day:nth-child(7n)[b-e01mxdfhhl] {
+    border-right: none;
+}
+
+.day:nth-child(n+36)[b-e01mxdfhhl] {
+    border-bottom: none;
+}
+
+.day:hover[b-e01mxdfhhl] {
+    background: rgba(13, 91, 168, 0.5);
+}
+
+.day.outside[b-e01mxdfhhl] {
+    opacity: 0.45;
+}
+
+.day.today[b-e01mxdfhhl] {
+    outline: 2px solid #f3c734;
+    outline-offset: -2px;
+}
+
+.day.selected[b-e01mxdfhhl] {
+    background: linear-gradient(180deg, #37c347 0%, #20aa2e 50%, #158b21 100%);
+    border: 1.5px solid #4de45f;
+    font-weight: 800;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+/* Footer: Back left, Close + Today right */
+.cal-footer[b-e01mxdfhhl] {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.footer-right[b-e01mxdfhhl] {
+    display: flex;
+    gap: 8px;
+}
+
+.footer-btn[b-e01mxdfhhl] {
+    min-width: 110px;
+    min-height: 44px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    padding: 6px 16px;
+}
+
+.footer-btn.primary[b-e01mxdfhhl] {
+    background: linear-gradient(180deg, #37c347 0%, #20aa2e 50%, #158b21 100%);
+    border-color: #4de45f;
+}

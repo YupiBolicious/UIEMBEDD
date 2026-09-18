@@ -1,0 +1,39 @@
+@inject CabinetStateService State
+@implements IDisposable
+
+<div class="content-readouts">
+    <div class="content-row content-row-dark">
+        <div class="row-label">Sash</div>
+        <div class="row-colon">:</div>
+        <div class="row-value">@State.SashStatus</div>
+    </div>
+    <div class="content-row content-row-dark">
+        <div class="row-label">Filter Life</div>
+        <div class="row-colon">:</div>
+        <div class="row-value filter-good">@State.FilterLifePercent% (@State.FilterLifeLabel)</div>
+    </div>
+    <div class="content-row content-row-highlight">
+        <div class="row-label">Downflow</div>
+        <div class="row-colon">:</div>
+        <div class="row-value">@State.DownflowMs.ToString("F2") m/s</div>
+    </div>
+    <div class="content-row content-row-dark">
+        <div class="row-label">Inflow</div>
+        <div class="row-colon">:</div>
+        <div class="row-value">@State.InflowMs.ToString("F2") m/s</div>
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        State.OnChange += OnStateChanged;
+    }
+
+    private void OnStateChanged() => InvokeAsync(StateHasChanged);
+
+    public void Dispose()
+    {
+        State.OnChange -= OnStateChanged;
+    }
+}

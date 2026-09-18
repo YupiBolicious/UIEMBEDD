@@ -1,62 +1,72 @@
-.header-banner {
+/* Stitch TopHeaderSection: w-full flex gap-2.5 px-3 pt-2 pb-1.5 */
+.top-status-bar {
+    width: 100%;
     display: flex;
     align-items: stretch;
-    height: 62px;
-    background: linear-gradient(180deg, #011936 0%, #011936 100%);
-    padding: 6px 6px 6px 6px;
-    gap: 8px;
+    gap: 10px;
+    padding: 8px 12px 6px;
+    z-index: 10;
 }
 
-.header-left {
+/* Persistent brand slot: fixed width, EscoBrand fills it */
+.brand-slot {
+    width: 30%;
+    min-width: 210px;
     display: flex;
-    align-items: center;
-    gap: 12px;
-    background: #032042;
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 4px;
-    padding: 6px 18px;
-    flex: 0 0 30%;
-    max-width: 30%;
+    align-items: stretch;
 }
 
-.brand-logo {
-    height: 30px;
-    width: auto;
-    object-fit: contain;
-    filter: brightness(1);
-}
-
-.brand-text {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.class-label {
-    color: #ffffff;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1.2px;
-    line-height: 1;
-    opacity: 0.95;
-}
-
-.header-right {
-    flex: 0 0 70%;
-    max-width: 70%;
+/* Stitch cabinet-safety-banner: flex-1 green gradient border-[#54e966] */
+.safety-banner {
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #18A904;
-    border: 2px solid #ffffff;
-    border-radius: 4px;
+    border: 2px solid #54e966;
+    border-radius: 2px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
-.safe-text {
-    color: #ffffff;
+.safety-banner.safe {
+    background: linear-gradient(180deg, #34cf45 0%, #22ab32 50%, #178523 100%);
+}
+
+.safety-banner.alarm {
+    background: linear-gradient(180deg, #ef4444 0%, #dc2626 50%, #991b1b 100%);
+    border-color: #fca5a5;
+}
+
+.safety-text {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+}
+
+.title-banner {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, #114c8a 0%, #082d5a 100%);
+    border: 2px solid #1a6ab5;
+    border-radius: 2px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.title-text {
     font-size: 20px;
     font-weight: 800;
-    letter-spacing: 1.8px;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    line-height: 1;
+    color: #fff;
+    text-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 640px) {
+    .safety-text {
+        font-size: 20px;
+    }
 }

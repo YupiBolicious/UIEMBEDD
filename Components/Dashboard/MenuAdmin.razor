@@ -1,0 +1,218 @@
+@page "/admin"
+@rendermode InteractiveServer
+@attribute [Authorize(Roles = "Admin")]
+@inject HeaderStateService Header
+@inject NavigationManager Nav
+@inject AppAuthStateProvider Auth
+@implements IDisposable
+
+<main class="hmi-shell">
+    <div class="screen-gloss"></div>
+    <div class="menuop-screen">
+
+        <!-- TopBar -->
+        <InnerTopBar Title="Menu" />
+
+        <!-- Main touch interactive area -->
+        <section class="menuop-viewport">
+            <div class="carousel-track page-@_menuPage" style="--page-count: 3;"
+                 @ontouchstart="OnTouchStart"
+                 @ontouchend="OnTouchEnd">
+
+                <div class="menu-page">
+                    @foreach (var tile in Page1Tiles)
+                    {
+                        <button class="menu-tile" @onclick="() => OnTileClick(tile.Label)" type="button">
+                             <div class="tile-icon">
+                                <img src="@tile.Icon" alt="@tile.Label" draggable="false" />
+                            </div>
+                            <span class="tile-label">@tile.Label</span>
+                        </button>
+                    }
+                </div>
+
+                <div class="menu-page">
+                    @foreach (var tile in Page2Tiles)
+                    {
+                        <button class="menu-tile" @onclick="() => OnTileClick(tile.Label)" type="button">  
+                            <div class="tile-icon">
+                                <img src="@tile.Icon" alt="@tile.Label" draggable="false" />
+                            </div>
+                            <span class="tile-label">@tile.Label</span>
+                        </button>
+                    }
+                    <div class="page-spacer"></div>
+                    <div class="page-spacer"></div>
+                </div>
+                <div class="menu-page">
+                    @foreach (var tile in Page3Tiles)
+                    {
+                        <button class="menu-tile" @onclick="() => OnTileClick(tile.Label)" type="button">
+                           <div class="tile-icon">
+                                <img src="@tile.Icon" alt="@tile.Label" draggable="false" />
+                            </div>
+                            <span class="tile-label">@tile.Label</span>
+                        </button>
+                    }
+                    <div class="page-spacer"></div>
+                    <div class="page-spacer"></div>
+                </div>
+            </div>
+
+            <!-- Pagination dots -->
+            <div class="carousel-dots">
+                <button class="menu-dot @(_menuPage == 1 ? "active" : "")" @onclick="() => SetMenuPage(1)" aria-label="Go to Page 1" type="button"></button>
+                <button class="menu-dot @(_menuPage == 2 ? "active" : "")" @onclick="() => SetMenuPage(2)" aria-label="Go to Page 2" type="button"></button>
+                <button class="menu-dot @(_menuPage == 3 ? "active" : "")" @onclick="() => SetMenuPage(3)" aria-label="Go to Page 3" type="button"></button>
+            </div>
+        </section>
+
+        <!-- Bottom role navigation dock -->
+        <BottomMenuNav InitialRole="Admin" OnAction="HandleBottomAction" />
+    </div>
+
+    <!-- Toast feedback -->
+    <div class="hmi-toast @(_toastVisible ? "show" : "")">
+        <span class="toast-pulse"></span>
+        <span>@_toastMessage</span>
+    </div>
+
+    @if (_showPin)
+    {
+        <PinPromptDialog Title="@_pendingRole"
+                         OnSubmitPin="OnPinSubmitted"
+                         OnCancel="OnPinCancelled" />
+    }
+</main>
+
+@code {
+    private int _menuPage = 1;
+    private bool _toastVisible;
+    private string _toastMessage = "";
+    private int _toastSeq;
+    private double _touchStartX;
+    private bool _showPin;
+    private string _pendingRole = "";
+ 
+    private static MenuTile[] Page1Tiles { get; } = CreatePage1();
+    private static MenuTile[] Page2Tiles { get; } = CreatePage2();
+    private static MenuTile[] Page3Tiles {get; } = CreatePage3();
+
+    protected override void OnInitialized()
+    {
+        Header.ShowStatus();
+    }
+
+    private void SetMenuPage(int page) => _menuPage = page;
+
+    private void HandleBottomAction(string action)
+    {
+        switch (action)
+        {
+            case "home":
+                Nav.NavigateTo("/");
+                break;
+            case "user":
+                Nav.NavigateTo("/user");
+                break;
+            case "Operator":
+            case "Admin":
+            case "Service":
+                if (Auth.CanAccess(action))
+                {
+                    Nav.NavigateTo(RouteFor(action));
+                }
+                else
+                {
+                    _pendingRole = action;
+                    _showPin = true;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    private static string RouteFor(string role) => role switch
+    {
+        "Admin" => "/admin",
+        "Service" => "/service",
+        _ => "/operator"
+    };
+
+    private async Task OnPinSubmitted(string pin)
+    {
+        _showPin = false;
+        if (await Auth.SwitchRoleAsync(_pendingRole, pin))
+        {
+            Nav.NavigateTo(RouteFor(_pendingRole));
+        }
+        else
+        {
+            ShowToast("Invalid PIN");
+        }
+    }
+
+    private void OnPinCancelled() => _showPin = false;
+
+    private void OnTileClick(string tileName) => ShowToast("Opening: " + tileName);
+
+    private void OnTouchStart(TouchEventArgs e) => _touchStartX = e.ChangedTouches[0].ScreenX;
+
+    private void OnTouchEnd(TouchEventArgs e)
+    {
+        var dx = _touchStartX - e.ChangedTouches[0].ScreenX;
+        if (dx > 40 && _menuPage < 3) SetMenuPage(_menuPage + 1);
+        else if (dx < -40 && _menuPage > 1) SetMenuPage(_menuPage - 1);
+    }
+
+    private async void ShowToast(string message)
+    {
+        _toastMessage = message;
+        _toastVisible = true;
+        var seq = ++_toastSeq;
+        await Task.Delay(1800);
+        if (seq == _toastSeq)
+        {
+            _toastVisible = false;
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    public void Dispose()
+    {
+        Header.ShowStatus();
+    }
+    public record MenuTile(string Label, string? Icon= null);
+
+private static MenuTile[] CreatePage1() => new[]
+{
+    new MenuTile("Shut Down", Icon:"/images/Shutdown.png"),
+    new MenuTile("Users", Icon:"/images/User%20Mgnt.png"),
+    new MenuTile("Logout Time", Icon:"/images/logout-time.png"),
+    new MenuTile("Languages", Icon:"/images/Language.png"),
+    new MenuTile("Cabinet Name", Icon:"/images/Cabinet%20Name.png"),
+    new MenuTile("TimeZone", Icon:"/images/Time%20Zone.png"),
+    new MenuTile("Date", Icon:"/images/Set-Date.png"),
+    new MenuTile("Time", Icon:"/images/Set-Time.png"),
+};
+
+private static MenuTile[] CreatePage2() => new[]
+{
+    new MenuTile("Fan PIN", Icon:"/images/Blower-PIN.png"),
+    new MenuTile("Operation Mode", Icon: "/images/Set-User-Mode.png"),
+    new MenuTile("Airflow Monitor", Icon: "/images/Airflow-Monitor.png"),
+    new MenuTile("Airflow Out Temperature", Icon: "/images/Airflow-Out.png"),
+    new MenuTile("Mute Timer", Icon: "/images/Mute-Timer.png"),
+    
+    // Explicitly target Icon using named parameters:
+    new MenuTile("Warmup Timer", Icon: "/images/Warm-Up.png"),
+    new MenuTile("Post Purge Timer", Icon: "/images/Post-Purge.png"),
+    new MenuTile("Network", Icon: "/images/wifi.png"),
+};
+
+private static MenuTile[] CreatePage3() => new[] 
+{
+    new MenuTile("Remote Modbus", Icon: "/images/Remote-modbus.png")  
+};
+}

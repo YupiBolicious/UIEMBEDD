@@ -1,23 +1,41 @@
 @inject CabinetStateService State
+@inject NavigationManager Nav
 @implements IDisposable
 
-<div class="info-bar">
-    <div class="info-cell bsc-cell">
-        <span class="info-value bsc">@State.BscDisplay</span>
+<section class="metadata-bar">
+    <div class="metadata-inner">
+        <div class="unit-cell">
+            <div class="bsc-pill">
+                <span class="bsc-id">@State.BscId</span>
+                <span class="bsc-serial">@State.SerialNumber</span>
+            </div>
+            <button type="button" class="hmi-btn operator-btn" title="Change User / Login" @onclick="OpenUserView">
+                <svg class="btn-icon" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="truncate">@State.OperatorName</span>
+            </button>
+        </div>
+        <div class="v-divider"></div>
+        <div class="meta-cell">
+            <span>@State.TemperatureText</span>
+        </div>
+        <div class="v-divider"></div>
+        <div class="meta-cell">
+            <span>@State.TimeText</span>
+        </div>
+        <div class="v-divider"></div>
+        <button type="button" class="hmi-btn meta-cell date-btn" title="Open System Calendar / Clock Settings" @onclick="() => State.OpenCalendar()">
+            <svg class="btn-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <span>@State.DateText</span>
+        </button>
     </div>
-    <div class="info-cell">
-        <span class="info-value">@State.OperatorName</span>
-    </div>
-    <div class="info-cell">
-        <span class="info-value">@State.TemperatureText</span>
-    </div>
-    <div class="info-cell">
-        <span class="info-value">@State.TimeText</span>
-    </div>
-    <div class="info-cell">
-        <span class="info-value">@State.DateText</span>
-    </div>
-</div>
+</section>
 
 @code {
     protected override void OnInitialized()
@@ -26,6 +44,8 @@
     }
 
     private void OnStateChanged() => InvokeAsync(StateHasChanged);
+
+    private void OpenUserView() => Nav.NavigateTo("/user");
 
     public void Dispose()
     {

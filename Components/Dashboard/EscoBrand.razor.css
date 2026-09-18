@@ -1,0 +1,40 @@
+/* Persistent ESCO brand card. Fills whatever slot the host provides —
+   hosts control width (e.g. 30% min 210px in the layout header). */
+.esco-brand-card {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 6px;
+    background: #072d61; 
+    border: 2px solid #1660a5;
+    border-radius: 2px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.esco-logo {
+    font-family: "Arial Black", Gadget, Impact, sans-serif;
+    font-style: italic;
+    letter-spacing: -1px;
+    font-size: 24px;
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.model-info {
+    text-align: right;
+    line-height: 1.2;
+    font-family: Inter, system-ui, sans-serif;
+}
+
+.model-line {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: #fff;
+}
+
+.model-line.dim {
+    color: #e2e8f0;
+}

@@ -1,0 +1,38 @@
+<div class="pin-overlay">
+    <div class="pin-card">
+        <div class="pin-title">Enter @Title PIN</div>
+        <input class="pin-input"
+               type="password"
+               @bind="_pin"
+               placeholder="PIN Code"
+               autofocus
+               aria-label="PIN Code"
+               @onkeydown="OnKeyDown" />
+        <div class="pin-actions">
+            <button class="hmi-button" @onclick="Cancel" type="button">Cancel</button>
+            <button class="hmi-button" @onclick="Submit" type="button">OK</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string Title { get; set; } = "Role";
+    [Parameter] public EventCallback<string> OnSubmitPin { get; set; }
+    [Parameter] public EventCallback OnCancel { get; set; }
+
+    private string _pin = "";
+
+    private async Task OnKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter") await Submit();
+    }
+
+    private async Task Submit()
+    {
+        if (string.IsNullOrWhiteSpace(_pin)) return;
+        await OnSubmitPin.InvokeAsync(_pin);
+        _pin = "";
+    }
+
+    private Task Cancel() => OnCancel.InvokeAsync();
+}

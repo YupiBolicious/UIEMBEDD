@@ -1,0 +1,25 @@
+<svg viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="cabBodyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#ffffff" />
+                    <stop offset="100%" stop-color="#eceff1" />
+                </linearGradient>
+                <filter id="cabShadow" x="-10%" y="-10%" width="120%" height="125%">
+                    <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000000" flood-opacity="0.25" />
+                </filter>
+            </defs>
+            <!-- Biosafety Cabinet Top / Header Representation -->
+            <g filter="url(#cabShadow)">
+                <rect x="22" y="16" width="56" height="42" rx="4" fill="url(#cabBodyGrad)" stroke="#78909c" stroke-width="2" />
+                <!-- Blue Banner Stripe -->
+                <rect x="23" y="32" width="54" height="12" fill="#1565c0" />
+                <!-- White Central Notch / Filter Sash Mark -->
+                <rect x="44" y="35" width="12" height="6" rx="1" fill="#ffffff" />
+            </g>
+            
+            <!-- Bottom ABC Identification Card -->
+            <g filter="url(#cabShadow)">
+                <rect x="16" y="52" width="68" height="32" rx="4" fill="#ffffff" stroke="#90a4ae" stroke-width="1.8" />
+                <text x="50" y="75" font-family="'Segoe UI', Roboto, 'Arial Rounded MT Bold', sans-serif" font-weight="700" font-size="20" letter-spacing="2" fill="#546e7a" text-anchor="middle">ABC</text>
+            </g>
+        </svg>

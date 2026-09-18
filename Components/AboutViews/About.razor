@@ -1,0 +1,90 @@
+@page "/about"
+@rendermode InteractiveServer
+@inject HeaderStateService Header
+@inject NavigationManager Nav
+@inject AppAuthStateProvider Auth
+
+
+<main class="hmi-shell">
+    <div class="screen-gloss"></div>
+    <div class="menuop-screen">
+
+        <!-- TopBar -->
+        <InnerTopBar Title="Menu" />
+
+        <!-- Main touch interactive area -->
+        <section class="menuop-viewport">
+            <div class="carousel-track page-@_menuPage" style="--page-count: 3;"
+                 @ontouchstart="OnTouchStart"
+                 @ontouchend="OnTouchEnd">
+
+                <div class="menu-page">
+                    @foreach (var tile in Page1Tiles)
+                    {
+                        <button class="menu-tile" @onclick="() => OnTileClick(tile.Label)" type="button">
+                            <div class="tile-icon">
+                                <img src="@tile.Icon" alt="@tile.Label" draggable="false" />
+                            </div>
+                            <span class="tile-label">@tile.Label</span>
+                        </button>
+                    }
+                </div>
+            </div>
+
+            <!-- Pagination dots -->
+            <div class="carousel-dots">
+                <button class="menu-dot @(_menuPage == 1 ? "active" : "")" @onclick="() => SetMenuPage(1)" aria-label="Go to Page 1" type="button"></button>
+                </div>
+        </section>
+
+    </div>
+
+    <!-- Toast feedback -->
+    <div class="hmi-toast @(_toastVisible ? "show" : "")">
+        <span class="toast-pulse"></span>
+        <span>@_toastMessage</span>
+    </div>
+</main>
+
+@code {
+    private int _menuPage = 1;
+    private bool _toastVisible;
+    private string _toastMessage = "";
+    private static MenuTile[] Page1Tiles { get; } = CreatePage1();
+
+    private int _toastSeq;
+    private double _touchStartX;
+
+    private void SetMenuPage(int page) => _menuPage = page;
+    private void OnTileClick(string tileName) => ShowToast("Opening: " + tileName);
+
+private void OnTouchStart(TouchEventArgs e) => _touchStartX = e.ChangedTouches[0].ScreenX;
+
+    private void OnTouchEnd(TouchEventArgs e)
+    {
+        var dx = _touchStartX - e.ChangedTouches[0].ScreenX;
+        if (dx > 40 && _menuPage < 3) SetMenuPage(_menuPage + 1);
+        else if (dx < -40 && _menuPage > 1) SetMenuPage(_menuPage - 1);
+    }
+     private async void ShowToast(string message)
+    {
+        _toastMessage = message;
+        _toastVisible = true;
+        var seq = ++_toastSeq;
+        await Task.Delay(1800);
+        if (seq == _toastSeq)
+        {
+            _toastVisible = false;
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+    public record MenuTile(string Label, string Icon);
+    private static MenuTile[] CreatePage1() => new[]
+    {
+        new MenuTile("Replaceable Components Record", "/images/Commissioning_icon.png"),
+        new MenuTile("Preventive Maintenance", "/images/preventive-maintenance.png")
+
+       };
+
+    
+}

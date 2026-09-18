@@ -1,0 +1,36 @@
+@inject CabinetStateService State
+@implements IDisposable
+
+<header class="inner-topbar">
+    <div class="inner-brand">
+        <span class="inner-logo">ESCO</span>
+        <div class="inner-divider"></div>
+        <div class="inner-class">
+            CLASS II A2<br />
+            <span>AC2</span>
+        </div>
+    </div>
+    <div class="inner-title-box">
+        <div class="inner-title">@Title</div>
+    </div>
+    <div class="inner-clock">
+        <div>@_now.ToString("MMM dd yyyy")</div>
+        <div class="inner-clock-time">@_now.ToString("HH:mm")</div>
+    </div>
+</header>
+
+@code {
+    [Parameter] public string Title { get; set; } = "";
+
+    private DateTime _now = DateTime.Now;
+
+    protected override void OnInitialized() => State.OnChange += OnTick;
+
+    private void OnTick()
+    {
+        _now = DateTime.Now;
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose() => State.OnChange -= OnTick;
+}

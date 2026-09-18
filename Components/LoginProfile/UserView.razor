@@ -1,0 +1,124 @@
+@page "/user"
+@rendermode InteractiveServer
+@attribute [Authorize]
+@inject CabinetStateService State
+@inject HeaderStateService Header
+@inject NavigationManager Nav
+@inject AppAuthStateProvider Auth
+@implements IDisposable
+
+<main class="hmi-shell">
+    <InnerTopBar Title="User" />
+
+    <!-- USER PROFILE -->
+    <section class="hmi-view">
+        <div class="user-content">
+
+            <button class="user-profile-card"
+                    @onclick="NavigateToProfileSelector"
+                    aria-label="Current User: @Auth.UserName. Tap to switch user."
+                    type="button">
+
+                <div class="avatar-card">
+                    <span>@Initial(Auth.UserName)</span>
+                </div>
+
+                <div class="user-details">
+                    <div class="user-name">
+                        @Auth.UserName
+                    </div>
+
+                    <div class="user-role">
+                        @Auth.CurrentRole
+                    </div>
+                </div>
+
+            </button>
+
+        </div>
+
+        <footer class="hmi-footer">
+
+            <button class="hmi-button"
+                    @onclick="NavigateBack"
+                    type="button">
+
+                <svg viewBox="0 0 24 24">
+                    <path d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+
+                <span>Back</span>
+            </button>
+
+            <div class="footer-actions">
+
+                <button class="hmi-button"
+                        @onclick="ShowLastLogin"
+                        type="button">
+
+                    <svg viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                              d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" />
+                    </svg>
+
+                    <span>Last Login</span>
+                </button>
+
+                <button class="hmi-button"
+                        @onclick="PerformLogout"
+                        type="button">
+
+                    <span class="exit-icon">➔</span>
+                    <span>Logout</span>
+
+                </button>
+
+            </div>
+
+        </footer>
+
+    </section>
+
+</main>
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        Header.ShowStatus();
+        State.OnChange += OnStateChange;
+    }
+
+    private void OnStateChange() => InvokeAsync(StateHasChanged);
+
+    public void Dispose()
+    {
+        Header.ShowStatus();
+        State.OnChange -= OnStateChange;
+    }
+
+    private static string Initial(string? name) =>
+        string.IsNullOrEmpty(name) ? "?" : name[..1].ToUpperInvariant();
+
+    private void NavigateToProfileSelector()
+    {
+        Nav.NavigateTo("/user-selection");
+    }
+
+    private async Task PerformLogout()
+    {
+        await Auth.LogoutAsync();
+        State.SetOperator("Operator");
+        Nav.NavigateTo("/user-selection");
+    }
+
+    private void NavigateBack()
+    {
+        Nav.NavigateTo("/");
+    }
+
+    private void ShowLastLogin()
+    {
+        // Add Last Login dialog/action here.
+    }
+}

@@ -1,0 +1,128 @@
+@inject CabinetStateService State
+@inject HeaderStateService Header
+@implements IDisposable
+
+<div class="calendar-overlay" role="dialog" aria-modal="true" aria-label="Calendar date picker">
+    <InnerTopBar Title="Calendar" />
+
+    <div class="cal-nav">
+        <div class="cal-stepper">
+            <button class="hmi-btn step-btn" @onclick="PrevMonth" type="button" aria-label="Previous month">&#8592;</button>
+            <span class="step-value month">@MonthName</span>
+            <button class="hmi-btn step-btn" @onclick="NextMonth" type="button" aria-label="Next month">&#8594;</button>
+        </div>
+        <div class="cal-stepper">
+            <button class="hmi-btn step-btn" @onclick="PrevYear" type="button" aria-label="Previous year">&#8592;</button>
+            <span class="step-value year">@_viewYear</span>
+            <button class="hmi-btn step-btn" @onclick="NextYear" type="button" aria-label="Next year">&#8594;</button>
+        </div>
+    </div>
+
+    <div class="cal-grid">
+        <div class="cal-weekdays">
+            @foreach (var name in Weekdays)
+            {
+                <span>@name</span>
+            }
+        </div>
+        <div class="cal-days">
+            @foreach (var cell in GetCells())
+            {
+                <button type="button"
+                        class="day @(cell.InMonth ? "" : "outside") @(cell.Date == _pending ? "selected" : "") @(cell.Date == Today ? "today" : "")"
+                        @onclick="() => SelectDay(cell)"
+                        aria-label="@cell.Date.ToString("MMMM d yyyy")"
+                        aria-pressed="@(cell.Date == _pending)">@cell.Date.Day</button>
+            }
+        </div>
+    </div>
+
+    <footer class="cal-footer">
+        <button class="hmi-btn footer-btn" @onclick="GoBack" type="button">&#8592; Back</button>
+        <div class="footer-right">
+            <button class="hmi-btn footer-btn primary" @onclick="Confirm" type="button">Close</button>
+            <button class="hmi-btn footer-btn" @onclick="GoToday" type="button">Today</button>
+        </div>
+    </footer>
+</div>
+
+@code {
+    private int _viewYear;
+    private int _viewMonth;
+    private DateOnly _pending;
+
+    private static readonly string[] Weekdays =
+        ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+    private static DateOnly Today => DateOnly.FromDateTime(DateTime.Today);
+
+    protected override void OnInitialized()
+    {
+        Header.ShowTitle("Calendar");
+        State.OnChange += OnStateChanged;
+        _pending = State.SelectedDate;
+        _viewYear = _pending.Year;
+        _viewMonth = _pending.Month;
+    }
+
+    private void OnStateChanged() => InvokeAsync(StateHasChanged);
+
+    public void Dispose()
+    {
+        Header.ShowStatus();
+        State.OnChange -= OnStateChanged;
+    }
+
+    private string MonthName => new DateTime(_viewYear, _viewMonth, 1).ToString("MMMM");
+
+    private IEnumerable<DayCell> GetCells()
+    {
+        var first = new DateOnly(_viewYear, _viewMonth, 1);
+        var start = first.AddDays(-(int)first.DayOfWeek);
+        for (var i = 0; i < 42; i++)
+        {
+            var date = start.AddDays(i);
+            yield return new DayCell(date, date.Month == _viewMonth);
+        }
+    }
+
+    private void PrevMonth()
+    {
+        if (_viewMonth == 1)
+        {
+            _viewMonth = 12;
+            _viewYear--;
+        }
+        else
+        {
+            _viewMonth--;
+        }
+    }
+
+    private void NextMonth()
+    {
+        if (_viewMonth == 12)
+        {
+            _viewMonth = 1;
+            _viewYear++;
+        }
+        else
+        {
+            _viewMonth++;
+        }
+    }
+
+    private void PrevYear() => _viewYear--;
+
+    private void NextYear() => _viewYear++;
+
+    private void SelectDay(DayCell cell) => State.ConfirmDate(cell.Date);
+
+    private void GoBack() => State.CloseCalendar();
+
+    private void GoToday() => State.ConfirmDate(Today);
+
+    private void Confirm() => State.ConfirmDate(_pending);
+
+    private sealed record DayCell(DateOnly Date, bool InMonth);
+}

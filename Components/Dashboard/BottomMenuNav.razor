@@ -1,0 +1,58 @@
+<!-- Bottom role navigation dock -->
+<footer class="role-dock">
+    <button class="nav-btn" @onclick='() => OnAction.InvokeAsync("home")' title="Return to Cabinet Status" type="button">
+        <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
+        </svg>
+    </button>
+
+    <div class="role-tabs">
+        <div class="role-slider" style="--active: @(ActiveIndex * 100)%;"></div>
+        <button class="role-tab" @onclick='() => SwitchRole("Operator")' type="button">
+            <span class="z-10">Operator</span>
+        </button>
+        <div class="tab-divider"></div>
+        <button class="role-tab" @onclick='() => SwitchRole("Admin")' type="button">
+            <span class="z-10">Admin</span>
+        </button>
+        <div class="tab-divider"></div>
+        <button class="role-tab" @onclick='() => SwitchRole("Service")' type="button">
+            <span class="z-10">Service</span>
+        </button>
+    </div>
+
+    <button class="nav-btn" @onclick='() => OnAction.InvokeAsync("user")' title="User Login & Profile" type="button">
+        <div class="user-avatar">
+            <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path>
+            </svg>
+            <span class="role-dot"></span>
+        </div>
+    </button>
+</footer>
+
+@code {
+    [Parameter] public EventCallback<string> OnAction { get; set; }
+
+    [Parameter] public string InitialRole { get; set; } = "Operator";
+
+    private string _currentRole = "Operator";
+
+    protected override void OnInitialized()
+    {
+        _currentRole = InitialRole;
+    }
+
+    private int ActiveIndex => _currentRole switch
+    {
+        "Admin" => 1,
+        "Service" => 2,
+        _ => 0
+    };
+
+    private async Task SwitchRole(string role)
+    {
+        _currentRole = role;
+        await OnAction.InvokeAsync(role);
+    }
+}

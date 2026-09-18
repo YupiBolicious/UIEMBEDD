@@ -1,10 +1,30 @@
+/* Stitch BottomTouchControlBar: grid grid-cols-6 gap-2, hmi-btn bevels */
 .dock {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     gap: 8px;
-    background: #011936;
-    padding: 10px 8px;
-    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 4px 12px 8px;
+    z-index: 10;
+}
+
+.hmi-btn {
+    position: relative;
+    background: linear-gradient(180deg, #114c8a 0%, #082d5a 50%, #041f42 100%);
+    border: 1.5px solid #1a6ab5;
+    box-shadow: inset 1px 1px 1px rgba(255, 255, 255, 0.25), inset -1px -1px 2px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.4);
+    transition: all 0.08s ease-in-out;
+    cursor: pointer;
+}
+
+.hmi-btn:active {
+    transform: translateY(1px);
+    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.7), inset -1px -1px 1px rgba(255, 255, 255, 0.1);
+    background: linear-gradient(180deg, #062349 0%, #0b396b 100%);
+}
+
+.hmi-btn.alarm {
+    background: linear-gradient(180deg, #134f91 0%, #0a3363 100%);
+    border-color: #237bc9;
 }
 
 .dock-btn {
@@ -12,56 +32,253 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    min-height: 78px;
-    background: #032042;
-    border: 1px solid rgba(255,255,255,0.10);
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.15s, transform 0.08s, border-color 0.15s;
+    gap: 2px;
+    min-height: 64px;
+    padding: 6px 4px 4px;
+    border-radius: 4px;
+    color: #f1f5f9;
 }
 
-.dock-btn:hover {
-    background: #0a2e5c;
-    border-color: rgba(255,255,255,0.18);
+.dock-btn:focus {
+    outline: none;
 }
 
-.dock-btn:active {
-    transform: scale(0.97);
-    background: #18A904;
+.dock-icon {
+    width: 30px;
+    height: 30px;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.6));
+}
+
+.dock-icon.gold {
+    color: #ffce39;
+}
+
+.dock-icon.light {
+    width: 26px;
+    height: 26px;
+    color: #e2e8f0;
+}
+
+.dock-icon.bolt {
+    width: 18px;
+    height: 26px;
+    color: #bae6fd;
+    margin-left: -6px;
+}
+
+.dock-icon.cream {
+    width: 30px;
+    height: 30px;
+    color: #fef3c7;
+}
+
+/* Stitch menu 3x2 beige tablet grid */
+.app-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    width: 36px;
+    align-items: center;
+    justify-items: center;
+    padding: 4px 0;
+}
+
+.app-grid span {
+    width: 10px;
+    height: 10px;
+    background: #fce1b8;
+    border-radius: 2px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+}
+
+.combo-icon {
+    display: flex;
+    align-items: center;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+.light-pct {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #e2e8f0;
+    line-height: 1;
+    align-self: flex-start;
+    margin-left: 6px;
+}
+
+.uv-rays {
+    width: 28px;
+    height: 16px;
+    color: #cbd5e1;
+    order: 2;
+}
+
+.uv-text {
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 0.15em;
+    color: #e2e8f0;
+    line-height: 1;
+    font-family: Inter, system-ui, sans-serif;
+    order: 3;
+}
+
+.mute-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mute-slash {
+    position: absolute;
+    width: 36px;
+    height: 3px;
+    background: #f87171;
+    transform: rotate(45deg);
+    border-radius: 2px;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
 }
 
 .dock-label {
     font-size: 9.5px;
     font-weight: 700;
-    letter-spacing: 0.8px;
+    letter-spacing: 0.08em;
     color: #cfe0ff;
-    line-height: 1;
+    line-height: 1.2;
 }
 
-.icon-yellow {
-    color: #ffcc00;
+/* State-driven indicator colors (bound to CabinetStateService) */
+.dock-icon.white {
+    color: #f8fafc;
 }
 
-.icon-muted {
-    color: #8ea2c0;
-    opacity: 0.85;
+.dock-btn.is-off .light-pct {
+    color: #94a3b8;
 }
 
-.light-wrap {
+.dock-btn.is-off .dock-icon.white {
+    opacity: 0.75;
+}
+
+/* UV active state: purple icon + light beam */
+.uv-active {
+    border-color: #a855f7;
+}
+
+.uv-rays.lit {
+    color: #c084fc;
+    filter: drop-shadow(0 0 4px rgba(192, 132, 252, 0.8));
+}
+
+.uv-text.lit {
+    color: #d8b4fe;
+    text-shadow: 0 0 8px rgba(192, 132, 252, 0.9);
+}
+
+.uv-beam {
+    width: 28px;
+    height: 18px;
+    color: #c084fc;
+    filter: drop-shadow(0 0 5px rgba(192, 132, 252, 0.9));
+    animation: uv-pulse 1.6s ease-in-out infinite;
+    order: 1;
+    margin-bottom: 1px;
+}
+
+.uv-active .dock-label {
+    order: 4;
+}
+
+@keyframes uv-pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+/* Brightness overlay: absolute over .hmi-shell (position: relative),
+   backdrop tap closes, panel stops propagation */
+.brightness-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(1, 13, 31, 0.72);
+}
+
+.brightness-panel {
+    width: min(420px, 86%);
+    background: linear-gradient(180deg, #0b396b 0%, #041f42 100%);
+    border: 1.5px solid #1a6ab5;
+    border-radius: 8px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), inset 0 0 12px rgba(0, 140, 255, 0.25);
+    padding: 20px 24px 16px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    line-height: 1;
+    align-items: stretch;
+    gap: 10px;
+    font-family: Inter, system-ui, sans-serif;
 }
 
-.light-pct {
-    font-size: 9px;
+.brightness-title {
+    font-size: 12px;
     font-weight: 800;
-    color: #ffd54d;
-    margin-top: 1px;
+    letter-spacing: 0.12em;
+    color: #bae6fd;
+    text-align: center;
 }
 
-:deep(.rz-icon) {
+.brightness-value {
+    font-size: 40px;
+    font-weight: 800;
+    color: #ffce39;
+    text-align: center;
     line-height: 1;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+.brightness-panel input[type="range"] {
+    width: 100%;
+    height: 44px;
+    accent-color: #ffce39;
+    cursor: pointer;
+}
+
+.brightness-panel input[type="range"]::-webkit-slider-thumb {
+    width: 32px;
+    height: 32px;
+}
+
+.brightness-panel input[type="range"]::-moz-range-thumb {
+    width: 32px;
+    height: 32px;
+}
+
+.brightness-scale {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    font-weight: 700;
+    color: #7ea6d4;
+}
+
+.brightness-done {
+    margin-top: 4px;
+    min-height: 48px;
+    border-radius: 4px;
+    border: 1.5px solid #1a6ab5;
+    background: linear-gradient(180deg, #114c8a 0%, #082d5a 50%, #041f42 100%);
+    box-shadow: inset 1px 1px 1px rgba(255, 255, 255, 0.25), 0 2px 4px rgba(0, 0, 0, 0.4);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+}
+
+.brightness-done:active {
+    transform: translateY(1px);
 }

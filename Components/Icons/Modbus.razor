@@ -1,0 +1,117 @@
+<svg viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+     <linearGradient id="pciDiagGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#0284c7" />
+            <stop offset="50%" stop-color="#0369a1" />
+            <stop offset="100%" stop-color="#0c4a6e" />
+        </linearGradient>
+
+        <!-- Cabinet Frame Gradients -->
+        <linearGradient id="pciCabFrameGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#f1f5f9" />
+            <stop offset="100%" stop-color="#cbd5e1" />
+        </linearGradient>
+        <linearGradient id="pciCabSashGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#0284c7" />
+            <stop offset="70%" stop-color="#0369a1" />
+            <stop offset="100%" stop-color="#075985" />
+        </linearGradient>
+        <linearGradient id="pciSashPortGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#e0f2fe" />
+            <stop offset="100%" stop-color="#bae6fd" />
+        </linearGradient>
+
+        <!-- Laptop Gradients -->
+        <linearGradient id="pciLaptopLidGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#334155" />
+            <stop offset="100%" stop-color="#0f172a" />
+        </linearGradient>
+        <linearGradient id="pciLaptopScreenGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff" />
+            <stop offset="70%" stop-color="#f0f9ff" />
+            <stop offset="100%" stop-color="#e0f2fe" />
+        </linearGradient>
+        <linearGradient id="pciLaptopBaseGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#e2e8f0" />
+            <stop offset="50%" stop-color="#cbd5e1" />
+            <stop offset="100%" stop-color="#94a3b8" />
+        </linearGradient>
+        <linearGradient id="pciKeyboardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#334155" />
+            <stop offset="100%" stop-color="#1e293b" />
+        </linearGradient>
+
+        <!-- Subtle Element Shadows -->
+        <filter id="pciLaptopShadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="1" dy="3" stdDeviation="2.5" flood-color="#0f172a" flood-opacity="0.25" />
+        </filter>
+        <filter id="pciCabShadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="-1" dy="2" stdDeviation="2" flood-color="#0f172a" flood-opacity="0.12" />
+        </filter>
+    <g filter="url(#pciCabShadow)" transform="translate(0, 2)">
+            <!-- Cabinet Main Housing Outer Contour -->
+            <path d="M 17 18 L 62 18 L 62 38 L 48 55 L 17 55 Z" fill="#ffffff" stroke="#94a3b8" stroke-width="1.6" stroke-linejoin="round" />
+
+            <!-- 3D Left Depth Wall -->
+            <path d="M 17 18 L 22 22 L 22 72 L 17 68 Z" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.2" />
+
+            <!-- Inner Work Chamber Recess Area -->
+            <rect x="22" y="22" width="37" height="48" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" />
+
+            <!-- Signature ESCO Blue Sash / Plenum Fascia Band -->
+            <rect x="17" y="38" width="38" height="11" fill="url(#pciCabSashGrad)" stroke="#0369a1" stroke-width="0.8" />
+            
+            <!-- White Filter Sash Port / Display Window inside Blue Band -->
+            <rect x="36" y="40.5" width="11" height="6" rx="1.5" fill="url(#pciSashPortGrad)" stroke="#38bdf8" stroke-width="0.8" />
+
+            <!-- Bottom Cabinet Base Stand Outline -->
+            <path d="M 17 55 L 17 73 L 23 73 L 23 60 L 32 60 L 32 73" fill="none" stroke="#64748b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+        </g>
+
+        <!-- ========================================== -->
+        <!-- 2. SIGNATURE DIAGONAL DIVIDER SLASH        -->
+        <!-- (Cutting through from bottom-left to top-right) -->
+        <!-- ========================================== -->
+        <g>
+            <!-- Diagonal Shadow Line -->
+            <line x1="22" y1="84" x2="72" y2="14" stroke="#000000" stroke-width="7" stroke-linecap="round" opacity="0.1" />
+            <!-- Vibrant Industrial Blue Diagonal Sash Beam -->
+            <line x1="24" y1="82" x2="71" y2="16" stroke="url(#pciDiagGrad)" stroke-width="5" stroke-linecap="round" />
+            <!-- Diagonal Specular Highlight Core -->
+            <line x1="25" y1="81" x2="70" y2="18" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round" opacity="0.85" />
+        </g>
+
+        <!-- ========================================== -->
+        <!-- 3. RIGHT SIDE: MODERN LAPTOP / PC TERMINAL -->
+        <!-- ========================================== -->
+        <g filter="url(#pciLaptopShadow)" transform="translate(1, 0)">
+            <!-- Laptop Screen Lid (Angled 3D Isometric View) -->
+            <!-- Outer Lid Bezel -->
+            <polygon points="54,43 83,42 82,68 53,69" fill="url(#pciLaptopLidGrad)" stroke="#0f172a" stroke-width="1.2" stroke-linejoin="round" />
+            
+            <!-- Inner Bright Display Screen (Clean White LCD) -->
+            <polygon points="56,45 81,44 80,66 55,67" fill="url(#pciLaptopScreenGrad)" stroke="#94a3b8" stroke-width="0.7" />
+            
+            <!-- Display Glare Sheen -->
+            <polygon points="56,45 74,44 65,66 55,67" fill="#ffffff" opacity="0.4" />
+            
+            <!-- Screen Micro Webcam Dot -->
+            <circle cx="68.5" cy="43.2" r="0.6" fill="#94a3b8" />
+
+            <!-- Laptop Base / Keyboard Section (Perspective Floor) -->
+            <!-- Keyboard Tray Baseplate -->
+            <polygon points="53,69 82,68 93,76 39,77" fill="url(#pciLaptopBaseGrad)" stroke="#64748b" stroke-width="1" stroke-linejoin="round" />
+            
+            <!-- Recessed Keyboard Well -->
+            <polygon points="54,70 79,69.5 86,74.5 45,75" fill="url(#pciKeyboardGrad)" />
+            
+            <!-- Trackpad Area -->
+            <polygon points="63,75.3 72,75.2 74,76.5 61,76.6" fill="#cbd5e1" stroke="#94a3b8" stroke-width="0.5" />
+
+            <!-- Laptop Front Chamfer Lip (Metallic Reflection) -->
+            <polygon points="39,77 93,76 92,77.8 40,78.5" fill="#f8fafc" stroke="#94a3b8" stroke-width="0.6" />
+        </g>
+
+        <!-- Base Ground Shadow under Laptop -->
+        <ellipse cx="66" cy="78.5" rx="22" ry="2.2" fill="#0f172a" opacity="0.18" />
+    
+</svg>

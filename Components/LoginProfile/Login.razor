@@ -1,0 +1,137 @@
+@page "/login"
+@rendermode InteractiveServer
+@attribute [AllowAnonymous]
+@inject CabinetStateService State
+@inject HeaderStateService Header
+@inject NavigationManager Nav
+@inject AppAuthStateProvider Auth
+@implements IDisposable
+
+@* <main class="hmi-shell">
+    <InnerTopBar Title="Login" />
+
+    <section class="hmi-login-view">
+        <form class="hmi-login-content" @onsubmit="HandleLogin">
+            <label class="hmi-form-container">
+                <span class="hmi-input-field">Username</span>
+                <div class="login-input-row">
+                    <input class="login-input" @bind="_name" placeholder="Operator" />
+                    <button class="login-avatar-btn" @onclick="GoToPersonas"
+                            title="Choose profile" aria-label="Choose profile" type="button">
+                        <svg fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                        </svg>
+                    </button>
+                </div>
+            </label>
+
+            <label class="hmi-input-field">
+                <span class="login-label">PIN</span>
+                <input class="login-input" type="password" @bind="_pin" placeholder="Enter PIN" />
+            </label>
+
+            <button class="login-submit" type="submit">Login</button>
+        </form>
+    </section>
+
+    <div class="hmi-toast @(_toastVisible ? "show" : "")">
+        <span class="toast-pulse"></span>
+        <span>@_toastMessage</span>
+    </div>
+</main> *@
+<main class="hmi-shell">
+    <InnerTopBar Title="Login" />
+
+    <section class="hmi-login-view">
+        <form class="hmi-login-content" @onsubmit="HandleLogin">
+            
+            @* Username Field with Profile Selector Badge *@
+            <div class="hmi-form-container">
+                <span class="hmi-field-label">Username</span>
+                <div class="hmi-input-field">
+                    <button type="button" 
+                            class="hmi-touch-badge" 
+                            @onclick="GoToPersonas"
+                            title="Choose profile" 
+                            aria-label="Choose profile">
+                        <span class="badge-sub">Select user</span>
+                        <svg fill="currentColor" viewBox="0 0 24 24" class="badge-icon">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                        </svg>
+                        <span class="badge-main">Tap here</span>
+                    </button>
+
+                    <div class="input-wrapper">
+                        <input class="login-input" @bind="_name" placeholder="Operator" />
+                    </div>
+                </div>
+            </div>
+
+            @* PIN Input Field *@
+            <div class="hmi-form-container">
+                <span class="hmi-field-label">PIN Access</span>
+                <div class="hmi-input-field">
+                    <div class="hmi-touch-badge lock-badge">
+                        <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 20 20" class="badge-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 8V6a4 4 0 118 0v2m-10 2h12a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6a1 1 0 011-1z" />
+                        </svg>
+                    </div>
+                    <div class="input-wrapper">
+                        <input class="login-input" type="password" @bind="_pin" placeholder="Enter PIN" />
+                    </div>
+                </div>
+            </div>
+
+            @* Navigation Dock Footer *@
+        </form>
+    </section>
+
+    @* HMI Feedback Toast *@
+    <div class="hmi-toast @(_toastVisible ? "show" : "")">
+        <span class="toast-pulse"></span>
+        <span>@_toastMessage</span>
+    </div>
+</main>
+
+
+@code {
+    private string _name = "";
+    private string _pin = "";
+    private bool _toastVisible;
+    private string _toastMessage = "";
+    private int _toastSeq;
+
+    protected override void OnInitialized() => Header.ShowStatus();
+
+    private async Task HandleLogin()
+    {
+        if (string.IsNullOrWhiteSpace(_name)) return;
+        var role = AppAuthStateProvider.RoleForName(_name);
+        if (await Auth.LoginAsync(_name.Trim(), role, _pin))
+        {
+            State.SetOperator(_name.Trim());
+            Nav.NavigateTo(NavigationUtils.SafeReturnUrl(Nav) ?? "/user");
+        }
+        else
+        {
+            ShowToast("Invalid PIN");
+        }
+    }
+
+    private void GoToPersonas() => Nav.NavigateTo("/user-selection");
+
+    private async void ShowToast(string message)
+    {
+        _toastMessage = message;
+        _toastVisible = true;
+        var seq = ++_toastSeq;
+        await Task.Delay(1800);
+        if (seq == _toastSeq)
+        {
+            _toastVisible = false;
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    public void Dispose() => Header.ShowStatus();
+}

@@ -21,6 +21,258 @@
       "PackagePath": "staticwebassets\\favicon.png"
     },
     {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\21-cfr-p11.png",
+      "PackagePath": "staticwebassets\\images\\21-cfr-p11.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Adjust-Brightness.png",
+      "PackagePath": "staticwebassets\\images\\Adjust-Brightness.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Airflow-Monitor.png",
+      "PackagePath": "staticwebassets\\images\\Airflow-Monitor.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Airflow-Out.png",
+      "PackagePath": "staticwebassets\\images\\Airflow-Out.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Authorization.png",
+      "PackagePath": "staticwebassets\\images\\Authorization.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Auxiliary-F.png",
+      "PackagePath": "staticwebassets\\images\\Auxiliary-F.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\BSC_Serial.png",
+      "PackagePath": "staticwebassets\\images\\BSC_Serial.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Blower-PIN.png",
+      "PackagePath": "staticwebassets\\images\\Blower-PIN.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Booking-Sched.png",
+      "PackagePath": "staticwebassets\\images\\Booking-Sched.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Cabinet Name.png",
+      "PackagePath": "staticwebassets\\images\\Cabinet Name.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\CabinetName.png",
+      "PackagePath": "staticwebassets\\images\\CabinetName.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Calibrate-Downflow-sensor.png",
+      "PackagePath": "staticwebassets\\images\\Calibrate-Downflow-sensor.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Calibrate-Sensor.png",
+      "PackagePath": "staticwebassets\\images\\Calibrate-Sensor.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Certif Report.png",
+      "PackagePath": "staticwebassets\\images\\Certif Report.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Clear-LCD.png",
+      "PackagePath": "staticwebassets\\images\\Clear-LCD.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Commissioning_icon.png",
+      "PackagePath": "staticwebassets\\images\\Commissioning_icon.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Decon.png",
+      "PackagePath": "staticwebassets\\images\\Decon.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Diagnostics.png",
+      "PackagePath": "staticwebassets\\images\\Diagnostics.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Env-Temp-Limit.png",
+      "PackagePath": "staticwebassets\\images\\Env-Temp-Limit.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Esco_Lock.png",
+      "PackagePath": "staticwebassets\\images\\Esco_Lock.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Experiment-Timer.png",
+      "PackagePath": "staticwebassets\\images\\Experiment-Timer.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Fan_Schedule.png",
+      "PackagePath": "staticwebassets\\images\\Fan_Schedule.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Field-Calibration.png",
+      "PackagePath": "staticwebassets\\images\\Field-Calibration.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Filter-Life-Display-Icon.png",
+      "PackagePath": "staticwebassets\\images\\Filter-Life-Display-Icon.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Formalin-Decontamination.png",
+      "PackagePath": "staticwebassets\\images\\Formalin-Decontamination.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Hydrogen-Peroxide-Decontamination.png",
+      "PackagePath": "staticwebassets\\images\\Hydrogen-Peroxide-Decontamination.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Installation Wizard.png",
+      "PackagePath": "staticwebassets\\images\\Installation Wizard.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Language.png",
+      "PackagePath": "staticwebassets\\images\\Language.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Light-Intensity.png",
+      "PackagePath": "staticwebassets\\images\\Light-Intensity.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Light_Sched.png",
+      "PackagePath": "staticwebassets\\images\\Light_Sched.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Logs.png",
+      "PackagePath": "staticwebassets\\images\\Logs.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Manual-Input-Data.png",
+      "PackagePath": "staticwebassets\\images\\Manual-Input-Data.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Measurement-Unit.png",
+      "PackagePath": "staticwebassets\\images\\Measurement-Unit.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Mute-Timer.png",
+      "PackagePath": "staticwebassets\\images\\Mute-Timer.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Options-Accessories.png",
+      "PackagePath": "staticwebassets\\images\\Options-Accessories.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Post-Purge.png",
+      "PackagePath": "staticwebassets\\images\\Post-Purge.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Remote-modbus.png",
+      "PackagePath": "staticwebassets\\images\\Remote-modbus.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Reset-Blower-Odometer.png",
+      "PackagePath": "staticwebassets\\images\\Reset-Blower-Odometer.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Reset-Calibration.png",
+      "PackagePath": "staticwebassets\\images\\Reset-Calibration.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Reset-Certification-Date.png",
+      "PackagePath": "staticwebassets\\images\\Reset-Certification-Date.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Reset-Default.png",
+      "PackagePath": "staticwebassets\\images\\Reset-Default.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Reset-Filter-Odometer.png",
+      "PackagePath": "staticwebassets\\images\\Reset-Filter-Odometer.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Reset-Sash-Cycle-Odometer.png",
+      "PackagePath": "staticwebassets\\images\\Reset-Sash-Cycle-Odometer.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Reset-UV-Lamp-Odometer.png",
+      "PackagePath": "staticwebassets\\images\\Reset-UV-Lamp-Odometer.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Select-Cabinet-Model.png",
+      "PackagePath": "staticwebassets\\images\\Select-Cabinet-Model.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Set-Constant.png",
+      "PackagePath": "staticwebassets\\images\\Set-Constant.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Set-Date.png",
+      "PackagePath": "staticwebassets\\images\\Set-Date.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Set-Standby-Speed.png",
+      "PackagePath": "staticwebassets\\images\\Set-Standby-Speed.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Set-Time.png",
+      "PackagePath": "staticwebassets\\images\\Set-Time.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Set-User-Mode.png",
+      "PackagePath": "staticwebassets\\images\\Set-User-Mode.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Shutdown.png",
+      "PackagePath": "staticwebassets\\images\\Shutdown.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Socket_Sched.png",
+      "PackagePath": "staticwebassets\\images\\Socket_Sched.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Software-Update.png",
+      "PackagePath": "staticwebassets\\images\\Software-Update.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Time Zone.png",
+      "PackagePath": "staticwebassets\\images\\Time Zone.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\UV_Sched.png",
+      "PackagePath": "staticwebassets\\images\\UV_Sched.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\UV_Timer.png",
+      "PackagePath": "staticwebassets\\images\\UV_Timer.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\User Mgnt.png",
+      "PackagePath": "staticwebassets\\images\\User Mgnt.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\User.png",
+      "PackagePath": "staticwebassets\\images\\User.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Warm-Up.png",
+      "PackagePath": "staticwebassets\\images\\Warm-Up.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\Zero-Sensor.png",
+      "PackagePath": "staticwebassets\\images\\Zero-Sensor.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\about-us.png",
+      "PackagePath": "staticwebassets\\images\\about-us.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\adminPin.png",
+      "PackagePath": "staticwebassets\\images\\adminPin.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\adv-af-alarm.png",
+      "PackagePath": "staticwebassets\\images\\adv-af-alarm.png"
+    },
+    {
       "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\cabinet-graphic.png",
       "PackagePath": "staticwebassets\\images\\cabinet-graphic.png"
     },
@@ -29,12 +281,152 @@
       "PackagePath": "staticwebassets\\images\\cabinet-graphic.svg"
     },
     {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\cert_report_1_10_icon.png",
+      "PackagePath": "staticwebassets\\images\\cert_report_1_10_icon.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\cert_report_icon_field.png",
+      "PackagePath": "staticwebassets\\images\\cert_report_icon_field.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\cert_report_icon_full.png",
+      "PackagePath": "staticwebassets\\images\\cert_report_icon_full.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\contact-us.png",
+      "PackagePath": "staticwebassets\\images\\contact-us.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\dfa_measure.png",
+      "PackagePath": "staticwebassets\\images\\dfa_measure.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\dfa_nom_measure.png",
+      "PackagePath": "staticwebassets\\images\\dfa_nom_measure.png"
+    },
+    {
       "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\esco-logo.png",
       "PackagePath": "staticwebassets\\images\\esco-logo.png"
     },
     {
       "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\esco-logo.png.svg",
       "PackagePath": "staticwebassets\\images\\esco-logo.png.svg"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\fan-auto-control.png",
+      "PackagePath": "staticwebassets\\images\\fan-auto-control.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\fanPIn.png",
+      "PackagePath": "staticwebassets\\images\\fanPIn.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\field-calib-advanced.png",
+      "PackagePath": "staticwebassets\\images\\field-calib-advanced.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\field-calib-basic.png",
+      "PackagePath": "staticwebassets\\images\\field-calib-basic.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\ifa_dim_measure.png",
+      "PackagePath": "staticwebassets\\images\\ifa_dim_measure.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\ifa_dim_min_measure.png",
+      "PackagePath": "staticwebassets\\images\\ifa_dim_min_measure.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\ifa_dim_nom_measure.png",
+      "PackagePath": "staticwebassets\\images\\ifa_dim_nom_measure.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\ifa_dim_stb_measure.png",
+      "PackagePath": "staticwebassets\\images\\ifa_dim_stb_measure.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\ifa_dimsec_measure.png",
+      "PackagePath": "staticwebassets\\images\\ifa_dimsec_measure.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\ifa_sec_measure.png",
+      "PackagePath": "staticwebassets\\images\\ifa_sec_measure.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\ifa_sec_min_measure.png",
+      "PackagePath": "staticwebassets\\images\\ifa_sec_min_measure.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\ifa_sec_nom_measure.png",
+      "PackagePath": "staticwebassets\\images\\ifa_sec_nom_measure.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\ifa_sec_stb_measure.png",
+      "PackagePath": "staticwebassets\\images\\ifa_sec_stb_measure.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\log-button_2.png",
+      "PackagePath": "staticwebassets\\images\\log-button_2.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\logout-time.png",
+      "PackagePath": "staticwebassets\\images\\logout-time.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\microprocessor-device.png",
+      "PackagePath": "staticwebassets\\images\\microprocessor-device.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\none.png",
+      "PackagePath": "staticwebassets\\images\\none.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\particulate_matter_icon.png",
+      "PackagePath": "staticwebassets\\images\\particulate_matter_icon.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\preventive-maintenance.png",
+      "PackagePath": "staticwebassets\\images\\preventive-maintenance.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\quick_tour.png",
+      "PackagePath": "staticwebassets\\images\\quick_tour.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\reminder_date.png",
+      "PackagePath": "staticwebassets\\images\\reminder_date.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\resource-mon.png",
+      "PackagePath": "staticwebassets\\images\\resource-mon.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\rtc-watchdog-test-menu.png",
+      "PackagePath": "staticwebassets\\images\\rtc-watchdog-test-menu.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\sensor-constant-corr.png",
+      "PackagePath": "staticwebassets\\images\\sensor-constant-corr.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\set-fan-speed.png",
+      "PackagePath": "staticwebassets\\images\\set-fan-speed.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\shipping-menu.png",
+      "PackagePath": "staticwebassets\\images\\shipping-menu.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\stopwatch.png",
+      "PackagePath": "staticwebassets\\images\\stopwatch.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\images\\wifi.png",
+      "PackagePath": "staticwebassets\\images\\wifi.png"
+    },
+    {
+      "Id": "C:\\Users\\luthiah.nabilah\\UiEmbed\\wwwroot\\js\\uiauth.js",
+      "PackagePath": "staticwebassets\\js\\uiauth.js"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.UiEmbed.Microsoft.AspNetCore.StaticWebAssets.props",

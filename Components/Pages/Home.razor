@@ -1,5 +1,6 @@
 ﻿@page "/"
 @rendermode InteractiveServer
+@attribute [Authorize(Roles = "Operator,Admin,Service")]
 @using UiEmbed.Components.Dashboard
 
 <PageTitle>BSC HMI - Dashboard</PageTitle>

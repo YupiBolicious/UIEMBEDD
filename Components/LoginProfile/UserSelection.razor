@@ -1,0 +1,229 @@
+@page "/user-selection"
+@rendermode InteractiveServer
+@attribute [AllowAnonymous]
+@inject CabinetStateService State
+@inject HeaderStateService Header
+@inject NavigationManager Nav
+@inject AppAuthStateProvider Auth
+@implements IDisposable
+
+<main class="hmi-shell">
+    <InnerTopBar Title="User" />
+    <!-- User Selection -->
+    <section class="user-grid">
+
+        <!-- Column 1 -->
+        <div class="user-column">
+
+            <button class="user-card"
+                    @onclick="SelectFactory"
+                    type="button">
+
+                <div class="avatar">
+                    F
+                </div>
+
+                <div class="user-info">
+
+                    <div class="user-name">
+                        Factory
+                    </div>
+
+                    <div class="username">
+                        factory
+                    </div>
+
+                    <div class="last-login">
+                    </div>
+
+                </div>
+
+            </button>
+
+
+            <button class="user-card"
+                    @onclick="SelectOperator"
+                    type="button">
+
+                <div class="avatar">
+                    O
+                </div>
+
+                <div class="user-info">
+
+                    <div class="user-name">
+                        Operator
+                    </div>
+
+                    <div class="username">
+                        operator
+                    </div>
+
+                    <div class="last-login">
+                    </div>
+
+                </div>
+
+            </button>
+
+        </div>
+
+
+        <!-- Column 2 -->
+        <div class="user-column">
+
+            <button class="user-card"
+                    @onclick="SelectAdministrator"
+                    type="button">
+
+                <div class="avatar">
+                    A
+                </div>
+
+                <div class="user-info">
+
+                    <div class="user-name">
+                        Administrator
+                    </div>
+
+                    <div class="username">
+                        admin
+                    </div>
+
+                    <div class="last-login">
+                    </div>
+
+                </div>
+
+            </button>
+
+        </div>
+
+
+        <!-- Column 3 -->
+        <div class="user-column">
+
+            <button class="user-card"
+                    @onclick="SelectService"
+                    type="button">
+
+                <div class="avatar">
+                    L
+                </div>
+
+                <div class="user-info">
+
+                    <div class="user-name">
+                        Technician
+                    </div>
+
+                    <div class="username">
+                        service
+                    </div>
+
+                    <div class="last-login">
+                    </div>
+
+                </div>
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- Bottom Toolbar -->
+    <footer class="hmi-footer">
+        <div class="footer-actions">
+            <!-- Back -->
+            <button class="hmi-button"
+                    @onclick="NavigateBack"
+                    type="button">
+                <svg viewBox="0 0 24 24"
+                    aria-hidden="true">
+                    <path d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                <span>Back</span>
+            </button>
+        </div>
+    </footer>
+
+    @if (_showPin)
+    {
+        <PinPromptDialog Title="@_pendingName"
+                         OnSubmitPin="OnPinSubmitted"
+                         OnCancel="OnPinCancelled" />
+    }
+
+    <div class="hmi-toast @(_toastVisible ? "show" : "")">
+        <span class="toast-pulse"></span>
+        <span>@_toastMessage</span>
+    </div>
+</main>
+
+
+@code {
+    private bool _showPin;
+    private string _pendingName = "";
+    private string _pendingRole = "";
+    private bool _toastVisible;
+    private string _toastMessage = "";
+    private int _toastSeq;
+
+    protected override void OnInitialized()
+    {
+        Header.ShowStatus();
+    }
+
+    private void SelectFactory() => PromptPin("Factory", "Operator");
+    private void SelectOperator() => PromptPin("Operator", "Operator");
+    private void SelectAdministrator() => PromptPin("Administrator", "Admin");
+    private void SelectService() => PromptPin("Technician", "Service");
+
+    private void PromptPin(string name, string role)
+    {
+        _pendingName = name;
+        _pendingRole = role;
+        _showPin = true;
+    }
+
+    private async Task OnPinSubmitted(string pin)
+    {
+        _showPin = false;
+        if (await Auth.LoginAsync(_pendingName, _pendingRole, pin))
+        {
+            State.SetOperator(_pendingName);
+            Nav.NavigateTo(NavigationUtils.SafeReturnUrl(Nav) ?? "/user");
+        }
+        else
+        {
+            ShowToast("Invalid PIN");
+        }
+    }
+
+    private void OnPinCancelled() => _showPin = false;
+
+    private void NavigateBack()
+    {
+        Nav.NavigateTo("/login");
+    }
+
+    private async void ShowToast(string message)
+    {
+        _toastMessage = message;
+        _toastVisible = true;
+        var seq = ++_toastSeq;
+        await Task.Delay(1800);
+        if (seq == _toastSeq)
+        {
+            _toastVisible = false;
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    public void Dispose()
+    {
+        Header.ShowStatus();
+    }
+}

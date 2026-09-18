@@ -55,3 +55,561 @@ h1:focus {
 .darker-border-checkbox.form-check-input {
     border-color: #929292;
 }
+
+/* ===== Top bar inner area ===== */
+.inner-topbar {
+    flex-shrink: 0;
+    width: 100%;
+    height: 56px;
+    border-bottom: 1px solid #0d4f8f;
+    background: linear-gradient(to bottom, #062c57 0%, #021d3f 100%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px;
+    z-index: 20;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+@media (min-width: 640px) {
+    .menuop-topbar {
+        padding: 0 20px;
+    }
+}
+
+/* Left: ESCO identification */
+.inner-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.inner-logo {
+    font-family: "Arial Black", Gadget, Impact, sans-serif;
+    font-style: italic;
+    letter-spacing: -1px;
+    font-size: 24px;
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+@media (min-width: 640px) {
+    .inner-logo {
+        font-size: 30px;
+    }
+}
+
+.inner-divider {
+    height: 32px;
+    width: 1px;
+    background: rgba(96, 165, 250, 0.4);
+}
+
+.inner-class {
+    font-size: 10px;
+    line-height: 1.25;
+    font-weight: 700;
+    color: #e2e8f0;
+    letter-spacing: 0.02em;
+}
+
+.inner-class span {
+    color: #7dd3fc;
+    font-weight: 600;
+}
+
+@media (min-width: 640px) {
+    .inner-class {
+        font-size: 12px;
+    }
+}
+
+/* Right: real-time date + clock */
+.inner-clock {
+    text-align: right;
+    font-size: 11px;
+    color: #bae6fd;
+    font-weight: 500;
+    line-height: 1.3;
+}
+
+.inner-clock-time {
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    color: #ffffff;
+}
+
+@media (min-width: 640px) {
+    .inner-clock {
+        font-size: 12px;
+    }
+
+    .inner-clock-time {
+        font-size: 16px;
+    }
+}
+
+/* Center: screen title pill */
+.inner-title-box {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.inner-title {
+    padding: 4px 28px;
+    border-radius: 9999px;
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    background: linear-gradient(to bottom, #0a4e8d 0%, #042d59 100%);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #e0f2fe;
+    white-space: nowrap;
+}
+
+@media (min-width: 640px) {
+    .inner-title {
+        font-size: 16px;
+    }
+}
+
+/* MAIN LAYOUT */
+.hmi-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background: linear-gradient(180deg, #011936 0%, #000B1A 100%);
+    padding: 0;
+}
+
+.hmi-frame {
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+}
+.hmi-shell {
+    --hmi-bg-dark: #03204e;
+    --hmi-bg-mid: #063678;
+    --hmi-bg-light: #0d5ba8;
+    --hmi-accent-green: #28b438;
+    --hmi-safe-green: #23b035;
+    --hmi-panel-navy: #042250;
+    --hmi-border-cyan: #1d74b9;
+    --hmi-gold: #f3c734;
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    aspect-ratio: 16 / 9.6;
+    min-height: 560px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    overflow: hidden;
+    color: #fff;
+    user-select: none;
+    -webkit-user-select: none;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: radial-gradient(130% 100% at 50% 115%, #1978ca 0%, #083b7f 40%, #03214f 85%);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), 0 0 0 2px #0f4b88, inset 0 0 12px rgba(0, 140, 255, 0.25);
+    border: 1px solid rgba(29, 116, 185, 0.6);
+}
+
+/* INNER AREA */
+.inner-header {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+}
+
+.inner-brand-slot {
+    width: 30%;
+    min-width: 210px;
+    display: flex;
+    align-items: stretch;
+}
+
+
+.hmi-footer {
+    padding: 7px;
+}
+
+.hmi-button {
+    padding: 9px 12px;
+    font-size: 12px;
+}
+
+.footer-actions {
+    gap: 5px;
+}
+
+/* Footer */
+.hmi-footer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px;
+    border-top: 1px solid rgba(8, 145, 178, 0.4);
+}
+
+.footer-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Buttons */
+.hmi-button {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 10px 20px;
+    border: 1.5px solid #48cae4;
+    border-radius: 8px;
+    background: linear-gradient(180deg, #0077b6 0%, #005f73 100%);
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4), 0 3px 6px rgba(0, 0, 0, 0.45);
+    cursor: pointer;
+    transition: transform 100ms ease, filter 100ms ease;
+}
+
+.hmi-button:hover {
+    filter: brightness(1.1);
+}
+
+.hmi-button:active {
+    transform: scale(0.97);
+    background: linear-gradient(180deg, #005f73 0%, #0077b6 100%);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.hmi-button svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: #cffafe;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2.5;
+}
+
+/* Content Area Middle */
+.user-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+/* ===== Menu View (shared by MenuOp / MenuAdmin) ===== */
+
+/* ===== ESCO Biosafety Cabinet - Menu View (Operator Mode) ===== */
+/* Ported from Stitch design: constrained HMI touchscreen terminal */
+
+.menuop-terminal {
+    --hmi-gloss: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 40%, rgba(0, 0, 0, 0) 60%);
+
+    width: 100%;
+    max-width: 1024px;
+    aspect-ratio: 16 / 9;
+    max-height: 640px;
+    background-color: #0f172a;
+    border: 10px solid #101b2b;
+    border-radius: 1rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    color: #ffffff;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+@media (min-width: 640px) {
+    .menuop-terminal {
+        border-width: 14px;
+    }
+}
+
+/* ===== Screen backdrop (glossy industrial LCD refraction) ===== */
+.menuop-screen {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    z-index: 10;
+    overflow: hidden;
+    background: radial-gradient(130% 90% at 50% 30%, #0d4b8f 0%, #063162 45%, #021a38 85%, #010e20 100%);
+}
+
+.screen-gloss {
+    position: absolute;
+    inset: 0;
+    z-index: 30;
+    pointer-events: none;
+    background: var(--hmi-gloss);
+}
+
+/* ===== Carousel viewport ===== */
+.menuop-viewport {
+    flex: 1;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 8px 0;
+}
+
+@media (min-width: 640px) {
+    .menuop-viewport {
+        padding: 12px 0;
+    }
+}
+
+.carousel-track {
+    display: flex;
+    width: calc(var(--page-count, 2) * 100%);
+    flex: 1;
+    height: 100%;
+    align-items: center;
+    transition: transform 0.32s cubic-bezier(0.2, 0, 0.1, 1);
+}
+
+.carousel-track.page-1 {
+    transform: translateX(0%);
+}
+
+.carousel-track.page-2 {
+    transform: translateX(calc(-100% / var(--page-count, 2)));
+}
+
+.carousel-track.page-3 {
+    transform: translateX(calc(-200% / var(--page-count, 2)));
+}
+
+.menu-page {
+    width: calc(100% / var(--page-count, 2));
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 8px 12px;
+    padding: 0 16px;
+    align-items: center;
+    justify-items: center;
+}
+
+@media (min-width: 640px) {
+    .menu-page {
+        gap: 16px 32px;
+        padding: 0 40px;
+    }
+}
+
+.page-spacer {
+    display: none;
+}
+
+@media (min-width: 640px) {
+    .page-spacer {
+        display: block;
+    }
+}
+
+/* ===== Tactile tiles ===== */
+.menu-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 96px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-family: inherit;
+    color: inherit;
+}
+
+@media (min-width: 640px) {
+    .menu-tile {
+        width: 112px;
+    }
+}
+
+.menu-tile:focus {
+    outline: none;
+}
+
+.tile-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(180deg, #ffffff 0%, #f4f6f9 55%, #d9e2ec 100%);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    border-radius: 1.15rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.45), inset 0 2px 2px rgba(255, 255, 255, 0.9), inset 0 -3px 4px rgba(0, 0, 0, 0.15);
+    transition: transform 0.08s ease, filter 0.08s ease;
+}
+
+.menu-tile:active .tile-icon {
+    transform: scale(0.94);
+    filter: brightness(0.92);
+}
+
+@media (min-width: 640px) {
+    .tile-icon {
+        width: 96px;
+        height: 96px;
+    }
+}
+
+.tile-icon svg {
+    width: 48px;
+    height: 48px;
+}
+
+.tile-icon img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+}
+
+@media (min-width: 640px) {
+    .tile-icon svg {
+        width: 64px;
+        height: 64px;
+    }
+
+    .tile-icon img {
+        width: 64px;
+        height: 64px;
+    }
+}
+
+.tile-label {
+    margin-top: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: #f1f5f9;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+    text-align: center;
+    white-space: nowrap;
+}
+
+@media (min-width: 640px) {
+    .tile-label {
+        font-size: 14px;
+    }
+}
+
+/* ===== Pagination dots ===== */
+.carousel-dots {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 4px 0;
+    z-index: 20;
+}
+
+.menu-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.4);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.2s ease;
+}
+
+.menu-dot:hover {
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.menu-dot:focus {
+    outline: none;
+}
+
+.menu-dot.active {
+    width: 10px;
+    height: 10px;
+    background: #ffffff;
+    box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.5);
+    transform: scale(1.25);
+}
+
+/* ===== Toast feedback ===== */
+.hmi-toast {
+    position: absolute;
+    top: 64px;
+    left: 50%;
+    transform: translate(-50%, -8px);
+    background: rgba(2, 6, 23, 0.9);
+    color: #bae6fd;
+    border: 1px solid rgba(56, 189, 248, 0.6);
+    padding: 10px 20px;
+    border-radius: 12px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(4px);
+    font-size: 12px;
+    font-weight: 600;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 50;
+}
+
+.hmi-toast.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+@media (min-width: 640px) {
+    .hmi-toast {
+        font-size: 14px;
+    }
+}
+
+.toast-pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 9999px;
+    background: #34d399;
+    animation: toast-pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes toast-pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}

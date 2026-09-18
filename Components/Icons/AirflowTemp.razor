@@ -1,0 +1,62 @@
+ <svg viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                @* @if (WithTile) {
+                    <linearGradient id="tileGrad_temp" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#ffffff" />
+                        <stop offset="100%" stop-color="#f1f5f9" />
+                    </linearGradient>
+                    <filter id="tileGlow_temp" x="-20%" y="-20%" width="140%" height="140%">
+                        <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#001a33" flood-opacity="0.18" />
+                    </filter>
+                } *@
+                <linearGradient id="thermoFluid" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#ef4444" />
+                    <stop offset="50%" stop-color="#f97316" />
+                    <stop offset="100%" stop-color="#f59e0b" />
+                </linearGradient>
+                <filter id="tempShadow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="3" stdDeviation="2.5" flood-color="#0284c7" flood-opacity="0.25" />
+                </filter>
+            </defs>
+
+            @* @if (WithTile) {
+                <rect x="5" y="5" width="90" height="90" rx="18" fill="url(#tileGrad_temp)" stroke="#cbd5e1" stroke-width="1.5" filter="url(#tileGlow_temp)" />
+            } *@
+
+            <g filter="url(#tempShadow)">
+                <!-- Cabinet Open Chamber Profile Frame -->
+                <!-- Left Frame Pillar -->
+                <rect x="14" y="20" width="8" height="60" rx="2" fill="#0284c7" />
+                <!-- Top Hood Canopy Frame -->
+                <rect x="22" y="20" width="38" height="6" fill="#0284c7" />
+                <!-- Bottom Worksurface Frame -->
+                <rect x="22" y="74" width="38" height="6" fill="#0284c7" />
+                <!-- Angled Work Zone Back Wall perspective line -->
+                <path d="M 22 26 L 46 36 L 46 64 L 22 74" fill="#e0f2fe" opacity="0.6" stroke="#93c5fd" stroke-width="1" />
+
+                <!-- Green Airflow Vectors exiting outward (Top Vector) -->
+                <path d="M 22 36 L 48 36 M 42 29 L 54 36 L 42 43" fill="none" stroke="#22c55e" stroke-width="4.8" stroke-linecap="round" stroke-linejoin="round" />
+
+                <!-- Green Airflow Vectors exiting outward (Bottom Vector) -->
+                <path d="M 22 64 L 48 64 M 42 57 L 54 64 L 42 71" fill="none" stroke="#22c55e" stroke-width="4.8" stroke-linecap="round" stroke-linejoin="round" />
+
+                <!-- Right Industrial Thermometer Sensor -->
+                <g transform="translate(68, 18)">
+                    <!-- Thermometer Glass Shell -->
+                    <path d="M 8 7 C 8 3.5, 12 3.5, 12 7 L 12 44 C 15.5 46.5, 17 50.5, 15.5 54.5 C 14 58.5, 10 61, 6 60.5 C 2 59.5, -0.5 56, 0 52 C 0.5 48.5, 2.5 45.5, 6 44 L 6 7 Z"
+                          fill="#ffffff" stroke="#0284c7" stroke-width="2.2" stroke-linejoin="round" />
+                    
+                    <!-- Red/Amber Temperature Column -->
+                    <rect x="7" y="18" width="4" height="28" fill="url(#thermoFluid)" />
+                    <!-- Thermometer Bulb -->
+                    <circle cx="8" cy="51" r="6" fill="url(#thermoFluid)" />
+                    <circle cx="6" cy="49" r="2" fill="#ffffff" opacity="0.75" />
+
+                    <!-- Temperature Calibration Graduation Ticks -->
+                    <line x1="14" y1="14" x2="18" y2="14" stroke="#0284c7" stroke-width="1.8" stroke-linecap="round" />
+                    <line x1="14" y1="22" x2="18" y2="22" stroke="#0284c7" stroke-width="1.8" stroke-linecap="round" />
+                    <line x1="14" y1="30" x2="18" y2="30" stroke="#0284c7" stroke-width="1.8" stroke-linecap="round" />
+                    <line x1="14" y1="38" x2="18" y2="38" stroke="#0284c7" stroke-width="1.8" stroke-linecap="round" />
+                </g>
+            </g>
+        </svg>

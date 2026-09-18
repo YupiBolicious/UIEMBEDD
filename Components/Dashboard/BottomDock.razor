@@ -1,33 +1,200 @@
-<div class="dock">
-    <button class="dock-btn" @onclick='() => OnAction.InvokeAsync("menu")' aria-label="Menu">
-        <RadzenIcon Icon="apps" Style="font-size: 28px; color: #e6f0ff;" />
+@inject CabinetStateService State
+@implements IDisposable
+
+<nav aria-label="Touchscreen Navigation Controls" class="dock">
+    <button class="hmi-btn dock-btn" @onclick="ToggleMenu" title="System Menu" type="button">
+        <span class="app-grid" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+        </span>
         <span class="dock-label">MENU</span>
     </button>
-    <button class="dock-btn" @onclick='() => OnAction.InvokeAsync("blower")' aria-label="Blower">
-        <span class="icon-yellow"><RadzenIcon Icon="air" Style="font-size: 28px;" /></span>
+    <button class="hmi-btn dock-btn" @onclick="ToggleBlower" title="Toggle Blower Fan" type="button" aria-pressed="@State.BlowerOn">
+        <svg class="dock-icon @(State.BlowerOn ? "gold" : "white")" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" fill="#e6a817" r="2.8" stroke="#1f2937" stroke-width="0.5"></circle>
+            <path d="M12 9.2 C12 5.5 15.5 4 17.5 5 C19 6 18.5 9 14.5 9.5 Z"></path>
+            <path d="M14.8 12 C18.5 12 20 15.5 19 17.5 C18 19 15 18.5 14.5 14.5 Z"></path>
+            <path d="M12 14.8 C12 18.5 8.5 20 6.5 19 C5 18 5.5 15 9.5 14.5 Z"></path>
+            <path d="M9.2 12 C5.5 12 4 8.5 5 6.5 C6 5 9 5.5 9.5 9.5 Z"></path>
+        </svg>
         <span class="dock-label">BLOWER</span>
     </button>
-    <button class="dock-btn" @onclick='() => OnAction.InvokeAsync("light")' aria-label="Light">
-        <span class="light-wrap">
-            <RadzenIcon Icon="lightbulb" Style="font-size: 26px; color: #ffd54d;" />
-            <span class="light-pct">100%</span>
-        </span>
+    <button class="hmi-btn dock-btn @(State.LightOn ? "" : "is-off")" title="Work Light — tap to toggle, hold for brightness" type="button" aria-pressed="@State.LightOn"
+            @onclick="OnLightClick"
+            @onpointerdown="OnLightPointerDown"
+            @onpointerup="CancelLightPress"
+            @onpointerleave="CancelLightPress"
+            @onpointercancel="CancelLightPress"
+            @oncontextmenu:preventDefault>
+        <span class="light-pct">@State.LightLevelPct%</span>
+        <svg class="dock-icon @(State.LightOn ? "gold" : "white")" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <line stroke="#ffce39" stroke-linecap="round" stroke-width="1.8" x1="12" x2="12" y1="1" y2="4"></line>
+            <line stroke="#ffce39" stroke-linecap="round" stroke-width="1.8" x1="4.5" x2="6.8" y1="4.5" y2="6.8"></line>
+            <line stroke="#ffce39" stroke-linecap="round" stroke-width="1.8" x1="1" x2="4" y1="12" y2="12"></line>
+            <path d="M12 5 A5 5 0 0 0 8 13.5 L8 16 C8 16.5 8.5 17 9 17 L15 17 C15.5 17 16 16.5 16 16 L16 13.5 A5 5 0 0 0 12 5 Z"></path>
+            <rect fill="#fef08a" height="1.5" rx="0.5" width="4" x="10" y="18"></rect>
+            <rect fill="#ca8a04" height="1" rx="0.5" width="3" x="10.5" y="20"></rect>
+        </svg>
         <span class="dock-label">LIGHT</span>
     </button>
-    <button class="dock-btn" @onclick='() => OnAction.InvokeAsync("power")' aria-label="Power">
-        <RadzenIcon Icon="power_settings_new" Style="font-size: 28px; color: #ff5252;" />
-        <span class="dock-label">POWER</span>
+    <button class="hmi-btn dock-btn" @onclick="SendPower" title="Chamber Electrical Socket Power" type="button">
+        <span class="combo-icon" aria-hidden="true">
+            <svg class="dock-icon light" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M16 7V3H14V7H10V3H8V7C5.79 7 4 8.79 4 11V14H6V19C6 20.1 6.9 21 8 21H10V14H14V21H16C17.1 21 18 20.1 18 19V14H20V11C20 8.79 18.21 7 16 7Z"></path>
+            </svg>
+            <svg class="dock-icon bolt" viewBox="0 0 20 24" fill="currentColor">
+                <path d="M11 0 L2 13 L9 13 L7 24 L18 10 L11 10 Z"></path>
+            </svg>
+        </span>
+        <span class="dock-label">SOCKET</span>
     </button>
-    <button class="dock-btn" @onclick='() => OnAction.InvokeAsync("uv")' aria-label="UV">
-        <RadzenIcon Icon="wb_sunny" Style="font-size: 28px; color: #b388ff;" />
-        <span class="dock-label">UV</span>
+    <button class="hmi-btn dock-btn @(State.UvOn ? "uv-active" : "")" @onclick="ToggleUv" title="UV Decontamination Light" type="button" aria-pressed="@State.UvOn">
+        @if (State.UvOn)
+        {
+            <svg class="uv-beam" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewBox="0 0 28 18" aria-hidden="true">
+                <line x1="7" y1="17" x2="4" y2="1"></line>
+                <line x1="14" y1="17" x2="14" y2="1"></line>
+                <line x1="21" y1="17" x2="24" y2="1"></line>
+            </svg>
+        }
+        <svg class="uv-rays @(State.UvOn ? "lit" : "")" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2.2" viewBox="0 0 28 16" aria-hidden="true">
+            <path d="M2 14 A12 12 0 0 1 26 14" stroke-dasharray="2 4"></path>
+        </svg>
+        <span class="uv-text @(State.UvOn ? "lit" : "")">UV</span>
     </button>
-    <button class="dock-btn" @onclick='() => OnAction.InvokeAsync("alarm")' aria-label="Alarm">
-        <span class="icon-muted"><RadzenIcon Icon="volume_off" Style="font-size: 28px;" /></span>
+    <button class="hmi-btn dock-btn alarm" @onclick="ToggleAlarm" title="Mute Audible Alarms" type="button" aria-pressed="@State.AlarmMuted">
+        <span class="mute-wrap" aria-hidden="true">
+            <svg class="dock-icon cream" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M3 9V15H7L12 20V4L7 9H3Z"></path>
+                <path d="M16.5 12C16.5 10.23 15.48 8.71 14 7.97V16.02C15.48 15.29 16.5 13.77 16.5 12Z" opacity="0.6"></path>
+                <path d="M14 3.23V5.29C16.89 6.15 19 8.83 19 12C19 15.17 16.89 17.85 14 18.71V20.77C18.01 19.86 21 16.28 21 12C21 7.72 18.01 4.14 14 3.23Z" opacity="0.6"></path>
+            </svg>
+            @if (State.AlarmMuted)
+            {
+                <span class="mute-slash"></span>
+            }
+        </span>
         <span class="dock-label">ALARM</span>
     </button>
-</div>
+</nav>
+
+@if (_showBrightness)
+{
+    <div class="brightness-overlay" @onclick="CloseBrightness">
+        <div class="brightness-panel" @onclick:stopPropagation>
+            <div class="brightness-title">Screen Brightness</div>
+            <div class="brightness-value">@State.LightLevelPct%</div>
+            <input type="range" min="0" max="100" step="1" value="@State.LightLevelPct" @oninput="OnBrightnessInput" aria-label="Light brightness" />
+            <div class="brightness-scale"><span>0</span><span>100</span></div>
+            <button class="brightness-done" @onclick="CloseBrightness" type="button">DONE</button>
+        </div>
+    </div>
+}
 
 @code {
     [Parameter] public EventCallback<string> OnAction { get; set; }
+
+    private bool _blowLongPress;
+    private bool _showBrightness;
+    private bool _lightLongPressFired;
+    private CancellationTokenSource? _lightPressCts;
+    private const int LongPressMs = 600;
+
+    protected override void OnInitialized()
+    {
+        State.OnChange += OnStateChanged;
+    }
+
+    private void OnStateChanged() => InvokeAsync(StateHasChanged);
+
+    public void Dispose()
+    {
+        State.OnChange -= OnStateChanged;
+        _lightPressCts?.Cancel();
+        _lightPressCts?.Dispose();
+    }
+
+    private async Task ToggleMenu() => await OnAction.InvokeAsync("menu");
+
+    private async Task ToggleBlower()
+    {
+        State.ToggleBlower();
+        await OnAction.InvokeAsync("blower");
+    }
+
+    private async Task SendPower() => await OnAction.InvokeAsync("power");
+
+    private async Task ToggleUv()
+    {
+        State.ToggleUv();
+        await OnAction.InvokeAsync("uv");
+    }
+
+    private async Task ToggleAlarm()
+    {
+        State.ToggleAlarmMuted();
+        await OnAction.InvokeAsync("alarm");
+    }
+
+    private void OnLightPointerDown(PointerEventArgs args)
+    {
+        CancelLightPress();
+        _lightLongPressFired = false;
+        _lightPressCts = new CancellationTokenSource();
+        var token = _lightPressCts.Token;
+        _ = Task.Run(async () =>
+        {
+            try
+            {
+                await Task.Delay(LongPressMs, token);
+                await InvokeAsync(() =>
+                {
+                    _lightLongPressFired = true;
+                    _showBrightness = true;
+                    StateHasChanged();
+                });
+            }
+            catch (TaskCanceledException)
+            {
+                // Released before threshold — treated as tap.
+            }
+        });
+    }
+    
+    private async Task OnBlowClick()
+    {
+        if(_blowLongPress)
+        {
+            _blowLongPress = false;
+            return;
+        }
+        State.ToggleBlower();
+        await OnAction.InvokeAsync("blower");
+    }
+    private void CancelLightPress()
+    {
+        _lightPressCts?.Cancel();
+        _lightPressCts?.Dispose();
+        _lightPressCts = null;
+    }
+
+    private async Task OnLightClick()
+    {
+        if (_lightLongPressFired)
+        {
+            _lightLongPressFired = false;
+            return;
+        }
+        State.ToggleLight();
+        await OnAction.InvokeAsync("light");
+    }
+
+    private void OnBrightnessInput(ChangeEventArgs e)
+    {
+        if (int.TryParse(e.Value?.ToString(), out var level))
+        {
+            State.SetLightLevel(level);
+        }
+    }
+
+    private void CloseBrightness() => _showBrightness = false;
 }
