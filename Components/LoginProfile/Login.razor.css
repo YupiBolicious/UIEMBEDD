@@ -1,118 +1,110 @@
-/* HmiLoginView.razor.css - Isolated Styles */
+/* HmiLoginView.razor.css - Scoped Component Styles */
 
-.hmi-shell {
+.hmi-screen-container {
+    position: relative;
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    background-color: #030712;
-}
-
-.hmi-login-view {
-    flex: 1;
+    background: radial-gradient(circle at 50% 50%, #084c8d 0%, #022048 45%, #01122b 85%, #000a1a 100%);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 1rem;
+    padding: 1.25rem;
+    overflow: hidden;
 }
 
-.hmi-login-content {
+.hmi-scanlines {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.hmi-center-view {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hmi-form-stack {
     width: 100%;
-    max-width: 28rem;
-    margin: auto;
+    max-width: 30rem;
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
 }
 
-.hmi-form-container {
-    display: flex;
-    flex-direction: column;
-    gap: 0.375rem;
-}
-
-.hmi-field-label {
-    font-size: 0.75rem;
-    font-family: monospace;
-    color: #22d3ee;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.hmi-input-field {
+.hmi-input-pill {
+    background: linear-gradient(180deg, rgba(8, 28, 58, 0.9) 0%, rgba(3, 16, 38, 0.95) 100%);
+    border: 1.5px solid #0093d5;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.8), 0 0 12px rgba(0, 147, 213, 0.25);
+    border-radius: 8px;
+    height: 4rem;
     display: flex;
     align-items: center;
-    background: rgba(15, 23, 42, 0.9);
-    border: 1px solid rgba(6, 182, 212, 0.3);
-    border-radius: 0.75rem;
-    height: 3.75rem;
     overflow: hidden;
-    transition: all 0.2s ease;
 }
 
-.hmi-input-field:hover,
-.hmi-input-field:focus-within {
-    border-color: #22d3ee;
-    box-shadow: 0 0 12px rgba(34, 211, 238, 0.25);
-}
-
-.hmi-touch-badge {
+.hmi-badge-cyan {
     height: 100%;
-    padding: 0 1rem;
+    min-width: 100px;
+    background: linear-gradient(180deg, #00b4e6 0%, #0077ab 50%, #005c87 100%);
+    border-right: 1.5px solid #00c3ff;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-    border-right: 1px solid rgba(6, 182, 212, 0.3);
     cursor: pointer;
+    color: #ffffff;
 }
 
-.badge-sub { font-size: 8px; color: #67e8f9; }
-.badge-main { font-size: 9px; font-weight: bold; color: #67e8f9; }
-.badge-icon { width: 1.25rem; height: 1.25rem; color: #22d3ee; }
+.badge-text-top, .badge-text-bottom {
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.badge-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+}
 
 .input-wrapper {
     flex: 1;
-    padding: 0 1rem;
+    padding: 0 1.25rem;
 }
 
-.login-input {
+.hmi-input {
     width: 100%;
     background: transparent;
     border: none;
-    color: #f8fafc;
-    font-size: 1rem;
+    color: #ffffff;
+    font-size: 1.125rem;
+    font-weight: 600;
     outline: none;
 }
 
 .hmi-bottom-dock {
+    position: relative;
+    z-index: 2;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(6, 182, 212, 0.2);
 }
 
-.hmi-button-bevel {
-    background: linear-gradient(180deg, #0f172a 0%, #0284c7 100%);
-    border: 1px solid rgba(56, 189, 248, 0.5);
-    border-radius: 0.5rem;
+.hmi-btn-bevel {
+    background: linear-gradient(180deg, #009cd0 0%, #006696 50%, #004d73 100%);
+    border: 1.5px solid #00d5ff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    padding: 0.625rem 1.75rem;
     color: #ffffff;
-    padding: 0.625rem 1.25rem;
-    font-weight: 600;
+    font-weight: bold;
     cursor: pointer;
-}
-
-.hmi-toast {
-    position: absolute;
-    bottom: 1rem;
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.hmi-toast.show {
-    opacity: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }

@@ -118,6 +118,12 @@
     private async Task ToggleBlower()
     {
         State.ToggleBlower();
+
+        // TEST: Blower ON → WarmingUp, Blower OFF → Safe
+        State.Condition = State.BlowerOn
+            ? CabinetCondition.WarmingUp
+            : CabinetCondition.Safe;
+
         await OnAction.InvokeAsync("blower");
     }
 
@@ -126,12 +132,24 @@
     private async Task ToggleUv()
     {
         State.ToggleUv();
+
+        // TEST: UV ON → UvOn condition, UV OFF → Safe
+        State.Condition = State.UvOn
+            ? CabinetCondition.UvOn
+            : CabinetCondition.Safe;
+
         await OnAction.InvokeAsync("uv");
     }
 
     private async Task ToggleAlarm()
     {
         State.ToggleAlarmMuted();
+
+        // TEST: Alarm unmuted → AirflowFail, Alarm muted → Safe
+        State.Condition = !State.AlarmMuted
+            ? CabinetCondition.AirflowFail
+            : CabinetCondition.Safe;
+
         await OnAction.InvokeAsync("alarm");
     }
 

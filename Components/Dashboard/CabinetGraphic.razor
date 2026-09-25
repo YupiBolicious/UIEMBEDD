@@ -1,53 +1,111 @@
 @inject CabinetStateService State
+@implements IDisposable
 
-<div class="cabinet-graphic-container">
-    <svg class="cabinet-svg" fill="none" viewBox="0 0 280 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Biosafety cabinet airflow visualization">
-        <defs>
-            <linearGradient id="arrowGreenGrad" x1="0%" x2="0%" y1="0%" y2="100%">
-                <stop offset="0%" stop-color="#4ade80" stop-opacity="0.9"></stop>
-                <stop offset="100%" stop-color="#22c55e" stop-opacity="0.4"></stop>
-            </linearGradient>
-            <linearGradient id="cabinetSideGrad" x1="0%" x2="100%" y1="0%" y2="0%">
-                <stop offset="0%" stop-color="#cfd5dc"></stop>
-                <stop offset="100%" stop-color="#9aa2ab"></stop>
-            </linearGradient>
-            <linearGradient id="trimTeal" x1="0%" x2="100%" y1="0%" y2="100%">
-                <stop offset="0%" stop-color="#0e8fa3"></stop>
-                <stop offset="100%" stop-color="#045a68"></stop>
-            </linearGradient>
-            <filter height="140%" id="checkGlow" width="140%" x="-20%" y="-20%">
-                <feDropShadow dx="0" dy="2" flood-color="#166534" flood-opacity="0.8" stdDeviation="2"></feDropShadow>
-            </filter>
-        </defs>
-        <polygon fill="url(#cabinetSideGrad)" points="12,48 38,50 48,206 14,198" stroke="#6b7280" stroke-width="1.5"></polygon>
-        <polygon fill="url(#trimTeal)" points="38,50 48,50 58,206 48,206"></polygon>
-        <polygon fill="#f8fafc" points="48,50 205,50 208,124 53,124" stroke="#94a3b8" stroke-width="1.5"></polygon>
-        <polygon fill="#e2e8f0" points="53,124 208,124 204,136 54,136" stroke="#cbd5e1" stroke-width="1"></polygon>
-        <rect fill="#1e293b" height="12" rx="4" width="34" x="110" y="112"></rect>
-        <polygon fill="#717a86" opacity="0.65" points="54,136 204,136 201,192 57,192"></polygon>
-        <polygon fill="#4d5562" opacity="0.5" points="70,142 190,142 188,180 72,180"></polygon>
-        <polygon fill="#cbd5e1" points="57,192 201,192 206,206 52,206" stroke="#94a3b8" stroke-width="1"></polygon>
-        <polygon fill="#334155" points="58,198 198,198 201,202 55,202"></polygon>
-        <polygon fill="url(#trimTeal)" points="205,50 213,51 208,207 201,206"></polygon>
-        <g filter="url(#checkGlow)">
-            <path d="M96 85 L118 106 L158 64" fill="none" stroke="#22c55e" stroke-linecap="round" stroke-linejoin="round" stroke-width="13"></path>
-            <path d="M96 85 L118 106 L158 64" fill="none" stroke="#4ade80" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"></path>
-        </g>
-        <g opacity="0.85">
-            <path d="M84,142 C84,152 82,165 82,175" fill="none" stroke="#4ade80" stroke-linecap="round" stroke-width="10"></path>
-            <polygon fill="#4ade80" points="72,174 92,174 82,189"></polygon>
-        </g>
-        <g opacity="0.85">
-            <path d="M152,142 C152,152 150,165 150,175" fill="none" stroke="#4ade80" stroke-linecap="round" stroke-width="10"></path>
-            <polygon fill="#4ade80" points="140,174 160,174 150,189"></polygon>
-        </g>
-        <path d="M80,204 C92,192 108,192 120,204" fill="none" stroke="#22c55e" stroke-linecap="round" stroke-width="4.5"></path>
-        <path d="M136,204 C148,192 164,192 176,204" fill="none" stroke="#22c55e" stroke-linecap="round" stroke-width="4.5"></path>
-    </svg>
+<div class="bsc-cabinet-wrapper @Class" style="@Style">
+    <div class="bsc-viewport">
+        <!-- 1. Base 3D Cabinet Housing (swaps per condition) -->
+        <img src="@BaseImage"
+             alt="ESCO Biosafety Cabinet Base"
+             class="bsc-layer bsc-layer-base" />
+
+        <!-- 2. Status OK Checkmark (only in Safe condition) -->
+        @if (State.Condition == CabinetCondition.Safe && ShowStatusOk && IsSafe)
+        {
+            <img src="/images/checkmark.png"
+                 alt="Cabinet Safe Status Checkmark"
+                 class="bsc-layer bsc-layer-status status-visible" />
+        }
+
+        <!-- 3. UV ON interior glow overlay -->
+        @if (State.Condition == CabinetCondition.UvOn)
+        {
+            <div class="bsc-uv-glow" title="UV light is on"></div>
+            <img src="/images/uv-sash.png"
+                 alt="UV Sash Indicator"
+                 class="bsc-layer bsc-layer-uv-sash" />
+        }
+        else if (IsBlowerActive)
+        {
+            <!-- 4. Downflow Laminar Airflow Stream (Descending HEPA Clean Air) -->
+            <div class="bsc-stream bsc-stream-downflow" title="Downflow Velocity: @DownflowVelocity">
+                <img src="@DownArrowImage"
+                     alt="Downflow Airflow Arrows Primary"
+                     class="bsc-layer bsc-arrow-df df-wave-1 @ArrowFilterClass" />
+                <img src="@DownArrowImage"
+                     alt="Downflow Airflow Arrows Secondary"
+                     class="bsc-layer bsc-arrow-df df-wave-2 @ArrowFilterClass" />
+            </div>
+
+            <!-- 5. Inflow Air Intake Streams (Front Sash Air Barrier Suction) -->
+            <div class="bsc-stream bsc-stream-inflow" title="Inflow Velocity: @InflowVelocity">
+                <img src="@ElbowArrowImage"
+                     alt="Inflow Airflow Elbow Vector Primary"
+                     class="bsc-layer bsc-arrow-if if-elbow-1 @ArrowFilterClass" />
+                <img src="@ElbowArrowImage"
+                     alt="Inflow Airflow Elbow Vector Secondary"
+                     class="bsc-layer bsc-arrow-if if-elbow-2 @ArrowFilterClass" />
+                <img src="@ElbowArrowImage"
+                     alt="Inflow Airflow Intake Vector"
+                     class="bsc-layer bsc-arrow-if if-base-1 @ArrowFilterClass" />
+            </div>
+        }
+        else
+        {
+            <!-- Standby / Blower Off Overlay Indicator -->
+            <div class="bsc-standby-indicator">
+                <span class="bsc-standby-badge">BLOWER OFF</span>
+            </div>
+        }
+    </div>
 </div>
 
 @code {
-    // Kept for page-level compatibility (Home.razor passes this). The Stitch
-    // design renders the cabinet as inline SVG, so no image file is required.
+    [Parameter] public bool IsBlowerActive { get; set; } = true;
+    [Parameter] public bool IsSafe { get; set; } = true;
+    [Parameter] public bool ShowStatusOk { get; set; } = true;
+    [Parameter] public string DownflowVelocity { get; set; } = "0.32 m/s";
+    [Parameter] public string InflowVelocity { get; set; } = "0.45 m/s";
+    [Parameter] public string Class { get; set; } = "";
+    [Parameter] public string Style { get; set; } = "";
     [Parameter] public string MachineGraphicPath { get; set; } = "/images/cabinet-graphic.png";
+
+    private string BaseImage => State.Condition switch
+    {
+        CabinetCondition.AirflowFail => "/images/BSC3Dbase-red.png",
+        CabinetCondition.WarmingUp => "/images/BSC3Dbase-orange.png",
+        CabinetCondition.UvOn => "/images/BSC3Dbase.png",
+        _ => "/images/BSC3Dbase.png"
+    };
+
+    private string DownArrowImage => State.Condition switch
+    {
+        CabinetCondition.AirflowFail => "/images/down-arror-red.png",
+        _ => "/images/down-arrow-green.png"
+    };
+
+    private string ElbowArrowImage => State.Condition switch
+    {
+        CabinetCondition.AirflowFail => "/images/elbow-arrow-red.png",
+        _ => "/images/elbow-arrow-green.png"
+    };
+
+    // For states without dedicated colored arrow assets, CSS-filter the green arrows
+    private string ArrowFilterClass => State.Condition switch
+    {
+        CabinetCondition.WarmingUp => "arrow-warming",
+        CabinetCondition.UvOn => "arrow-uv",
+        _ => ""
+    };
+
+    protected override void OnInitialized()
+    {
+        State.OnChange += OnStateChanged;
+    }
+
+    private void OnStateChanged() => InvokeAsync(StateHasChanged);
+
+    public void Dispose()
+    {
+        State.OnChange -= OnStateChanged;
+    }
 }

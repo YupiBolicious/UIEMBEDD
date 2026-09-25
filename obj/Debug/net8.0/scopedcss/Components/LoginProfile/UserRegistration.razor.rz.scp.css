@@ -1,0 +1,290 @@
+.hmi-title[b-wi7zpc8188] {
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: #ffffff;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* 2. Main Registration Workspace */
+.hmi-registration-workspace[b-wi7zpc8188] {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 1.5rem;
+    align-items: center;
+    padding: 0.6rem 0.5rem;
+    z-index: 10;
+}
+
+/* Form Column */
+.hmi-form-column[b-wi7zpc8188] {
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    width: 100%;
+    max-width: 440px;
+    gap: 0.7rem;
+}
+
+/* Side-by-side stacked input pairs */
+.hmi-input-pair[b-wi7zpc8188] {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    align-items: end;
+}
+
+.hmi-input-group[b-wi7zpc8188] {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.hmi-label[b-wi7zpc8188] {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #7dd3fc;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.hmi-input-wrapper[b-wi7zpc8188] {
+    position: relative;
+    width: 100%;
+}
+
+.hmi-input[b-wi7zpc8188],
+.hmi-select[b-wi7zpc8188] {
+    width: 100%;
+    background: linear-gradient(180deg, rgba(7, 34, 70, 0.9) 0%, rgba(3, 24, 52, 0.9) 100%);
+    border: 1.5px solid rgba(56, 189, 248, 0.35);
+    border-radius: 0.7rem;
+    padding: 0.55rem 0.85rem 0.55rem 2.15rem;
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-family: inherit;
+    box-sizing: border-box;
+    box-shadow: inset 0 2px 6px rgba(0, 8, 20, 0.55), 0 4px 14px rgba(2, 132, 199, 0.12);
+    transition: all 0.2s ease;
+}
+
+.hmi-input-icon[b-wi7zpc8188] {
+    position: absolute;
+    left: 0.72rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 15px;
+    height: 15px;
+    color: #7dd3fc;
+    opacity: 0.85;
+    pointer-events: none;
+}
+
+.hmi-input[b-wi7zpc8188]::placeholder {
+    color: rgba(186, 230, 253, 0.4);
+}
+
+.hmi-input:focus[b-wi7zpc8188],
+.hmi-select:focus[b-wi7zpc8188] {
+    outline: none;
+    border-color: #38bdf8;
+    background: linear-gradient(180deg, rgba(8, 42, 84, 0.95) 0%, rgba(4, 30, 62, 0.95) 100%);
+    box-shadow: 0 0 0 3.5px rgba(56, 189, 248, 0.18), 0 0 18px rgba(56, 189, 248, 0.35), inset 0 2px 4px rgba(0, 0, 0, 0.5);
+    transform: translateY(-1px);
+}
+
+/* Select dropdown */
+.hmi-select[b-wi7zpc8188] {
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+}
+
+.hmi-select option[b-wi7zpc8188] {
+    background: #042250;
+    color: #ffffff;
+}
+
+.hmi-select:focus[b-wi7zpc8188] {
+    outline: none;
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 3.5px rgba(56, 189, 248, 0.18), 0 0 18px rgba(56, 189, 248, 0.35);
+}
+
+.hmi-select-caret[b-wi7zpc8188] {
+    position: absolute;
+    right: 0.65rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+/* Personnel Directory Status Bar */
+.hmi-status-bar[b-wi7zpc8188] {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    width: 100%;
+    margin-top: 0.4rem;
+    padding: 0.45rem 0.9rem;
+    background: linear-gradient(180deg, rgba(3, 33, 68, 0.95) 0%, rgba(1, 17, 36, 0.95) 100%);
+    border: 1px solid rgba(56, 189, 248, 0.28);
+    border-radius: 0.65rem;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.08), 0 4px 14px rgba(0, 10, 25, 0.45);
+}
+
+.hmi-status-title[b-wi7zpc8188] {
+    color: #ffffff;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.hmi-status-metric[b-wi7zpc8188] {
+    color: rgba(186, 230, 253, 0.85);
+    font-size: 0.62rem;
+    white-space: nowrap;
+}
+
+.hmi-status-standard[b-wi7zpc8188] {
+    color: rgba(125, 211, 252, 0.55);
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+}
+
+/* Confirmation Checkbox Row */
+.hmi-confirm-row[b-wi7zpc8188] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0.2rem;
+    z-index: 10;
+}
+
+.hmi-checkbox-label[b-wi7zpc8188] {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    cursor: pointer;
+}
+
+.hmi-checkbox-input[b-wi7zpc8188] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.hmi-checkbox-box[b-wi7zpc8188] {
+    width: 1.35rem;
+    height: 1.35rem;
+    border-radius: 0.35rem;
+    background: #ffffff;
+    border: 2px solid #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    transition: all 0.15s ease;
+}
+
+.checkbox-checked[b-wi7zpc8188] {
+    background: #0284c7;
+    border-color: #38bdf8;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+}
+
+.hmi-checkbox-text[b-wi7zpc8188] {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #ffffff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+/* 3. Bottom HMI Footer Dock */
+.hmi-footer[b-wi7zpc8188] {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(56, 189, 248, 0.25);
+    z-index: 10;
+}
+
+.hmi-footer-status[b-wi7zpc8188] {
+    flex: 1;
+    text-align: center;
+    color: rgba(148, 163, 184, 0.5);
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+    white-space: nowrap;
+}
+
+.hmi-btn-back[b-wi7zpc8188] {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.52rem 1.4rem;
+    border-radius: 0.65rem;
+    background: linear-gradient(90deg, #0284c7 0%, #0ea5e9 100%);
+    border: 1px solid #38bdf8;
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 0.92rem;
+    box-shadow: 0 4px 14px rgba(0, 25, 50, 0.45);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.hmi-btn-back:hover[b-wi7zpc8188] {
+    filter: brightness(1.12);
+}
+
+.hmi-btn-back:active[b-wi7zpc8188] {
+    transform: scale(0.96);
+}
+
+.hmi-btn-submit[b-wi7zpc8188] {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.52rem 1.5rem;
+    border-radius: 0.65rem;
+    font-weight: 800;
+    font-size: 0.92rem;
+    transition: all 0.2s ease;
+}
+
+.submit-active[b-wi7zpc8188] {
+    background: linear-gradient(90deg, #0284c7 0%, #0369a1 100%);
+    border: 1.5px solid #38bdf8;
+    color: #ffffff;
+    box-shadow: 0 4px 16px rgba(2, 132, 199, 0.45);
+    cursor: pointer;
+}
+
+.submit-active:hover[b-wi7zpc8188] {
+    filter: brightness(1.15);
+}
+
+.submit-active:active[b-wi7zpc8188] {
+    transform: scale(0.96);
+}
+
+.submit-disabled[b-wi7zpc8188] {
+    background: rgba(30, 41, 59, 0.6);
+    border: 1.5px solid rgba(148, 163, 184, 0.25);
+    color: rgba(255, 255, 255, 0.4);
+    cursor: not-allowed;
+}
+
+@keyframes pulseGlow-b-wi7zpc8188 {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.9); }
+}

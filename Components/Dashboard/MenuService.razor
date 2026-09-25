@@ -152,11 +152,11 @@ private int _menuPage = 1;
     {
         Header.ShowStatus();
     }
-    public record MenuTile(string Label, string Icon);
+    public record MenuTile(string Label, string Icon, string Route="");
     private static MenuTile[] CreatePage1() => new[]
     {
-        new MenuTile("Replaceable Components Record", "/images/Commissioning_icon.png"),
-        new MenuTile("Preventive Maintenance", "/images/preventive-maintenance.png")
+        new MenuTile("Replaceable Components Record", "/images/Commissioning_icon.png", Route:"/service/componentrecord"),
+        new MenuTile("Preventive Maintenance", "/images/preventive-maintenance.png", Route:"/service/maintenance")
 
        };
 }

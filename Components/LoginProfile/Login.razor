@@ -5,87 +5,81 @@
 @inject HeaderStateService Header
 @inject NavigationManager Nav
 @inject AppAuthStateProvider Auth
+@inject IJSRuntime JS
 @implements IDisposable
 
-@* <main class="hmi-shell">
-    <InnerTopBar Title="Login" />
-
-    <section class="hmi-login-view">
-        <form class="hmi-login-content" @onsubmit="HandleLogin">
-            <label class="hmi-form-container">
-                <span class="hmi-input-field">Username</span>
-                <div class="login-input-row">
-                    <input class="login-input" @bind="_name" placeholder="Operator" />
-                    <button class="login-avatar-btn" @onclick="GoToPersonas"
-                            title="Choose profile" aria-label="Choose profile" type="button">
-                        <svg fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                        </svg>
-                    </button>
-                </div>
-            </label>
-
-            <label class="hmi-input-field">
-                <span class="login-label">PIN</span>
-                <input class="login-input" type="password" @bind="_pin" placeholder="Enter PIN" />
-            </label>
-
-            <button class="login-submit" type="submit">Login</button>
-        </form>
-    </section>
-
-    <div class="hmi-toast @(_toastVisible ? "show" : "")">
-        <span class="toast-pulse"></span>
-        <span>@_toastMessage</span>
-    </div>
-</main> *@
 <main class="hmi-shell">
     <InnerTopBar Title="Login" />
 
-    <section class="hmi-login-view">
-        <form class="hmi-login-content" @onsubmit="HandleLogin">
-            
-            @* Username Field with Profile Selector Badge *@
-            <div class="hmi-form-container">
-                <span class="hmi-field-label">Username</span>
-                <div class="hmi-input-field">
+    @* Components/HmiLoginView.razor *@
+
+    <section class="hmi-screen-container">
+        <div class="hmi-scanlines"></div>
+
+        @* Center Content: Username & Password Inputs *@
+        <div class="hmi-center-view">
+            <div class="hmi-form-stack">
+                
+                @* Username Field *@
+                <div class="hmi-input-pill">
                     <button type="button" 
-                            class="hmi-touch-badge" 
-                            @onclick="GoToPersonas"
-                            title="Choose profile" 
-                            aria-label="Choose profile">
-                        <span class="badge-sub">Select user</span>
-                        <svg fill="currentColor" viewBox="0 0 24 24" class="badge-icon">
-                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                            class="hmi-badge-cyan" 
+                            @onclick="OnSelectUserTap"
+                            title="Select User">
+                        <span class="badge-text-top">Select user</span>
+                        <svg class="badge-icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
                         </svg>
-                        <span class="badge-main">Tap here</span>
+                        <span class="badge-text-bottom">Tap here</span>
                     </button>
 
                     <div class="input-wrapper">
-                        <input class="login-input" @bind="_name" placeholder="Operator" />
+                        <input type="text" 
+                            class="hmi-input" 
+                            @bind-value="Username" 
+                            placeholder="Username" />
                     </div>
                 </div>
-            </div>
 
-            @* PIN Input Field *@
-            <div class="hmi-form-container">
-                <span class="hmi-field-label">PIN Access</span>
-                <div class="hmi-input-field">
-                    <div class="hmi-touch-badge lock-badge">
-                        <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 20 20" class="badge-icon">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 8V6a4 4 0 118 0v2m-10 2h12a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6a1 1 0 011-1z" />
+                @* Password Field *@
+                <div class="hmi-input-pill">
+                    <div class="hmi-badge-cyan static">
+                        <svg class="badge-icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
                         </svg>
                     </div>
+
                     <div class="input-wrapper">
-                        <input class="login-input" type="password" @bind="_pin" placeholder="Enter PIN" />
+                        <input type="password" 
+                            class="hmi-input password" 
+                            @bind-value="Password" 
+                            placeholder="Password" 
+                            @onkeyup="HandleKeyUp" />
                     </div>
                 </div>
+
             </div>
+        </div>
 
-            @* Navigation Dock Footer *@
-        </form>
+        @* Bottom Control Dock *@
+        <footer class="hmi-bottom-dock">
+            <button type="button" class="hmi-button" @onclick="OnBackClicked">
+                <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                </svg>
+                <span>Back</span>
+            </button>
+
+            <button type="button" class="hmi-button" @onclick="HandleLogin">
+                <div class="icon-circle">
+                    <svg class="circle-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                    </svg>
+                </div>
+                <span>Login</span>
+            </button>
+        </footer>
     </section>
-
     @* HMI Feedback Toast *@
     <div class="hmi-toast @(_toastVisible ? "show" : "")">
         <span class="toast-pulse"></span>
@@ -93,23 +87,26 @@
     </div>
 </main>
 
-
 @code {
-    private string _name = "";
-    private string _pin = "";
+    public string Username { get; set; } = "";
+    public string Password { get; set; } = "";
     private bool _toastVisible;
     private string _toastMessage = "";
     private int _toastSeq;
 
     protected override void OnInitialized() => Header.ShowStatus();
 
+    private void OnSelectUserTap() => Nav.NavigateTo("/user-selection");
+
+    private async Task OnBackClicked() => await JS.InvokeVoidAsync("history.back");
+
     private async Task HandleLogin()
     {
-        if (string.IsNullOrWhiteSpace(_name)) return;
-        var role = AppAuthStateProvider.RoleForName(_name);
-        if (await Auth.LoginAsync(_name.Trim(), role, _pin))
+        if (string.IsNullOrWhiteSpace(Username)) return;
+        var role = AppAuthStateProvider.RoleForName(Username);
+        if (await Auth.LoginAsync(Username.Trim(), role, Password))
         {
-            State.SetOperator(_name.Trim());
+            State.SetOperator(Username.Trim());
             Nav.NavigateTo(NavigationUtils.SafeReturnUrl(Nav) ?? "/user");
         }
         else
@@ -118,7 +115,13 @@
         }
     }
 
-    private void GoToPersonas() => Nav.NavigateTo("/user-selection");
+    private async Task HandleKeyUp(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            await HandleLogin();
+        }
+    }
 
     private async void ShowToast(string message)
     {

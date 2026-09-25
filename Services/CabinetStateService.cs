@@ -26,6 +26,7 @@ public sealed class CabinetStateService : IDisposable
     private DateOnly _selectedDate = DateOnly.FromDateTime(DateTime.Today);
     private bool _showCalendar;
     private bool _showUser;
+    private CabinetCondition _condition = CabinetCondition.Safe;
 
     public event Action? OnChange;
 
@@ -74,6 +75,8 @@ public sealed class CabinetStateService : IDisposable
     public DateOnly SelectedDate { get => _selectedDate; set { _selectedDate = value; NotifyStateChanged(); } }
     public bool ShowCalendar { get => _showCalendar; set { _showCalendar = value; NotifyStateChanged(); } }
     public bool ShowUser{get => _showUser; set {_showUser=value; NotifyStateChanged();}}
+
+    public CabinetCondition Condition { get => _condition; set { _condition = value; NotifyStateChanged(); } }
 
     public string TemperatureText => $"Temp: {TemperatureC}°C";
     public string SashText => $"Sash : {SashStatus}";

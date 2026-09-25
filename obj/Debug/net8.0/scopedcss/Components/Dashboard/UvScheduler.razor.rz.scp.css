@@ -1,0 +1,209 @@
+.status-pulse-dot[b-ofpqgwkl5m] {
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background-color: var(--hmi-safe-green);
+    box-shadow: 0 0 8px var(--hmi-safe-green);
+    animation: pulseGlow-b-ofpqgwkl5m 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* 2. Main Scheduler Workspace */
+.hmi-scheduler-workspace[b-ofpqgwkl5m] {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem 0;
+    z-index: 10;
+}
+
+/* Centered Interactive Fan Scheduler Card */
+.hmi-scheduler-card[b-ofpqgwkl5m] {
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+    border-radius: 1.5rem;
+    padding: 2rem 2.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-shadow: 0 16px 40px rgba(0, 10, 26, 0.65), inset 0 1px 2px rgba(255, 255, 255, 0.15);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(12px);
+}
+
+.card-active[b-ofpqgwkl5m] {
+    background: linear-gradient(180deg, rgba(3, 35, 68, 0.92) 0%, rgba(2, 22, 45, 0.96) 100%);
+    border: 2px solid rgba(56, 189, 248, 0.55);
+    box-shadow: 0 18px 45px rgba(2, 132, 199, 0.35), inset 0 0 20px rgba(56, 189, 248, 0.15);
+}
+
+.card-inactive[b-ofpqgwkl5m] {
+    background: linear-gradient(180deg, rgba(3, 25, 48, 0.85) 0%, rgba(1, 15, 30, 0.92) 100%);
+    border: 2px solid rgba(148, 163, 184, 0.25);
+    box-shadow: 0 12px 30px rgba(0, 10, 24, 0.5);
+}
+
+/* Fan Disc Hologram Graphic */
+.hmi-fan-graphic-disc[b-ofpqgwkl5m] {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    transition: all 0.3s ease;
+}
+
+/* UV Dial Disc (icon wrapper) */
+.hmi-cloth-graphic-disc[b-ofpqgwkl5m] {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    transition: all 0.3s ease;
+}
+
+.hmi-cloth-icon[b-ofpqgwkl5m] {
+    width: 96px;
+    height: 96px;
+}
+
+.disc-active[b-ofpqgwkl5m] {
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, rgba(2, 132, 199, 0.08) 70%, transparent 100%);
+    border: 2px solid rgba(56, 189, 248, 0.45);
+    box-shadow: 0 0 30px rgba(56, 189, 248, 0.35);
+}
+
+.disc-inactive[b-ofpqgwkl5m] {
+    background: radial-gradient(circle, rgba(148, 163, 184, 0.1) 0%, transparent 70%);
+    border: 2px solid rgba(148, 163, 184, 0.2);
+}
+
+/* Feature Label & State */
+.hmi-feature-label[b-ofpqgwkl5m] {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-bottom: 1.25rem;
+    font-family: ui-monospace, SFMono-Regular, monospace;
+}
+
+.hmi-state-indicator[b-ofpqgwkl5m] {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 9999px;
+    font-family: ui-monospace, SFMono-Regular, monospace;
+}
+
+.state-on[b-ofpqgwkl5m] {
+    background: rgba(35, 176, 53, 0.2);
+    border: 1px solid rgba(52, 211, 153, 0.6);
+    color: #4ade80;
+    box-shadow: 0 0 10px rgba(52, 211, 153, 0.3);
+}
+
+.state-off[b-ofpqgwkl5m] {
+    background: rgba(148, 163, 184, 0.15);
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    color: #94a3b8;
+}
+
+/* Capacitive Toggle Switch Track & Knob */
+.hmi-toggle-container[b-ofpqgwkl5m] {
+    margin-bottom: 1.25rem;
+}
+
+.hmi-switch-track[b-ofpqgwkl5m] {
+    position: relative;
+    display: inline-flex;
+    height: 52px;
+    width: 104px;
+    flex-shrink: 0;
+    cursor: pointer;
+    border-radius: 9999px;
+    border: 2.5px solid;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.5), 0 8px 18px rgba(0, 15, 35, 0.4);
+}
+
+.track-on[b-ofpqgwkl5m] {
+    background: linear-gradient(90deg, #0284c7 0%, #0ea5e9 100%);
+    border-color: #38bdf8;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3), 0 0 20px rgba(56, 189, 248, 0.4);
+}
+
+.track-off[b-ofpqgwkl5m] {
+    background: linear-gradient(90deg, #475569 0%, #64748b 100%);
+    border-color: #94a3b8;
+}
+
+.hmi-switch-knob[b-ofpqgwkl5m] {
+    pointer-events: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 60%, #cbd5e1 100%);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), inset 0 1px 2px #ffffff;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    margin: 3.5px;
+}
+
+.knob-on[b-ofpqgwkl5m] {
+    transform: translateX(52px);
+}
+
+.knob-off[b-ofpqgwkl5m] {
+    transform: translateX(0px);
+}
+
+.knob-check[b-ofpqgwkl5m] {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: #059669;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.knob-dot[b-ofpqgwkl5m] {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #64748b;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+/* Card Status Caption */
+.hmi-card-caption[b-ofpqgwkl5m] {
+    min-height: 24px;
+    margin-bottom: 1.25rem;
+}
+
+@keyframes pulseGlow-b-ofpqgwkl5m {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.9); }
+}
+
+@keyframes spinSlow-b-ofpqgwkl5m {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow[b-ofpqgwkl5m] {
+    animation: spinSlow-b-ofpqgwkl5m 8s linear infinite;
+}

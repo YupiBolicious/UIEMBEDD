@@ -342,6 +342,11 @@ VERSION
 RESPONSIVE
 ========================================================= */
 
+.footer-actions {
+    width: 100%;
+    justify-content: space-between;
+}
+
 @media (max-width: 700px) {
 .hmi-page {
     padding: 4px;
@@ -426,21 +431,6 @@ RESPONSIVE
 
 .last-login {
     font-size: 9px;
-}
-
-.hmi-footer {
-    min-height: 48px;
-
-    padding: 7px;
-}
-
-.hmi-button {
-    min-width: 100px;
-
-    padding:
-        8px
-        12px;
-    font-size: 12px;
 }
 
 .version {

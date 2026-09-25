@@ -1,5 +1,6 @@
 @inject CabinetStateService State
 @inject NavigationManager Nav
+@inject AppAuthStateProvider Auth
 @implements IDisposable
 
 <section class="metadata-bar">
@@ -9,11 +10,11 @@
                 <span class="bsc-id">@State.BscId</span>
                 <span class="bsc-serial">@State.SerialNumber</span>
             </div>
-            <button type="button" class="hmi-btn operator-btn" title="Change User / Login" @onclick="OpenUserView">
+            <button type="button" class="hmi-btn operator-btn" title="@(_isLoggedIn ? "Change User / Profile" : "Go to login")" @onclick="HandleClick">
                 <svg class="btn-icon" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
                 </svg>
-                <span class="truncate">@State.OperatorName</span>
+                <span class="truncate">@(_isLoggedIn ? _userName : "Login")</span>
             </button>
         </div>
         <div class="v-divider"></div>
@@ -38,17 +39,46 @@
 </section>
 
 @code {
+    private bool _isLoggedIn;
+    private string _userName = "";
+
     protected override void OnInitialized()
     {
         State.OnChange += OnStateChanged;
+        Auth.AuthenticationStateChanged += OnAuthChanged;
+    }
+
+    protected override async Task OnInitializedAsync() => await RefreshAsync();
+
+    private async Task RefreshAsync()
+    {
+        var state = await Auth.GetAuthenticationStateAsync();
+        var user = state.User;
+        _isLoggedIn = user.Identity?.IsAuthenticated == true;
+        _userName = _isLoggedIn ? user.Identity.Name ?? "" : "";
+        StateHasChanged();
     }
 
     private void OnStateChanged() => InvokeAsync(StateHasChanged);
 
-    private void OpenUserView() => Nav.NavigateTo("/user");
+    private void OnAuthChanged(Task<AuthenticationState> change)
+        => _ = InvokeAsync(RefreshAsync);
+
+    private void HandleClick()
+    {
+        if (_isLoggedIn)
+        {
+            Nav.NavigateTo("/user");
+        }
+        else
+        {
+            Nav.NavigateTo("/login");
+        }
+    }
 
     public void Dispose()
     {
         State.OnChange -= OnStateChanged;
+        Auth.AuthenticationStateChanged -= OnAuthChanged;
     }
 }

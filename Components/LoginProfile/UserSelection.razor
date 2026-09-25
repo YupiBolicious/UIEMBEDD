@@ -5,153 +5,65 @@
 @inject HeaderStateService Header
 @inject NavigationManager Nav
 @inject AppAuthStateProvider Auth
-@implements IDisposable
 
 <main class="hmi-shell">
-    <InnerTopBar Title="User" />
-    <!-- User Selection -->
+    <InnerTopBar Title="User"/>
     <section class="user-grid">
+        @foreach (var columnGroup in UserColumns)
+        {
+            <div class="user-column">
+                @foreach (var user in columnGroup)
+                {
+                    <button class="user-card"
+                            @onclick="() => PromptPin(user)"
+                            type="button">
 
-        <!-- Column 1 -->
-        <div class="user-column">
+                        <div class="avatar">@user.DisplayName[0]</div>
+                        <div class="user-info">
+                            <div class="user-name">
+                                @user.DisplayName
+                            </div>
 
-            <button class="user-card"
-                    @onclick="SelectFactory"
-                    type="button">
+                            <div class="username">
+                                @user.Username
+                            </div>
 
-                <div class="avatar">
-                    F
-                </div>
-
-                <div class="user-info">
-
-                    <div class="user-name">
-                        Factory
-                    </div>
-
-                    <div class="username">
-                        factory
-                    </div>
-
-                    <div class="last-login">
-                    </div>
-
-                </div>
-
-            </button>
-
-
-            <button class="user-card"
-                    @onclick="SelectOperator"
-                    type="button">
-
-                <div class="avatar">
-                    O
-                </div>
-
-                <div class="user-info">
-
-                    <div class="user-name">
-                        Operator
-                    </div>
-
-                    <div class="username">
-                        operator
-                    </div>
-
-                    <div class="last-login">
-                    </div>
-
-                </div>
-
-            </button>
-
-        </div>
-
-
-        <!-- Column 2 -->
-        <div class="user-column">
-
-            <button class="user-card"
-                    @onclick="SelectAdministrator"
-                    type="button">
-
-                <div class="avatar">
-                    A
-                </div>
-
-                <div class="user-info">
-
-                    <div class="user-name">
-                        Administrator
-                    </div>
-
-                    <div class="username">
-                        admin
-                    </div>
-
-                    <div class="last-login">
-                    </div>
-
-                </div>
-
-            </button>
-
-        </div>
-
-
-        <!-- Column 3 -->
-        <div class="user-column">
-
-            <button class="user-card"
-                    @onclick="SelectService"
-                    type="button">
-
-                <div class="avatar">
-                    L
-                </div>
-
-                <div class="user-info">
-
-                    <div class="user-name">
-                        Technician
-                    </div>
-
-                    <div class="username">
-                        service
-                    </div>
-
-                    <div class="last-login">
-                    </div>
-
-                </div>
-
-            </button>
-
-        </div>
-
+                            <div class="last-login">
+                                @user.LastLoginDisplay
+                            </div>
+                        </div>
+                    </button>
+                }
+            </div>
+        }
     </section>
-
 
     <!-- Bottom Toolbar -->
     <footer class="hmi-footer">
         <div class="footer-actions">
-            <!-- Back -->
             <button class="hmi-button"
                     @onclick="NavigateBack"
                     type="button">
-                <svg viewBox="0 0 24 24"
-                    aria-hidden="true">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
                 <span>Back</span>
+            </button>
+
+            <button class="hmi-button" @onclick="NavigateToRegister" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M19 8v6m-3-3h6" />
+                </svg>
+                <span>Add User</span>
             </button>
         </div>
     </footer>
 
     @if (_showPin)
     {
-        <PinPromptDialog Title="@_pendingName"
+        <PinPromptDialog Title="@_selectedUser?.DisplayName"
                          OnSubmitPin="OnPinSubmitted"
                          OnCancel="OnPinCancelled" />
     }
@@ -162,38 +74,60 @@
     </div>
 </main>
 
-
 @code {
     private bool _showPin;
-    private string _pendingName = "";
-    private string _pendingRole = "";
+    private UserProfile? _selectedUser;
+
     private bool _toastVisible;
-    private string _toastMessage = "";
-    private int _toastSeq;
+    private string _toastMessage = string.Empty;
+
+    public record UserProfile(
+        string DisplayName, 
+        string Username, 
+        string Role, 
+        int ColumnIndex, 
+        DateTime? LastLogin = null)
+    {
+        public string LastLoginDisplay => LastLogin?.ToString("yyyy-MM-dd HH:mm") ?? string.Empty;
+    }
+
+    private readonly List<UserProfile> Users = new()
+    {
+        new("Factory", "factory", "Operator", ColumnIndex: 1),
+        new("Operator", "operator", "Operator", ColumnIndex: 1),
+        new("Administrator", "admin", "Admin", ColumnIndex: 2),
+        new("Technician", "service", "Service", ColumnIndex: 3)
+    };
+
+    private IEnumerable<IGrouping<int, UserProfile>> UserColumns => 
+        Users.GroupBy(u => u.ColumnIndex).OrderBy(g => g.Key);
 
     protected override void OnInitialized()
     {
         Header.ShowStatus();
     }
 
-    private void SelectFactory() => PromptPin("Factory", "Operator");
-    private void SelectOperator() => PromptPin("Operator", "Operator");
-    private void SelectAdministrator() => PromptPin("Administrator", "Admin");
-    private void SelectService() => PromptPin("Technician", "Service");
-
-    private void PromptPin(string name, string role)
+    private void PromptPin(UserProfile user)
     {
-        _pendingName = name;
-        _pendingRole = role;
+        _selectedUser = user;
         _showPin = true;
+    }
+
+    private void OnPinCancelled()
+    {
+        _showPin = false;
+        _selectedUser = null;
     }
 
     private async Task OnPinSubmitted(string pin)
     {
+        if (_selectedUser == null) return;
+
         _showPin = false;
-        if (await Auth.LoginAsync(_pendingName, _pendingRole, pin))
+
+        if (await Auth.LoginAsync(_selectedUser.DisplayName, _selectedUser.Role, pin))
         {
-            State.SetOperator(_pendingName);
+            State.SetOperator(_selectedUser.DisplayName);
             Nav.NavigateTo(NavigationUtils.SafeReturnUrl(Nav) ?? "/user");
         }
         else
@@ -202,28 +136,20 @@
         }
     }
 
-    private void OnPinCancelled() => _showPin = false;
-
-    private void NavigateBack()
-    {
-        Nav.NavigateTo("/login");
-    }
-
-    private async void ShowToast(string message)
+    private void ShowToast(string message)
     {
         _toastMessage = message;
         _toastVisible = true;
-        var seq = ++_toastSeq;
-        await Task.Delay(1800);
-        if (seq == _toastSeq)
-        {
-            _toastVisible = false;
-            await InvokeAsync(StateHasChanged);
-        }
+        StateHasChanged();
     }
 
-    public void Dispose()
+    private void NavigateToRegister()
     {
-        Header.ShowStatus();
+        Nav.NavigateTo("/user-registration");
+    }
+
+    private void NavigateBack()
+    {
+        Nav.NavigateTo("/");
     }
 }

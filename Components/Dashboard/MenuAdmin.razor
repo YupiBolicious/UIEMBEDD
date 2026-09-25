@@ -22,7 +22,7 @@
                 <div class="menu-page">
                     @foreach (var tile in Page1Tiles)
                     {
-                        <button class="menu-tile" @onclick="() => OnTileClick(tile.Label)" type="button">
+                        <button class="menu-tile" @onclick="() => OnTileClick(tile)" type="button">
                              <div class="tile-icon">
                                 <img src="@tile.Icon" alt="@tile.Label" draggable="false" />
                             </div>
@@ -34,7 +34,7 @@
                 <div class="menu-page">
                     @foreach (var tile in Page2Tiles)
                     {
-                        <button class="menu-tile" @onclick="() => OnTileClick(tile.Label)" type="button">  
+                        <button class="menu-tile" @onclick="() => OnTileClick(tile)" type="button">  
                             <div class="tile-icon">
                                 <img src="@tile.Icon" alt="@tile.Label" draggable="false" />
                             </div>
@@ -47,7 +47,7 @@
                 <div class="menu-page">
                     @foreach (var tile in Page3Tiles)
                     {
-                        <button class="menu-tile" @onclick="() => OnTileClick(tile.Label)" type="button">
+                        <button class="menu-tile" @onclick="() => OnTileClick(tile)" type="button">
                            <div class="tile-icon">
                                 <img src="@tile.Icon" alt="@tile.Label" draggable="false" />
                             </div>
@@ -93,7 +93,7 @@
     private double _touchStartX;
     private bool _showPin;
     private string _pendingRole = "";
- 
+
     private static MenuTile[] Page1Tiles { get; } = CreatePage1();
     private static MenuTile[] Page2Tiles { get; } = CreatePage2();
     private static MenuTile[] Page3Tiles {get; } = CreatePage3();
@@ -155,7 +155,13 @@
 
     private void OnPinCancelled() => _showPin = false;
 
-    private void OnTileClick(string tileName) => ShowToast("Opening: " + tileName);
+    private void OnTileClick(MenuTile tileName)
+    {
+        ShowToast("Opening: " + tileName);
+        if(!string.IsNullOrEmpty(tileName.Route)) {
+            Nav.NavigateTo(tileName.Route);
+        }
+    } 
 
     private void OnTouchStart(TouchEventArgs e) => _touchStartX = e.ChangedTouches[0].ScreenX;
 
@@ -183,36 +189,36 @@
     {
         Header.ShowStatus();
     }
-    public record MenuTile(string Label, string? Icon= null);
+    public record MenuTile(string Label, string? Icon= null, string Route="");
 
 private static MenuTile[] CreatePage1() => new[]
 {
-    new MenuTile("Shut Down", Icon:"/images/Shutdown.png"),
-    new MenuTile("Users", Icon:"/images/User%20Mgnt.png"),
-    new MenuTile("Logout Time", Icon:"/images/logout-time.png"),
-    new MenuTile("Languages", Icon:"/images/Language.png"),
-    new MenuTile("Cabinet Name", Icon:"/images/Cabinet%20Name.png"),
-    new MenuTile("TimeZone", Icon:"/images/Time%20Zone.png"),
-    new MenuTile("Date", Icon:"/images/Set-Date.png"),
-    new MenuTile("Time", Icon:"/images/Set-Time.png"),
+    new MenuTile("Shut Down", Icon:"/images/Shutdown.png", Route:"/shut-down"),
+    new MenuTile("Users", Icon:"/images/User%20Mgnt.png", Route:"/user-registration"),
+    new MenuTile("Logout Time", Icon:"/images/logout-time.png", Route:"/logout"),
+    new MenuTile("Languages", Icon:"/images/Language.png", Route :"/language"),
+    new MenuTile("Cabinet Name", Icon:"/images/Cabinet%20Name.png", Route :"/cabinet-name"),
+    new MenuTile("TimeZone", Icon:"/images/Time%20Zone.png", Route :"/time-zone"),
+    new MenuTile("Date", Icon:"/images/Set-Date.png", Route :"/set-date"),
+    new MenuTile("Time", Icon:"/images/Set-Time.png", Route :"/set-time"),
 };
 
 private static MenuTile[] CreatePage2() => new[]
 {
-    new MenuTile("Fan PIN", Icon:"/images/Blower-PIN.png"),
-    new MenuTile("Operation Mode", Icon: "/images/Set-User-Mode.png"),
-    new MenuTile("Airflow Monitor", Icon: "/images/Airflow-Monitor.png"),
-    new MenuTile("Airflow Out Temperature", Icon: "/images/Airflow-Out.png"),
-    new MenuTile("Mute Timer", Icon: "/images/Mute-Timer.png"),
+    new MenuTile("Fan PIN", Icon:"/images/Blower-PIN.png", Route :"/blower-pin"),
+    new MenuTile("Operation Mode", Icon: "/images/Set-User-Mode.png", Route :"/set-user-mode"),
+    new MenuTile("Airflow Monitor", Icon: "/images/Airflow-Monitor.png", Route :"/airflow-monitor"),
+    new MenuTile("Airflow Out Temperature", Icon: "/images/Airflow-Out.png", Route :"/airflow-out"),
+    new MenuTile("Mute Timer", Icon: "/images/Mute-Timer.png", Route :"/mute-timer"),
     
     // Explicitly target Icon using named parameters:
-    new MenuTile("Warmup Timer", Icon: "/images/Warm-Up.png"),
-    new MenuTile("Post Purge Timer", Icon: "/images/Post-Purge.png"),
-    new MenuTile("Network", Icon: "/images/wifi.png"),
+    new MenuTile("Warmup Timer", Icon: "/images/Warm-Up.png", Route :"/warm-up"),
+    new MenuTile("Post Purge Timer", Icon: "/images/Post-Purge.png", Route :"/post-purge"),
+    new MenuTile("Network", Icon: "/images/wifi.png", Route :"/wifi"),
 };
 
 private static MenuTile[] CreatePage3() => new[] 
 {
-    new MenuTile("Remote Modbus", Icon: "/images/Remote-modbus.png")  
+    new MenuTile("Remote Modbus", Icon: "/images/Remote-modbus.png", Route :"/modbus")  
 };
 }

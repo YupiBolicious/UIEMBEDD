@@ -1,0 +1,184 @@
+@* Shared log table view: EventLog / AlarmLog *@
+@inject NavigationManager Nav
+@rendermode InteractiveServer
+
+<div class="hmi-shell">
+    <InnerTopBar Title="@Title" />
+
+    <div class="hmi-log-strip">
+        <div class="strip-filter">
+            @foreach (var opt in FilterOptions)
+            {
+                var label = opt;
+                <button type="button" class="@(ActiveFilter == label ? "strip-filter-btn active" : "strip-filter-btn")" @onclick='() => SetFilter(label)'>@label</button>
+            }
+        </div>
+    </div>
+
+    <!-- Main Table Workspace: fixed header + scrolling body -->
+    <main class="hmi-table-workspace">
+        <div class="hmi-table-container">
+            <table class="hmi-log-table">
+                <thead>
+                    <tr>
+                        <th class="th-no">No</th>
+                        <th>Date</th>
+                        <th>Time (24h)</th>
+                        @foreach (var col in Columns)
+                        {
+                            <th style="width:@col.Width">@col.Header</th>
+                        }
+                        <th>User</th>
+                    </tr>
+                </thead>
+            </table>
+
+            <div class="table-scroll">
+                <table class="hmi-log-table">
+                    <tbody>
+                        @foreach (var entry in Rows)
+                        {
+                            <tr class="log-row @(entry.IsAdmin ? "row-admin" : "row-guest")">
+                                <td class="td-no font-mono">@entry.No</td>
+                                <td class="font-mono">@entry.Date</td>
+                                <td class="font-mono">@entry.Time</td>
+                                @for (var i = 0; i < Columns.Count; i++)
+                                {
+                                    var col = Columns[i];
+                                    var val = (i < entry.Values.Count) ? entry.Values[i] : "";
+                                    <td style="width:@col.Width">
+                                        @if (col.Style == "pill-temp")
+                                        {
+                                            <span class="pill-temp font-mono">
+                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+                                                </svg>
+                                                @val
+                                            </span>
+                                        }
+                                        else if (col.Style == "pill-airflow")
+                                        {
+                                            <span class="pill-airflow font-mono">
+                                                <span class="mini-flow-dot"></span>
+                                                @val
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="plain-metric badge-alarm font-mono">@val</span>
+                                        }
+                                    </td>
+                                }
+                                <td><span class="font-mono">@entry.User</span></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Table Pagination & Items Count Bar -->
+        <div class="hmi-pagination-bar">
+            <div class="page-nav">
+                <button type="button" @onclick="FirstPage" disabled="@(CurrentPage <= 1)" class="btn-page @(CurrentPage <= 1 ? "btn-disabled" : "")" title="First Page">
+                    <svg class="page-ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5" /></svg>
+                </button>
+                <button type="button" @onclick="PreviousPage" disabled="@(CurrentPage <= 1)" class="btn-page @(CurrentPage <= 1 ? "btn-disabled" : "")" title="Previous Page">
+                    <svg class="page-ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+                </button>
+
+                <span class="page-count">
+                    Page <strong class="sky">@CurrentPage</strong> of <strong class="white">@TotalPages</strong>
+                </span>
+
+                <button type="button" @onclick="NextPage" disabled="@(CurrentPage >= TotalPages)" class="btn-page @(CurrentPage >= TotalPages ? "btn-disabled" : "")" title="Next Page">
+                    <svg class="page-ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+                </button>
+                <button type="button" @onclick="LastPage" disabled="@(CurrentPage >= TotalPages)" class="btn-page @(CurrentPage >= TotalPages ? "btn-disabled" : "")" title="Last Page">
+                    <svg class="page-ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5.25 4.5l7.5 7.5-7.5 7.5m6-15l7.5 7.5-7.5 7.5" /></svg>
+                </button>
+            </div>
+
+            <div class="page-total">
+                <span>(@TotalText @TotalItems.ToString("N0") items)</span>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bottom HMI Navigation & Options Dock -->
+    <footer class="hmi-footer">
+        <button type="button" @onclick="Back" class="hmi-button">
+            <svg stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+            </svg>
+            <span>Back</span>
+        </button>
+
+        <button type="button" @onclick="OpenOptions" class="hmi-button">
+            <svg stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
+            </svg>
+            <span>Options</span>
+        </button>
+    </footer>
+</div>
+
+@code {
+    public class LogRowModel
+    {
+        public int No { get; set; }
+        public string Date { get; set; } = "";
+        public string Time { get; set; } = "";
+        public List<string> Values { get; set; } = new();
+        public string User { get; set; } = "";
+        public bool IsAdmin => User?.Equals("Administrator", StringComparison.OrdinalIgnoreCase) == true;
+    }
+
+    public class LogColumn
+    {
+        public string Header { get; set; } = "";
+        public string Width { get; set; } = "14%";
+        public string Style { get; set; } = "text";
+    }
+
+    [Parameter] public string Title { get; set; } = "Log";
+    [Parameter] public string OptionsRoute { get; set; } = "";
+    [Parameter] public string BackRoute { get; set; } = "/operator";
+    [Parameter] public List<string> FilterOptions { get; set; } = new() { "All Logs", "21 Sep" };
+    [Parameter] public string? Clock { get; set; }
+    [Parameter] public string? Airflow { get; set; }
+    [Parameter] public List<LogColumn> Columns { get; set; } = new();
+    [Parameter] public List<LogRowModel> Rows { get; set; } = new();
+    [Parameter] public int TotalPages { get; set; } = 616;
+    [Parameter] public int TotalItems { get; set; } = 30793;
+    [Parameter] public string TotalText { get; set; } = "Total log is";
+
+    private string ActiveFilter { get; set; } = "";
+    private int CurrentPage { get; set; } = 1;
+
+    protected override void OnInitialized()
+    {
+        ActiveFilter = FilterOptions.Count > 0 ? FilterOptions[0] : "";
+    }
+
+    private void SetFilter(string filter) => ActiveFilter = filter;
+
+    private void FirstPage() => CurrentPage = 1;
+    private void PreviousPage()
+    {
+        if (CurrentPage > 1) CurrentPage--;
+    }
+    private void NextPage()
+    {
+        if (CurrentPage < TotalPages) CurrentPage++;
+    }
+    private void LastPage() => CurrentPage = TotalPages;
+
+    private void Back() => Nav.NavigateTo(BackRoute);
+
+    private void OpenOptions()
+    {
+        if (!string.IsNullOrEmpty(OptionsRoute))
+            Nav.NavigateTo(OptionsRoute);
+    }
+}

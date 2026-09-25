@@ -342,6 +342,11 @@ VERSION
 RESPONSIVE
 ========================================================= */
 
+.footer-actions[b-xs38b3vo1y] {
+    width: 100%;
+    justify-content: space-between;
+}
+
 @media (max-width: 700px) {
 .hmi-page[b-xs38b3vo1y] {
     padding: 4px;
@@ -426,21 +431,6 @@ RESPONSIVE
 
 .last-login[b-xs38b3vo1y] {
     font-size: 9px;
-}
-
-.hmi-footer[b-xs38b3vo1y] {
-    min-height: 48px;
-
-    padding: 7px;
-}
-
-.hmi-button[b-xs38b3vo1y] {
-    min-width: 100px;
-
-    padding:
-        8px
-        12px;
-    font-size: 12px;
 }
 
 .version[b-xs38b3vo1y] {

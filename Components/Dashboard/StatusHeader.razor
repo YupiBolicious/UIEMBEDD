@@ -1,0 +1,103 @@
+@inject CabinetStateService State
+@implements IDisposable
+
+<header class="status-header @ConditionClass">
+    <div class="status-icon">
+        @StatusIcon
+    </div>
+    <div class="status-text">
+        <span class="status-title">@StatusTitle</span>
+        @if (!string.IsNullOrEmpty(StatusSubtitle))
+        {
+            <span class="status-subtitle">@StatusSubtitle</span>
+        }
+    </div>
+</header>
+
+@code {
+    protected override void OnInitialized()
+    {
+        State.OnChange += OnStateChanged;
+    }
+
+    private void OnStateChanged() => InvokeAsync(StateHasChanged);
+
+    public void Dispose()
+    {
+        State.OnChange -= OnStateChanged;
+    }
+
+    private string ConditionClass => State.Condition switch
+    {
+        CabinetCondition.WarmingUp => "status-warming",
+        CabinetCondition.AirflowFail => "status-alarm",
+        CabinetCondition.UvOn => "status-uv",
+        _ => "status-safe"
+    };
+
+    private string StatusTitle => State.Condition switch
+    {
+        CabinetCondition.WarmingUp => "WARMING UP",
+        CabinetCondition.AirflowFail => "AIRFLOW FAIL",
+        CabinetCondition.UvOn => "UV ON",
+        _ => "Cabinet is safe"
+    };
+
+    private string? StatusSubtitle => State.Condition switch
+    {
+        CabinetCondition.AirflowFail => "The inflow value is too low!",
+        _ => null
+    };
+
+    private RenderFragment StatusIcon => State.Condition switch
+    {
+        CabinetCondition.AirflowFail => AlarmIcon,
+        CabinetCondition.WarmingUp => WarmingIcon,
+        CabinetCondition.UvOn => UvIcon,
+        _ => CheckIcon
+    };
+
+    private static RenderFragment CheckIcon => __builder =>
+    {
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+    };
+
+    private static RenderFragment AlarmIcon => __builder =>
+    {
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"></path>
+        </svg>
+    };
+
+    private static RenderFragment WarmingIcon => __builder =>
+    {
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"></circle>
+            <line x1="12" y1="2" x2="12" y2="5"></line>
+            <line x1="12" y1="19" x2="12" y2="22"></line>
+            <line x1="2" y1="12" x2="5" y2="12"></line>
+            <line x1="19" y1="12" x2="22" y2="12"></line>
+            <line x1="4.5" y1="4.5" x2="6.6" y2="6.6"></line>
+            <line x1="17.4" y1="17.4" x2="19.5" y2="19.5"></line>
+            <line x1="4.5" y1="19.5" x2="6.6" y2="17.4"></line>
+            <line x1="17.4" y1="6.6" x2="19.5" y2="4.5"></line>
+        </svg>
+    };
+
+    private static RenderFragment UvIcon => __builder =>
+    {
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"></circle>
+            <line x1="12" y1="2" x2="12" y2="5"></line>
+            <line x1="12" y1="19" x2="12" y2="22"></line>
+            <line x1="2" y1="12" x2="5" y2="12"></line>
+            <line x1="19" y1="12" x2="22" y2="12"></line>
+            <line x1="4.5" y1="4.5" x2="6.6" y2="6.6"></line>
+            <line x1="17.4" y1="17.4" x2="19.5" y2="19.5"></line>
+            <line x1="4.5" y1="19.5" x2="6.6" y2="17.4"></line>
+            <line x1="17.4" y1="6.6" x2="19.5" y2="4.5"></line>
+        </svg>
+    };
+}

@@ -1,0 +1,373 @@
+@page "/dashboard/bookingschedule"
+@rendermode InteractiveServer
+@inject NavigationManager Nav
+
+<div class="hmi-shell">
+    <InnerTopBar Title="Booking Schedule" />
+
+    <!-- Top Strip: Date Selector + Filter / Clock -->
+    <div class="top-strip">
+        <div class="hmi-date-selector" title="Pick a day">
+            <button type="button" @onclick="TogglePicker" class="hmi-date-btn">
+                <svg class="cal-ico" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                </svg>
+                <span class="date-label">@SelectedDate.ToString("dd MMM yyyy")</span>
+                <svg class="caret-ico" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
+            </button>
+
+            @if (_pickerOpen)
+            {
+                <div class="date-picker-card">
+                    <div class="dp-header">
+                        <button type="button" class="dp-step" @onclick="PickerPrevMonth" title="Previous month">&#8249;</button>
+                        <span class="dp-month">@MonthName @_pickerYear</span>
+                        <button type="button" class="dp-step" @onclick="PickerNextMonth" title="Next month">&#8250;</button>
+                    </div>
+                    <div class="dp-weekdays">
+                        @foreach (var wd in Weekdays)
+                        {
+                            <span>@wd</span>
+                        }
+                    </div>
+                    <div class="dp-grid">
+                        @foreach (var cell in PickerCells())
+                        {
+                            <button type="button"
+                                    class="dp-day @(cell.InMonth ? "" : "dp-outside") @(cell.Date == _pickerPending ? "dp-selected" : "") @(cell.Date == TodayOnly ? "dp-today" : "")"
+                                    @onclick='() => PickDay(cell)'
+                                    aria-label="@cell.Date.ToString("dd MMM yyyy")">@cell.Date.Day</button>
+                        }
+                    </div>
+                    <div class="dp-footer">
+                        <button type="button" class="dp-link" @onclick="PickToday">Today</button>
+                        <button type="button" class="dp-link dp-close" @onclick="TogglePicker">Close</button>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="right-cluster">
+            <div class="hmi-filter-capsule">
+                <button type="button" class="@(ActiveFilter == "all" ? "filter-active" : "filter-btn")" @onclick='() => SetFilter("all")'>All (24H)</button>
+                <button type="button" class="@(ActiveFilter == "available" ? "filter-active" : "filter-btn")" @onclick='() => SetFilter("available")'>Open (15)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sub-Header: Day Timeline Overview Bar -->
+    <div class="hmi-overview-bar">
+
+        <div class="ov-nav">
+            <button type="button" @onclick="ScrollEarlier" disabled="@(StartHourIndex <= 0)" class="hmi-timeline-nav-btn @(StartHourIndex <= 0 ? "dimmed" : "")">
+                <svg viewBox="0 0 24 24" class="mini-ico"><path d="M15 19l-7-7 7-7"/></svg>
+                <span>Earlier</span>
+            </button>
+            <span class="range-label">@($"{StartHourIndex:D2}:00 - {Math.Min(StartHourIndex + 4, 23):D2}:59")</span>
+            <button type="button" @onclick="ScrollLater" disabled="@(StartHourIndex >= 19)" class="hmi-timeline-nav-btn @(StartHourIndex >= 19 ? "dimmed" : "")">
+                <span>Later</span>
+                <svg viewBox="0 0 24 24" class="mini-ico"><path d="M9 5l7 7-7 7"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Interactive 24-Hour Slots Workspace (5 Columns Visible) -->
+    <main class="hmi-slots-grid">
+        @foreach (var slot in GetVisibleSlots())
+        {
+            <div class="hmi-slot-card @(slot.IsMaintenance ? "slot-maintenance" : (slot.IsBooked ? "slot-booked" : "slot-available"))">
+
+                <!-- Slot Header -->
+                <div class="hmi-slot-header">
+                    <div class="slot-time">@slot.StartTime</div>
+                    <div class="slot-range">@slot.StartTime - @slot.EndTime</div>
+                </div>
+
+                <!-- Slot Center Telemetry & Visual Graphic -->
+                <div class="hmi-slot-body">
+                    @if (slot.IsMaintenance)
+                    {
+                        <div class="hmi-status-avatar uv">
+                            <svg viewBox="0 0 24 24" class="status-ico"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>
+                        </div>
+                        <span class="status-label uv">AUTO UV CYCLE</span>
+                        <span class="status-sub">Decontamination Protocol</span>
+                        <span class="hmi-lock-tag">System Locked</span>
+                    }
+                    else if (slot.IsBooked)
+                    {
+                        <div class="hmi-status-avatar booked">
+                            <svg viewBox="0 0 24 24" class="status-ico"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg>
+                        </div>
+                        <span class="status-label booked">RESERVED</span>
+                        <span class="status-sub mono">@slot.BookedBy</span>
+                        <span class="status-extra">@slot.ExperimentLabel</span>
+                    }
+                    else
+                    {
+                        <div class="hmi-status-avatar avail">
+                            <svg viewBox="0 0 24 24" class="status-ico"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                        </div>
+                        <span class="status-label avail">AVAILABLE</span>
+                        <span class="status-sub">Clean State Ready</span>
+                        <span class="status-extra">Standard 60m Slot</span>
+                    }
+                </div>
+
+                <!-- Slot Action Button -->
+                <div class="hmi-slot-footer">
+                    @if (slot.IsMaintenance)
+                    {
+                        <div class="hmi-btn-disabled">MAINTENANCE ACTIVE</div>
+                    }
+                    else if (slot.IsBooked)
+                    {
+                        <button type="button" @onclick="() => ViewBookingDetails(slot)" class="hmi-btn-booked">Details</button>
+                    }
+                    else
+                    {
+                        <button type="button" @onclick="() => BookSlot(slot)" class="hmi-btn-book">Book Now +</button>
+                    }
+                </div>
+
+            </div>
+        }
+    </main>
+
+    <!-- Bottom HMI Dock Navigation Bar -->
+    <footer class="hmi-footer">
+        <button type="button" @onclick="NavigateBack" class="hmi-button">
+            <svg viewBox="0 0 24 24" class="dock-ico"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
+            <span>Back</span>
+        </button>
+
+        <!-- Right Controls: Quick Book + Options -->
+        <div class="dock-actions">
+            <button type="button" @onclick="OpenOptions" class="hmi-button">
+                <svg viewBox="0 0 24 24" class="dock-ico"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" /></svg>
+                <span>Options</span>
+            </button>
+        </div>
+    </footer>
+</div>
+
+@code {
+    /// <summary>
+    /// Currently viewed date in the booking calendar
+    /// </summary>
+    [Parameter] public DateTime SelectedDate { get; set; } = new DateTime(2026, 9, 21);
+    [Parameter] public EventCallback<DateTime> SelectedDateChanged { get; set; }
+
+    /// <summary>
+    /// System current clock readout
+    /// </summary>
+    [Parameter] public DateTime CurrentTime { get; set; } = new DateTime(2026, 9, 21, 23, 25, 0);
+
+    /// <summary>
+    /// Real-time cabinet utilization metric (percentage)
+    /// </summary>
+    [Parameter] public double CabinetUtilization { get; set; } = 37.5;
+
+    /// <summary>
+    /// Event triggered when a user taps "Book Now" for a specific hourly slot
+    /// </summary>
+    [Parameter] public EventCallback<BookingSlotModel> OnSlotBooked { get; set; }
+
+    /// <summary>
+    /// Event triggered when user navigates back
+    /// </summary>
+    [Parameter] public EventCallback OnBack { get; set; }
+
+    public class BookingSlotModel
+    {
+        public int HourIndex { get; set; }
+        public string StartTime { get; set; } = "";
+        public string EndTime { get; set; } = "";
+        public bool IsMaintenance { get; set; }
+        public bool IsBooked { get; set; }
+        public string BookedBy { get; set; } = "";
+        public string ExperimentLabel { get; set; } = "";
+    }
+
+    private int StartHourIndex = 0;
+    private string ActiveFilter = "all";
+    private List<BookingSlotModel> FullDaySlots = new();
+
+    protected override void OnInitialized()
+    {
+        InitializeDaySlots();
+    }
+
+    private void InitializeDaySlots()
+    {
+        FullDaySlots.Clear();
+        for (int h = 0; h < 24; h++)
+        {
+            var nextH = (h + 1) % 24;
+            var isUv = (h == 3); // 03:00 UV maintenance
+            var isBooked = (h == 8 || h == 9 || h == 10 || h == 14 || h == 15);
+
+            FullDaySlots.Add(new BookingSlotModel
+            {
+                HourIndex = h,
+                StartTime = $"{h:D2}:00",
+                EndTime = $"{nextH:D2}:00",
+                IsMaintenance = isUv,
+                IsBooked = isBooked,
+                BookedBy = isBooked ? (h < 12 ? "Dr. Chen (Cell Cult)" : "Labtech Operator") : "",
+                ExperimentLabel = isBooked ? "BSL-2 Biosafety Run" : ""
+            });
+        }
+    }
+
+    private IEnumerable<BookingSlotModel> GetVisibleSlots()
+    {
+        return FullDaySlots
+            .Skip(StartHourIndex)
+            .Take(5);
+    }
+
+    private void ScrollEarlier()
+    {
+        if (StartHourIndex > 0)
+        {
+            StartHourIndex = Math.Max(0, StartHourIndex - 1);
+        }
+    }
+
+    private void ScrollLater()
+    {
+        if (StartHourIndex < 19)
+        {
+            StartHourIndex = Math.Min(19, StartHourIndex + 1);
+        }
+    }
+
+    private void SetFilter(string filter)
+    {
+        ActiveFilter = filter;
+        if (filter == "available")
+        {
+            // Jump to first open slot
+            var firstOpen = FullDaySlots.FirstOrDefault(s => !s.IsBooked && !s.IsMaintenance);
+            if (firstOpen != null)
+            {
+                StartHourIndex = Math.Min(firstOpen.HourIndex, 19);
+            }
+        }
+    }
+
+    private bool _pickerOpen;
+    private int _pickerYear;
+    private int _pickerMonth;
+
+    private static readonly string[] Weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    private static DateOnly TodayOnly => DateOnly.FromDateTime(DateTime.Today);
+    private DateOnly _pickerPending => DateOnly.FromDateTime(SelectedDate);
+    private string MonthName => new DateTime(_pickerYear, _pickerMonth, 1).ToString("MMM");
+
+    private void TogglePicker()
+    {
+        _pickerOpen = !_pickerOpen;
+        if (_pickerOpen)
+        {
+            _pickerYear = SelectedDate.Year;
+            _pickerMonth = SelectedDate.Month;
+        }
+    }
+
+    private void PickerPrevMonth()
+    {
+        if (_pickerMonth == 1)
+        {
+            _pickerMonth = 12;
+            _pickerYear--;
+        }
+        else
+        {
+            _pickerMonth--;
+        }
+    }
+
+    private void PickerNextMonth()
+    {
+        if (_pickerMonth == 12)
+        {
+            _pickerMonth = 1;
+            _pickerYear++;
+        }
+        else
+        {
+            _pickerMonth++;
+        }
+    }
+
+    private IEnumerable<DayCell> PickerCells()
+    {
+        var first = new DateOnly(_pickerYear, _pickerMonth, 1);
+        var start = first.AddDays(-(int)first.DayOfWeek);
+        for (var i = 0; i < 42; i++)
+        {
+            var date = start.AddDays(i);
+            yield return new DayCell(date, date.Month == _pickerMonth);
+        }
+    }
+
+    private async Task PickDay(DayCell cell)
+    {
+        _pickerOpen = false;
+        SelectedDate = new DateTime(cell.Date.Year, cell.Date.Month, cell.Date.Day,
+            SelectedDate.Hour, SelectedDate.Minute, SelectedDate.Second);
+        if (SelectedDateChanged.HasDelegate)
+        {
+            await SelectedDateChanged.InvokeAsync(SelectedDate);
+        }
+    }
+
+    private Task PickToday() => PickDay(new DayCell(TodayOnly, TodayOnly.Month == _pickerMonth));
+
+    private sealed record DayCell(DateOnly Date, bool InMonth);
+
+    private async Task BookSlot(BookingSlotModel slot)
+    {
+        if (OnSlotBooked.HasDelegate)
+        {
+            await OnSlotBooked.InvokeAsync(slot);
+        }
+        else
+        {
+            Nav.NavigateTo($"/booking-confirmation?hour={slot.HourIndex}");
+        }
+    }
+
+    private void ViewBookingDetails(BookingSlotModel slot)
+    {
+        Nav.NavigateTo($"/booking-details?hour={slot.HourIndex}");
+    }
+
+    private void QuickBookCurrentSlot()
+    {
+        var nextAvailable = FullDaySlots.FirstOrDefault(s => !s.IsBooked && !s.IsMaintenance && s.HourIndex >= CurrentTime.Hour);
+        if (nextAvailable != null)
+        {
+            BookSlot(nextAvailable);
+        }
+    }
+
+    private async Task NavigateBack()
+    {
+        if (OnBack.HasDelegate)
+        {
+            await OnBack.InvokeAsync();
+        }
+        else
+        {
+            Nav.NavigateTo("/operator");
+        }
+    }
+
+    private void OpenOptions()
+    {
+        Nav.NavigateTo("/dashboard/options/schedule");
+    }
+}

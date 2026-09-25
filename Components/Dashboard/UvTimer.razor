@@ -1,0 +1,360 @@
+@page "/dashboard/uvtimer"
+@using Microsoft.AspNetCore.Components.Web
+@implements IDisposable
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+<div class="hmi-shell">
+    <InnerTopBar Title="UV Timer"/>
+
+    <main class="hmi-uv-workspace">
+
+        <!-- ================= LEFT: UV LAMP START / PAUSE / RESUME CONTROL ================= -->
+        <div class="hmi-uv-start-card @(isRunning ? "card-running" : isPaused ? "card-paused" : IsComplete ? "card-done" : "")"
+             @onclick="OnLeftTap"
+             title="@StatusLabel">
+            <div class="hmi-uv-icon-disc">
+                <svg class="hmi-uv-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="uvTube" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0" stop-color="#e0f2fe" />
+                            <stop offset="0.5" stop-color="#7dd3fc" />
+                            <stop offset="1" stop-color="#38bdf8" />
+                        </linearGradient>
+                    </defs>
+                    <rect x="22" y="14" width="56" height="24" rx="9" fill="#082f49" stroke="#38bdf8" stroke-width="2.5" />
+                    <rect x="30" y="21" width="40" height="10" rx="5" fill="url(#uvTube)" />
+                    <path d="M18 42 H82 M26 50 H74" stroke="#38bdf8" stroke-width="2" stroke-dasharray="3 4" opacity="0.5" />
+                    <line x1="30" y1="48" x2="26" y2="72" stroke="#7dd3fc" stroke-width="3" stroke-linecap="round" />
+                    <line x1="41" y1="48" x2="38" y2="72" stroke="#7dd3fc" stroke-width="3" stroke-linecap="round" />
+                    <line x1="50" y1="48" x2="50" y2="76" stroke="#7dd3fc" stroke-width="3" stroke-linecap="round" />
+                    <line x1="59" y1="48" x2="62" y2="72" stroke="#7dd3fc" stroke-width="3" stroke-linecap="round" />
+                    <line x1="70" y1="48" x2="74" y2="72" stroke="#7dd3fc" stroke-width="3" stroke-linecap="round" />
+                </svg>
+            </div>
+
+            <div class="hmi-uv-status-label">@StatusLabel</div>
+            <div class="hmi-uv-time-display">@LeftDisplayTime</div>
+            <div class="hmi-uv-caption">@Caption</div>
+        </div>
+
+        <!-- ================= RIGHT: WHEEL PICKER / LIVE COUNTDOWN / COMPLETE ================= -->
+        <div class="hmi-uv-panel">
+
+            @if (!isRunning && !isPaused && !IsComplete)
+            {
+                <!-- ========== SETTING MODE: DRUM WHEEL PICKER (no play button) ========== -->
+                <div class="drum-picker-card">
+                    <div class="gloss-overlay"></div>
+
+                    <div class="picker-header">
+                        <span class="format-label">HH:MM:SS</span>
+                    </div>
+
+                    <div class="wheel-section">
+                        <div class="magnifier-slot"></div>
+
+                        <div class="time-column">
+                            <button type="button" @onclick="() => StepHours(-1)" class="step-btn step-far">@GetWrappedHours(-2).ToString("D2")</button>
+                            <button type="button" @onclick="() => StepHours(-1)" class="step-btn step-near">@GetWrappedHours(-1).ToString("D2")</button>
+                            <div class="active-time-value" @onwheel="HandleHoursWheel">@Hours.ToString("D2")</div>
+                            <button type="button" @onclick="() => StepHours(1)" class="step-btn step-near">@GetWrappedHours(1).ToString("D2")</button>
+                            <button type="button" @onclick="() => StepHours(1)" class="step-btn step-far">@GetWrappedHours(2).ToString("D2")</button>
+                        </div>
+
+                        <div class="time-separator"><span>:</span></div>
+
+                        <div class="time-column">
+                            <button type="button" @onclick="() => StepMinutes(-1)" class="step-btn step-far">@GetWrappedMinutes(-2).ToString("D2")</button>
+                            <button type="button" @onclick="() => StepMinutes(-1)" class="step-btn step-near">@GetWrappedMinutes(-1).ToString("D2")</button>
+                            <div class="active-time-value" @onwheel="HandleMinutesWheel">@Minutes.ToString("D2")</div>
+                            <button type="button" @onclick="() => StepMinutes(1)" class="step-btn step-near">@GetWrappedMinutes(1).ToString("D2")</button>
+                            <button type="button" @onclick="() => StepMinutes(1)" class="step-btn step-far">@GetWrappedMinutes(2).ToString("D2")</button>
+                        </div>
+
+                        <div class="time-separator"><span>:</span></div>
+
+                        <div class="time-column">
+                            <button type="button" @onclick="() => StepSeconds(-1)" class="step-btn step-far">@GetWrappedSeconds(-2).ToString("D2")</button>
+                            <button type="button" @onclick="() => StepSeconds(-1)" class="step-btn step-near">@GetWrappedSeconds(-1).ToString("D2")</button>
+                            <div class="active-time-value" @onwheel="HandleSecondsWheel">@Seconds.ToString("D2")</div>
+                            <button type="button" @onclick="() => StepSeconds(1)" class="step-btn step-near">@GetWrappedSeconds(1).ToString("D2")</button>
+                            <button type="button" @onclick="() => StepSeconds(1)" class="step-btn step-far">@GetWrappedSeconds(2).ToString("D2")</button>
+                        </div>
+                    </div>
+
+                    <div class="preset-chips-container">
+                        <button type="button" @onclick="() => SetPreset(0, 5, 0)" class="preset-chip">5m</button>
+                        <button type="button" @onclick="() => SetPreset(0, 7, 0)" class="preset-chip chip-highlight">7m</button>
+                        <button type="button" @onclick="() => SetPreset(0, 15, 0)" class="preset-chip">15m</button>
+                        <button type="button" @onclick="() => SetPreset(0, 30, 0)" class="preset-chip">30m</button>
+                        <button type="button" @onclick="() => SetPreset(1, 0, 0)" class="preset-chip">1h</button>
+                    </div>
+                </div>
+            }
+            else if (IsComplete)
+            {
+                <!-- ========== COMPLETE STATE ========== -->
+                <div class="timer-running-card complete-state">
+                    <div class="gloss-overlay"></div>
+                    <div class="progress-ring-wrapper">
+                        <svg class="progress-ring" viewBox="0 0 120 120">
+                            <circle class="ring-bg" cx="60" cy="60" />
+                            <circle class="ring-fill ring-complete" cx="60" cy="60" r="52"
+                                    style="stroke-dasharray: 326.72; stroke-dashoffset: 0;" />
+                        </svg>
+                        <div class="countdown-readout">
+                            <svg class="complete-check" viewBox="0 0 24 24">
+                                <path d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span class="complete-label">UV CYCLE COMPLETE</span>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <!-- ========== RUNNING / PAUSED: LIVE COUNTDOWN ========== -->
+                <div class="timer-running-card">
+                    <div class="gloss-overlay"></div>
+                    <div class="progress-ring-wrapper">
+                        <svg class="progress-ring" viewBox="0 0 120 120">
+                            <circle class="ring-bg" cx="60" cy="60" />
+                            <circle class="ring-fill" cx="60" cy="60" r="52"
+                                    style="stroke-dasharray: 326.72; stroke-dashoffset: @StrokeDashOffset;" />
+                        </svg>
+                        <div class="countdown-readout">
+                            <span class="live-digits">@FormattedRemainingTime</span>
+                            <span class="progress-percent">@((int)(ProgressPercentage))% REMAINING</span>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <!-- STOP / RESET, visible only while running or paused -->
+            @if (isRunning || isPaused)
+            {
+            <div class="reset-dock">
+                <button type="button" @onclick="ResetTimer"
+                        class="uv-reset-btn"
+                        title="Reset/Stop Timer">
+                    <svg viewBox="0 0 24 24" class="reset-ico">
+                        <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" />
+                    </svg>
+                    <span>STOP / RESET</span>
+                </button>
+            </div>
+            }
+
+        </div>
+
+    </main>
+
+    <!-- Bottom HMI Dock Navigation Bar -->
+    <footer class="hmi-footer">
+        <button type="button" @onclick="NavigateBack" class="hmi-button">
+            <svg class="hmi-foot-ico" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+            </svg>
+            <span>Back</span>
+        </button>
+
+        <div class="telemetry-info">
+            <span>Total Set: <strong>@TotalConfiguredSeconds s</strong></span>
+            <span class="telemetry-divider">|</span>
+            <span>Remaining: <strong class="text-cyan">@remainingSeconds s</strong></span>
+        </div>
+    </footer>
+</div>
+
+@code {
+    private int Hours = 0;
+    private int Minutes = 7;
+    private int Seconds = 0;
+    private int remainingSeconds;
+    private bool isRunning = false;
+    private bool isPaused = false;
+    private bool IsComplete = false;
+    private CancellationTokenSource? cts;
+
+    private int TotalConfiguredSeconds => (Hours * 3600) + (Minutes * 60) + Seconds;
+
+    private string FormattedPickedTime =>
+        TimeSpan.FromSeconds(TotalConfiguredSeconds).ToString(@"hh\:mm\:ss");
+
+    private string FormattedRemainingTime =>
+        TimeSpan.FromSeconds(remainingSeconds).ToString(@"hh\:mm\:ss");
+
+    private double ProgressPercentage => TotalConfiguredSeconds > 0
+        ? ((double)remainingSeconds / TotalConfiguredSeconds) * 100.0
+        : 0;
+
+    private double StrokeDashOffset =>
+        326.72 - (326.72 * (ProgressPercentage / 100.0));
+
+    private string StatusLabel => IsComplete
+        ? "CYCLE COMPLETE"
+        : isRunning ? "TAP TO PAUSE"
+        : isPaused ? "TAP TO RESUME"
+        : "TAP TO START";
+
+    private string LeftDisplayTime => IsComplete
+        ? "00:00:00"
+        : (isRunning || isPaused) ? FormattedRemainingTime : FormattedPickedTime;
+
+    private string Caption => IsComplete
+        ? "Tap HERE to return to setup."
+        : isRunning ? "UV emitter active. Tap the lamp to pause the cycle."
+        : isPaused ? "Cycle paused. Tap the lamp to resume."
+        : "Tap the lamp to start a UV sterilization cycle";
+
+    private async Task OnLeftTap()
+    {
+        if (IsComplete)
+        {
+            DoneClicked();
+        }
+        else if (isRunning)
+        {
+            PauseTimer();
+        }
+        else if (isPaused)
+        {
+            ResumeTimer();
+        }
+        else
+        {
+            await StartTimer();
+        }
+    }
+
+    private async Task StartTimer()
+    {
+        if (TotalConfiguredSeconds <= 0) return;
+
+        remainingSeconds = TotalConfiguredSeconds;
+        isRunning = true;
+        isPaused = false;
+        IsComplete = false;
+
+        StateHasChanged();
+        RunTimerLoop();
+    }
+
+    private void RunTimerLoop()
+    {
+        cts?.Cancel();
+        cts?.Dispose();
+        cts = new CancellationTokenSource();
+
+        var token = cts.Token;
+
+        _ = Task.Run(async () =>
+        {
+            using var timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
+
+            try
+            {
+                while (await timer.WaitForNextTickAsync(token))
+                {
+                    if (remainingSeconds > 0)
+                    {
+                        remainingSeconds--;
+                        await InvokeAsync(StateHasChanged);
+                    }
+                    else
+                    {
+                        isRunning = false;
+                        isPaused = false;
+                        IsComplete = true;
+                        await InvokeAsync(StateHasChanged);
+                        break;
+                    }
+                }
+            }
+            catch (OperationCanceledException)
+            {
+            }
+        }, token);
+    }
+
+    private void PauseTimer()
+    {
+        if (!isRunning) return;
+
+        cts?.Cancel();
+        isRunning = false;
+        isPaused = true;
+        StateHasChanged();
+    }
+
+    private void ResumeTimer()
+    {
+        if (!isPaused || remainingSeconds <= 0) return;
+
+        isRunning = true;
+        isPaused = false;
+        RunTimerLoop();
+        StateHasChanged();
+    }
+
+    private void ResetTimer()
+    {
+        cts?.Cancel();
+        cts?.Dispose();
+        cts = null;
+
+        isRunning = false;
+        isPaused = false;
+        remainingSeconds = TotalConfiguredSeconds;
+        StateHasChanged();
+    }
+
+    private void DoneClicked()
+    {
+        IsComplete = false;
+        ResetTimer();
+    }
+
+    private int GetWrappedHours(int offset)
+    {
+        int val = (Hours + offset) % 24;
+        return val < 0 ? val + 24 : val;
+    }
+
+    private int GetWrappedMinutes(int offset)
+    {
+        int val = (Minutes + offset) % 60;
+        return val < 0 ? val + 60 : val;
+    }
+
+    private int GetWrappedSeconds(int offset)
+    {
+        int val = (Seconds + offset) % 60;
+        return val < 0 ? val + 60 : val;
+    }
+
+    private void StepHours(int delta) => Hours = GetWrappedHours(delta);
+    private void StepMinutes(int delta) => Minutes = GetWrappedMinutes(delta);
+    private void StepSeconds(int delta) => Seconds = GetWrappedSeconds(delta);
+
+    private void SetPreset(int h, int m, int s)
+    {
+        Hours = h; Minutes = m; Seconds = s;
+    }
+
+    private void HandleHoursWheel(WheelEventArgs e) => StepHours(e.DeltaY > 0 ? 1 : -1);
+    private void HandleMinutesWheel(WheelEventArgs e) => StepMinutes(e.DeltaY > 0 ? 1 : -1);
+    private void HandleSecondsWheel(WheelEventArgs e) => StepSeconds(e.DeltaY > 0 ? 1 : -1);
+
+    private void NavigateBack()
+    {
+        Navigation.NavigateTo("/operator");
+    }
+
+    public void Dispose()
+    {
+        cts?.Cancel();
+        cts?.Dispose();
+    }
+}

@@ -1,0 +1,27 @@
+@page "/dashboard/alarmlog"
+@rendermode InteractiveServer
+
+<LogView Title="Alarm Log"
+         OptionsRoute="/dashboard/options/alarmlog"
+         TotalText="Total alarm is"
+         TotalPages="14"
+         TotalItems="683"
+         Rows="PagedLogs"
+         Columns="Columns" />
+
+@code {
+    private List<LogView.LogColumn> Columns { get; set; } = new()
+    {
+        new() { Header = "Alarm", Width = "22%", Style = "text" },
+    };
+
+    private List<LogView.LogRowModel> PagedLogs { get; set; } = new()
+    {
+        new() { No = 1, Date = "2026-09-21", Time = "10:26:37", Values = new() { "A001 - UV failure" }, User = "Administrator" },
+        new() { No = 2, Date = "2026-09-21", Time = "10:25:37", Values = new() { "A003 - Inflow low" }, User = "Administrator" },
+        new() { No = 3, Date = "2026-09-21", Time = "10:24:37", Values = new() { "A007 - Downflow high" }, User = "Guest" },
+        new() { No = 4, Date = "2026-09-21", Time = "10:23:37", Values = new() { "A012 - Temp over range" }, User = "Guest" },
+        new() { No = 5, Date = "2026-09-21", Time = "10:22:37", Values = new() { "A001 - UV failure" }, User = "Guest" },
+        new() { No = 6, Date = "2026-09-21", Time = "10:21:37", Values = new() { "A003 - Inflow low" }, User = "Guest" },
+    };
+}

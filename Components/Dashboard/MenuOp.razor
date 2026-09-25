@@ -22,7 +22,7 @@
                 <div class="menu-page">
                     @foreach (var tile in Page1Tiles)
                     {
-                        <button class="menu-tile" @onclick="() => OnTileClick(tile.Label)" type="button">
+                        <button class="menu-tile" @onclick="() => OnTileClick(tile)" type="button">
                             <div class="tile-icon">
                                 <img src="@tile.Icon" alt="@tile.Label" draggable="false" />
                             </div>
@@ -34,7 +34,7 @@
                 <div class="menu-page">
                     @foreach (var tile in Page2Tiles)
                     {
-                        <button class="menu-tile" @onclick="() => OnTileClick(tile.Label)" type="button">
+                        <button class="menu-tile" @onclick="() => OnTileClick(tile)" type="button">
                             <div class="tile-icon">
                                 <img src="@tile.Icon" alt="@tile.Label" draggable="false" />
                             </div>
@@ -140,7 +140,15 @@
 
     private void OnPinCancelled() => _showPin = false;
 
-    private void OnTileClick(string tileName) => ShowToast("Opening: " + tileName);
+    private void OnTileClick(MenuTile tile)
+    {
+        ShowToast("Opening: " + tile.Label);
+
+        if (!string.IsNullOrEmpty(tile.Route))
+        {
+            Nav.NavigateTo(tile.Route);
+        }
+    }
 
     private void OnTouchStart(TouchEventArgs e) => _touchStartX = e.ChangedTouches[0].ScreenX;
 
@@ -168,26 +176,28 @@
     {
         Header.ShowStatus();
     }
-    public record MenuTile(string Label, string Icon);
+
+    public record MenuTile(string Label, string Icon, string Route = "");
+
     private static MenuTile[] CreatePage1() => new[]
     {
-        new MenuTile("Experiment Timer", "/images/Experiment-Timer.png"),
-        new MenuTile("Light Intensity", "/images/Light-Intensity.png"),
-        new MenuTile("LCD Brightness", "/images/Adjust-Brightness.png"),
-        new MenuTile("LCD Cleaning", "/images/Clear-LCD.png"),
-        new MenuTile("Booking Schedule", "/images/Booking-Sched.png"),
-        new MenuTile("Data Log", "/images/log-button_2.png"),
-        new MenuTile("Alarm Log", "/images/log-button_2.png"),
-        new MenuTile("Event Log", "/images/log-button_2.png"),
+        new MenuTile("Experiment Timer", "/images/Experiment-Timer.png", Route: "/dashboard/exptimer/main"),
+        new MenuTile("Light Intensity", "/images/Light-Intensity.png", Route: "/dashboard/lightintensity"),
+        new MenuTile("LCD Brightness", "/images/Adjust-Brightness.png", Route: "/dashboard/lcdbrightness"),
+        new MenuTile("LCD Cleaning", "/images/Clear-LCD.png", Route: "/dashboard/lcdcleaning"),
+        new MenuTile("Booking Schedule", "/images/Booking-Sched.png", Route: "/dashboard/bookingschedule"),
+        new MenuTile("Data Log", "/images/log-button_2.png", Route:"/dashboard/datalog"),
+        new MenuTile("Alarm Log", "/images/log-button_2.png", Route: "/dashboard/alarmlog"),
+        new MenuTile("Event Log", "/images/log-button_2.png", Route: "/dashboard/eventlog"),
     };
 
     private static MenuTile[] CreatePage2() => new[]
     {
-        new MenuTile("UV Timer", "/images/UV_Timer.png"),
-        new MenuTile("Fan Scheduler", "/images/Fan_Schedule.png"),
-        new MenuTile("UV Scheduler", "/images/UV_Sched.png"),
-        new MenuTile("Light Scheduler", "/images/Light_Sched.png"),
-        new MenuTile("El-Outlet Scheduler", "/images/Socket_Sched.png"),
+        new MenuTile("UV Timer", "/images/UV_Timer.png", Route: "/dashboard/uvtimer"),
+        new MenuTile("Fan Scheduler", "/images/Fan_Schedule.png", Route: "/dashboard/fanscheduler"),
+        new MenuTile("UV Scheduler", "/images/UV_Sched.png", Route: "/dashboard/uvscheduler"),
+        new MenuTile("Light Scheduler", "/images/Light_Sched.png", Route: "/dashboard/lightscheduler"),
+        new MenuTile("El-Outlet Scheduler", "/images/Socket_Sched.png", Route: "/dashboard/outletscheduler"),
         new MenuTile("About", "/images/about-us.png"),
     };
 }

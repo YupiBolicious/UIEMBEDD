@@ -1,0 +1,217 @@
+@page "/user-registration"
+@rendermode InteractiveServer
+@inject NavigationManager Nav
+
+<div class="hmi-shell">
+       <InnerTopBar Title="User Registration"/>
+
+        <!-- 2. Main Registration Workspace (Form + Lab Illustration) -->
+        <main class="hmi-registration-workspace">
+            
+            <!-- Left Column: Form Fields -->
+            <div class="hmi-form-column">
+                
+                <!-- Full Name / Username -->
+                <div class="hmi-input-pair">
+                    <!-- Full Name -->
+                    <div class="hmi-input-group">
+                        <label class="hmi-label">Full Name</label>
+                        <div class="hmi-input-wrapper">
+                            <svg class="hmi-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                                <circle cx="12" cy="7" r="4" />
+                            </svg>
+                            <input type="text" 
+                                   @bind="Model.FullName" 
+                                   placeholder="Full Name" 
+                                   class="hmi-input" />
+                        </div>
+                    </div>
+
+                    <!-- Username -->
+                    <div class="hmi-input-group">
+                        <label class="hmi-label">Username</label>
+                        <div class="hmi-input-wrapper">
+                            <svg class="hmi-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2.5" y="5" width="19" height="14" rx="2" />
+                                <path d="M8 11h.01M12 11h4M8 15h4M15 15h1" />
+                            </svg>
+                            <input type="text" 
+                                   @bind="Model.Username" 
+                                   placeholder="Username" 
+                                   class="hmi-input" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New Password / Confirm Password -->
+                <div class="hmi-input-pair">
+                    <!-- New Password -->
+                    <div class="hmi-input-group">
+                        <label class="hmi-label">New Password</label>
+                        <div class="hmi-input-wrapper">
+                            <svg class="hmi-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4" />
+                            </svg>
+                            <input type="password" 
+                                   @bind="Model.Password" 
+                                   placeholder="Create Password" 
+                                   class="hmi-input" />
+                        </div>
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div class="hmi-input-group">
+                        <label class="hmi-label">Confirm Password</label>
+                        <div class="hmi-input-wrapper">
+                            <svg class="hmi-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" />
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                            </svg>
+                            <input type="password" 
+                                   @bind="Model.ConfirmPassword" 
+                                   placeholder="Retype New Password" 
+                                   class="hmi-input" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email / User Level -->
+                <div class="hmi-input-pair">
+                    <!-- Email -->
+                    <div class="hmi-input-group">
+                        <label class="hmi-label">Email</label>
+                        <div class="hmi-input-wrapper">
+                            <svg class="hmi-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="2" />
+                                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                            </svg>
+                            <input type="email" 
+                                   @bind="Model.Email" 
+                                   placeholder="email@example.com" 
+                                   class="hmi-input" />
+                        </div>
+                    </div>
+
+                    <!-- User Level (Select Dropdown) -->
+                    <div class="hmi-input-group">
+                        <label class="hmi-label">User Level</label>
+                        <div class="hmi-input-wrapper relative">
+                            <svg class="hmi-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                                <circle cx="9" cy="7" r="4" />
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+                            </svg>
+                            <select @bind="Model.UserLevel" class="hmi-select">
+                                <option value="Operator">Operator</option>
+                                <option value="Administrator">Administrator</option>
+                                <option value="Service">Service</option>
+                                <option value="Guest">Guest</option>
+                            </select>
+                            <div class="hmi-select-caret pointer-events-none">
+                                <svg class="w-4 h-4 text-sky-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div
+
+        </main>
+
+        <!-- Confirmation Checkbox Row -->
+        <div class="hmi-confirm-row">
+            <label class="hmi-checkbox-label">
+                <input type="checkbox" @bind="IsConfirmed" class="hmi-checkbox-input" />
+                <span class="hmi-checkbox-box @(IsConfirmed ? "checkbox-checked" : "")">
+                    @if (IsConfirmed)
+                    {
+                        <svg class="w-4 h-4 text-white stroke-[3]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                        </svg>
+                    }
+                </span>
+                <span class="hmi-checkbox-text">I confirm all provided data in the form.</span>
+            </label>
+        </div>
+
+        <!-- 3. Bottom HMI Navigation & Footer Dock -->
+        <footer class="hmi-footer">
+            <!-- Tactile Back Navigation Button -->
+            <button type="button" @onclick="NavigateBack" class="hmi-button">
+                <svg class="w-5 h-5 stroke-[3]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                </svg>
+                <span>Back</span>
+            </button>
+
+            <!-- Faint System Status -->
+            <div class="hmi-footer-status">SYSTEM READY &bull; CAPACITIVE TOUCH ACTIVE</div>
+
+            <!-- Tactile Submit Registration Button -->
+            <button type="button" 
+                    @onclick="SubmitRegistration" 
+                    disabled="@(!IsConfirmed)"
+                    class="hmi-button @(IsConfirmed ? "submit-active" : "submit-disabled")">
+                <!-- User ID Badge Icon verbatim from reference -->
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 5v14M5 12h14" />
+                </svg>
+                <span>Submit</span>
+            </button>
+        </footer
+</div>
+
+@code {
+    /// <summary>
+    /// Registration Form Data Model
+    /// </summary>
+    public class UserRegistrationModel
+    {
+        public string FullName { get; set; } = "";
+        public string Username { get; set; } = "";
+        public string Password { get; set; } = "";
+        public string ConfirmPassword { get; set; } = "";
+        public string Email { get; set; } = "";
+        public string UserLevel { get; set; } = "Operator";
+    }
+
+    [Parameter] public UserRegistrationModel Model { get; set; } = new();
+    [Parameter] public bool IsConfirmed { get; set; } = true;
+    [Parameter] public DateTime CurrentTime { get; set; } = new DateTime(2024, 9, 20, 8, 36, 0);
+
+    /// <summary>
+    /// Event callbacks for hardware/controller integration
+    /// </summary>
+    [Parameter] public EventCallback<UserRegistrationModel> OnSubmit { get; set; }
+    [Parameter] public EventCallback OnBack { get; set; }
+
+    private async Task SubmitRegistration()
+    {
+        if (!IsConfirmed) return;
+
+        if (OnSubmit.HasDelegate)
+        {
+            await OnSubmit.InvokeAsync(Model);
+        }
+        else
+        {
+            // Default success navigation back to user list or login
+            Nav.NavigateTo("/user-selection");
+        }
+    }
+
+    private async Task NavigateBack()
+    {
+        if (OnBack.HasDelegate)
+        {
+            await OnBack.InvokeAsync();
+        }
+        else
+        {
+            Nav.NavigateTo("/user-selection");
+        }
+    }
+}

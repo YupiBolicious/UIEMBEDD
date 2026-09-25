@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "UJS8J6yEWH0=",
+  "dgSpecHash": "ar9jKUoDxd8=",
   "success": true,
   "projectFilePath": "C:\\Users\\luthiah.nabilah\\UiEmbed\\UiEmbed.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\luthiah.nabilah\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.31\\microsoft.netcore.app.ref.8.0.31.nupkg.sha512",
+    "C:\\Users\\luthiah.nabilah\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.31\\microsoft.windowsdesktop.app.ref.8.0.31.nupkg.sha512",
+    "C:\\Users\\luthiah.nabilah\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.31\\microsoft.aspnetcore.app.ref.8.0.31.nupkg.sha512",
+    "C:\\Users\\luthiah.nabilah\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\8.0.31\\microsoft.netcore.app.host.win-x64.8.0.31.nupkg.sha512"
+  ],
   "logs": []
 }

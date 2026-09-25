@@ -1,16 +1,257 @@
-/* Stitch cabinet-graphic-container: w-[38%] h-full flex items-center justify-center */
-.cabinet-graphic-container[b-m3ycwjj0xd] {
+/* Outer Centering & Responsive Wrapper */
+.bsc-cabinet-wrapper[b-m3ycwjj0xd] {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    height: 100%;
+    max-width: 380px;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Coordinate Viewport matching exact native asset aspect ratio (342 x 390 = 0.8769) */
+.bsc-viewport[b-m3ycwjj0xd] {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 342 / 390;
+    max-height: 420px;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
 }
 
-.cabinet-svg[b-m3ycwjj0xd] {
+/* Master Stacked Layer Positioning */
+.bsc-layer[b-m3ycwjj0xd] {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    max-height: 220px;
-    filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.45));
+    object-fit: contain;
+    pointer-events: none;
+}
+
+/* Layer 1: 3D Cabinet Base Enclosure */
+.bsc-layer-base[b-m3ycwjj0xd] {
+    z-index: 1;
+    filter: drop-shadow(0 14px 28px rgba(0, 10, 25, 0.65));
+}
+
+/* Layer 2: Status OK Checkmark (Upper Sash) */
+.bsc-layer-status[b-m3ycwjj0xd] {
+    z-index: 5;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.status-visible[b-m3ycwjj0xd] {
+    opacity: 1;
+    animation: statusCheckPulse-b-m3ycwjj0xd 3s ease-in-out infinite;
+}
+
+.status-hidden[b-m3ycwjj0xd] {
+    opacity: 0;
+}
+
+/* Airflow Container Groups */
+.bsc-stream[b-m3ycwjj0xd] {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.bsc-stream-downflow[b-m3ycwjj0xd] {
+    z-index: 3;
+}
+
+.bsc-stream-inflow[b-m3ycwjj0xd] {
+    z-index: 4;
+}
+
+/* =========================================================================
+   DOWNFLOW AIRFLOW ANIMATION (Clean HEPA Air Pushing Vertically Downwards)
+   ========================================================================= */
+.bsc-arrow-df[b-m3ycwjj0xd] {
+    filter: drop-shadow(0 0 6px rgba(74, 222, 128, 0.65));
+    will-change: transform, opacity;
+}
+
+/* Wave 1: Primary downward pulse */
+.df-wave-1[b-m3ycwjj0xd] {
+    animation: downflowContinuous-b-m3ycwjj0xd 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Wave 2: Staggered secondary pulse for continuous fluid motion */
+.df-wave-2[b-m3ycwjj0xd] {
+    animation: downflowContinuous-b-m3ycwjj0xd 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    animation-delay: -0.9s;
+}
+
+@keyframes downflowContinuous-b-m3ycwjj0xd {
+    0% {
+        transform: translateY(-14px) scale(0.96);
+        opacity: 0.15;
+    }
+    30% {
+        opacity: 0.95;
+    }
+    70% {
+        opacity: 0.85;
+    }
+    100% {
+        transform: translateY(16px) scale(1.02);
+        opacity: 0.05;
+    }
+}
+
+/* =========================================================================
+   INFLOW AIRFLOW ANIMATION (Room Air Suctioned Inward through Front Grille)
+   ========================================================================= */
+.bsc-arrow-if[b-m3ycwjj0xd] {
+    filter: drop-shadow(0 0 5px rgba(52, 211, 153, 0.6));
+    will-change: transform, opacity;
+}
+
+/* Inflow Elbow Wave 1: Translates into the intake grille from the front right */
+.if-elbow-1[b-m3ycwjj0xd] {
+    animation: inflowSuctionElbow-b-m3ycwjj0xd 1.6s ease-in-out infinite;
+}
+
+/* Inflow Elbow Wave 2: Staggered secondary wave */
+.if-elbow-2[b-m3ycwjj0xd] {
+    animation: inflowSuctionElbow-b-m3ycwjj0xd 1.6s ease-in-out infinite;
+    animation-delay: -0.8s;
+}
+
+/* Inflow Horizontal Base Vector */
+.if-base-1[b-m3ycwjj0xd] {
+    animation: inflowSuctionBase-b-m3ycwjj0xd 1.6s ease-in-out infinite;
+    animation-delay: -0.4s;
+}
+
+@keyframes inflowSuctionElbow-b-m3ycwjj0xd {
+    0% {
+        transform: translate(6px, -4px) scale(0.96);
+        opacity: 0.2;
+    }
+    35% {
+        opacity: 1;
+    }
+    75% {
+        opacity: 0.85;
+    }
+    100% {
+        transform: translate(-8px, 5px) scale(1.02);
+        opacity: 0.1;
+    }
+}
+
+@keyframes inflowSuctionBase-b-m3ycwjj0xd {
+    0% {
+        transform: translateX(8px);
+        opacity: 0.2;
+    }
+    40% {
+        opacity: 0.9;
+    }
+    80% {
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateX(-6px);
+        opacity: 0.1;
+    }
+}
+
+/* Status Checkmark Soft Pulse Animation */
+@keyframes statusCheckPulse-b-m3ycwjj0xd {
+    0%, 100% {
+        filter: drop-shadow(0 0 4px rgba(74, 222, 128, 0.5));
+        transform: scale(1);
+    }
+    50% {
+        filter: drop-shadow(0 0 12px rgba(74, 222, 128, 0.85));
+        transform: scale(1.02);
+    }
+}
+
+/* Standby Mode Indicator */
+.bsc-standby-indicator[b-m3ycwjj0xd] {
+    position: absolute;
+    bottom: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 6;
+}
+
+.bsc-standby-badge[b-m3ycwjj0xd] {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(148, 163, 184, 0.4);
+    color: #94a3b8;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    font-family: ui-monospace, SFMono-Regular, monospace;
+}
+
+/* Accessibility: Respect Reduced Motion Preferences */
+@media (prefers-reduced-motion: reduce) {
+    .df-wave-1[b-m3ycwjj0xd],
+    .df-wave-2[b-m3ycwjj0xd],
+    .if-elbow-1[b-m3ycwjj0xd],
+    .if-elbow-2[b-m3ycwjj0xd],
+    .if-base-1[b-m3ycwjj0xd],
+    .status-visible[b-m3ycwjj0xd] {
+        animation: none !important;
+        transform: none !important;
+        opacity: 0.9 !important;
+    }
+}
+
+/* =========================================================================
+   CONDITION-DEPENDENT ARROW TINTS (for states without dedicated arrow assets)
+   ========================================================================= */
+.arrow-warming[b-m3ycwjj0xd] {
+    filter: hue-rotate(-55deg) saturate(1.3) brightness(1.1) drop-shadow(0 0 6px rgba(250, 204, 21, 0.65));
+}
+
+.arrow-uv[b-m3ycwjj0xd] {
+    filter: hue-rotate(150deg) saturate(1.4) brightness(1.05) drop-shadow(0 0 6px rgba(192, 132, 252, 0.65));
+}
+
+/* =========================================================================
+   UV ON INTERIOR GLOW OVERLAY
+   ========================================================================= */
+.bsc-uv-glow[b-m3ycwjj0xd] {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    background: radial-gradient(
+        ellipse at 50% 55%,
+        rgba(168, 85, 247, 0.4) 0%,
+        rgba(168, 85, 247, 0.1) 45%,
+        transparent 70%
+    );
+    mix-blend-mode: screen;
+    animation: uvPulse-b-m3ycwjj0xd 2.5s ease-in-out infinite;
+}
+
+/* UV Sash Image Overlay (sits above glow, below status) */
+.bsc-layer-uv-sash[b-m3ycwjj0xd] {
+    z-index: 4;
+}
+
+@keyframes uvPulse-b-m3ycwjj0xd {
+    0%, 100% {
+        opacity: 0.85;
+    }
+    50% {
+        opacity: 1;
+    }
 }

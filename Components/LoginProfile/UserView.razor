@@ -1,6 +1,6 @@
 @page "/user"
 @rendermode InteractiveServer
-@attribute [Authorize]
+@attribute [AllowAnonymous]
 @inject CabinetStateService State
 @inject HeaderStateService Header
 @inject NavigationManager Nav
@@ -12,71 +12,93 @@
 
     <!-- USER PROFILE -->
     <section class="hmi-view">
-        <div class="user-content">
+        @if (Auth.IsLoggedIn)
+        {
+            <div class="user-content">
 
-            <button class="user-profile-card"
-                    @onclick="NavigateToProfileSelector"
-                    aria-label="Current User: @Auth.UserName. Tap to switch user."
-                    type="button">
-
-                <div class="avatar-card">
-                    <span>@Initial(Auth.UserName)</span>
-                </div>
-
-                <div class="user-details">
-                    <div class="user-name">
-                        @Auth.UserName
-                    </div>
-
-                    <div class="user-role">
-                        @Auth.CurrentRole
-                    </div>
-                </div>
-
-            </button>
-
-        </div>
-
-        <footer class="hmi-footer">
-
-            <button class="hmi-button"
-                    @onclick="NavigateBack"
-                    type="button">
-
-                <svg viewBox="0 0 24 24">
-                    <path d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                </svg>
-
-                <span>Back</span>
-            </button>
-
-            <div class="footer-actions">
-
-                <button class="hmi-button"
-                        @onclick="ShowLastLogin"
+                <button class="user-profile-card"
+                        @onclick="NavigateToProfileSelector"
+                        aria-label="Current User: @Auth.UserName. Tap to switch user."
                         type="button">
 
-                    <svg viewBox="0 0 20 20">
-                        <path fill-rule="evenodd"
-                              d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" />
-                    </svg>
+                    <div class="avatar-card">
+                        <span>@Initial(Auth.UserName)</span>
+                    </div>
 
-                    <span>Last Login</span>
-                </button>
+                    <div class="user-details">
+                        <div class="user-name">
+                            @Auth.UserName
+                        </div>
 
-                <button class="hmi-button"
-                        @onclick="PerformLogout"
-                        type="button">
-
-                    <span class="exit-icon">➔</span>
-                    <span>Logout</span>
+                        <div class="user-role">
+                            @Auth.CurrentRole
+                        </div>
+                    </div>
 
                 </button>
 
             </div>
 
-        </footer>
+            <footer class="hmi-footer">
 
+                <button class="hmi-button"
+                        @onclick="NavigateBack"
+                        type="button">
+
+                    <svg viewBox="0 0 24 24">
+                        <path d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+
+                    <span>Back</span>
+                </button>
+
+                <div class="footer-actions">
+
+                    <button class="hmi-button"
+                            @onclick="ShowLastLogin"
+                            type="button">
+
+                        <svg viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" />
+                        </svg>
+
+                        <span>Last Login</span>
+                    </button>
+
+                    <button class="hmi-button"
+                            @onclick="PerformLogout"
+                            type="button">
+
+                        <span class="exit-icon">&#10132;</span>
+                        <span>Logout</span>
+
+                    </button>
+
+                </div>
+
+            </footer>
+        }
+        else
+        {
+            <div class="user-content login-gate">
+                <div class="status-message login-hint">
+                    <span class="status-icon">&#9679;</span>
+                    <span>No user logged in yet</span>
+                </div>
+
+                <button class="hmi-button login-button"
+                        @onclick="NavigateToLogin"
+                        type="button">
+
+                    <svg viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" />
+                    </svg>
+
+                    <span>Login</span>
+                </button>
+            </div>
+        }
     </section>
 
 </main>
@@ -105,6 +127,11 @@
         Nav.NavigateTo("/user-selection");
     }
 
+    private void NavigateToLogin()
+    {
+        Nav.NavigateTo("/login");
+    }
+
     private async Task PerformLogout()
     {
         await Auth.LogoutAsync();
@@ -119,6 +146,6 @@
 
     private void ShowLastLogin()
     {
-        // Add Last Login dialog/action here.
+        Nav.NavigateTo("/user-selection"); //to add later last login history
     }
 }
