@@ -67,6 +67,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJY29uc1xBaXJmbG93LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/luthiah.nabilah/UiEmbed/Components/Icons/AirflowOut.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJY29uc1xBaXJmbG93T3V0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/luthiah.nabilah/UiEmbed/Components/Icons/AirflowTemp.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJY29uc1xBaXJmbG93VGVtcC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
@@ -143,8 +147,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJY29uc1xQb3N0UHVyZ2UucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/luthiah.nabilah/UiEmbed/Components/Icons/QuickStart.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJY29uc1xRdWlja1N0YXJ0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/luthiah.nabilah/UiEmbed/Components/Icons/Shutdown.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJY29uc1xTaHV0ZG93bi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/luthiah.nabilah/UiEmbed/Components/Icons/Thermometer.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJY29uc1xUaGVybW9tZXRlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/luthiah.nabilah/UiEmbed/Components/Icons/TimerIcon.razor]
@@ -202,6 +214,46 @@ build_metadata.AdditionalFiles.CssScope =
 [C:/Users/luthiah.nabilah/UiEmbed/Components/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xfSW1wb3J0cy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/luthiah.nabilah/UiEmbed/Components/Admin/Airflow.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxBaXJmbG93LnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-tzyht3bmoy
+
+[C:/Users/luthiah.nabilah/UiEmbed/Components/Admin/AirflowOut.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxBaXJmbG93T3V0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-lpsfkzcbr8
+
+[C:/Users/luthiah.nabilah/UiEmbed/Components/Admin/FanInput.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxGYW5JbnB1dC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-d83nv13vph
+
+[C:/Users/luthiah.nabilah/UiEmbed/Components/Admin/Modbus.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxNb2RidXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-06nuxr9q26
+
+[C:/Users/luthiah.nabilah/UiEmbed/Components/Admin/MuteTimer.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxNdXRlVGltZXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-48jaqg4vjn
+
+[C:/Users/luthiah.nabilah/UiEmbed/Components/Admin/NormalMode.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxOb3JtYWxNb2RlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-31jbyoxgx9
+
+[C:/Users/luthiah.nabilah/UiEmbed/Components/Admin/OpMode.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxPcE1vZGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-jx7f9lr9ui
+
+[C:/Users/luthiah.nabilah/UiEmbed/Components/Admin/PostPurge.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQb3N0UHVyZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-5q7wrnqeof
+
+[C:/Users/luthiah.nabilah/UiEmbed/Components/Admin/QuickStart.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxRdWlja1N0YXJ0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-38mydw3ewo
+
+[C:/Users/luthiah.nabilah/UiEmbed/Components/Admin/Warmup.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxXYXJtdXAucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-68sk8fww2k
 
 [C:/Users/luthiah.nabilah/UiEmbed/Components/Dashboard/BookingSchedule.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xEYXNoYm9hcmRcQm9va2luZ1NjaGVkdWxlLnJhem9y

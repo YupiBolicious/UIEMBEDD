@@ -1,0 +1,187 @@
+@page "/service/componentrecord"
+@rendermode InteractiveServer
+@inject NavigationManager Nav
+
+<div class="hmi-shell">
+    <InnerTopBar Title="Replaceable Component Record" />
+
+    <!-- Main Data Log Table Workspace -->
+    <main class="hmi-table-workspace">
+        <div class="hmi-table-container">
+            <table class="hmi-log-table">
+                <thead>
+                    <tr>
+                        <th class="th-no">No</th>
+                        <th>Date</th>
+                        <th>Time(24h)</th>
+                        <th>Unit Model</th>
+                        <th>User</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="table-scroll">
+                <table class="hmi-log-table">
+                    <tbody>
+                    @foreach (var entry in PagedLogs)
+                    {
+                        <tr class="log-row @(entry.IsService ? "row-service" : "row-guest")">
+                            <td class="td-no font-mono">@entry.No</td>
+                            <td class="font-mono">@entry.Date</td>
+                            <td class="font-mono">@entry.Time</td>
+                            <td class="font-mono">@entry.UnitModel</td>
+                            <td class="font-mono">@entry.User</td>
+                            <td class="font-mono">@entry.Maintenance</td>
+                            <td class="font-mono">@entry.Maintenance</td>
+                        </tr>
+                    }
+                </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="hmi-pagination-bar">
+            <div class="page-nav">
+                <button type="button" @onclick="FirstPage" disabled="@(CurrentPage <= 1)" class="btn-page @(CurrentPage <= 1 ? "btn-disabled" : "")" title="First Page">
+                    <svg class="page-ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5" /></svg>
+                </button>
+                <button type="button" @onclick="PreviousPage" disabled="@(CurrentPage <= 1)" class="btn-page @(CurrentPage <= 1 ? "btn-disabled" : "")" title="Previous Page">
+                    <svg class="page-ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+                </button>
+
+                <span class="page-count">
+                    Page <strong class="sky">@CurrentPage</strong> of <strong class="white">@TotalPages</strong>
+                </span>
+
+                <button type="button" @onclick="NextPage" disabled="@(CurrentPage >= TotalPages)" class="btn-page @(CurrentPage >= TotalPages ? "btn-disabled" : "")" title="Next Page">
+                    <svg class="page-ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+                </button>
+                <button type="button" @onclick="LastPage" disabled="@(CurrentPage >= TotalPages)" class="btn-page @(CurrentPage >= TotalPages ? "btn-disabled" : "")" title="Last Page">
+                    <svg class="page-ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5.25 4.5l7.5 7.5-7.5 7.5m6-15l7.5 7.5-7.5 7.5" /></svg>
+                </button>
+            </div>
+
+            <div class="page-total">
+                <span>(Total log is <strong class="white">@TotalItems.ToString("N0")</strong> items)</span>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bottom HMI Navigation & Options Dock -->
+    <footer class="hmi-footer">
+        <button type="button" @onclick="NavigateBack" class="hmi-button">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+            </svg>
+            <span>Back</span>
+        </button>
+
+        <button type="button" @onclick="OpenNew" class="hmi-button">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+            <span>Add New Records</span>
+        </button>
+        <button type="button" @onclick="OpenOptions" class="hmi-button">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
+            </svg>
+            <span>Options</span>
+        </button>
+    </footer>
+</div>
+
+@code {
+    public class LogEntryModel
+    {
+        public int No { get; set; }
+        public string Date {get; set;} ="";
+        public string Time { get; set; } = "";
+        public string UnitModel { get; set; } = "";
+        public string Maintenance {get; set;} = "";
+        public string User {get; set;}  = "";
+        public bool IsService => User?.Equals("Service", StringComparison.OrdinalIgnoreCase) == true;
+    }
+    [Parameter] public int CurrentPage {get; set;} = 1;
+    [Parameter] public int TotalPages { get; set; } = 616;
+    [Parameter] public int TotalItems { get; set; } = 30793;
+    [Parameter] public EventCallback OnBack { get; set; }
+    [Parameter] public EventCallback OnOptions { get; set; }
+
+    private string ActiveFilter = "all";
+    private List<LogEntryModel> PagedLogs = new();
+
+    @* protected override void OnInitialized()
+    {
+        LoadLogs();
+    } *@
+
+    @* private void LoadLogs()
+    {
+        PagedLogs = new List<LogEntryModel>
+        {
+            new() { No = 1, Maintenance = "Daily BSC Maintenance", AckDate = "01/01/2025", DueDate = "01/01/2026", User = "Administrator" },
+            new() { No = 2, Maintenance = "Weekly BSC Maintenance", AckDate = "01/01/2025", DueDate = "01/01/2026", User = "Administrator" },
+            new() { No = 3, Maintenance = "Monthly BSC Maintenance", AckDate = "01/01/2025", DueDate = "01/01/2026", User = "Guest" },
+            new() { No = 4, Maintenance = "Quarterly BSC Maintenance", AckDate = "01/01/2025", DueDate = "01/01/2026", User = "Guest" },
+            new() { No = 5, Maintenance = "Annual BSC Maintenance", AckDate = "01/01/2024", DueDate = "01/01/2026", User = "Guest" },
+            new() { No = 6, Maintenance = "Quinquennial BSC Maintenance", AckDate = "01/01/2024", DueDate = "01/01/2026", User = "Guest" },
+            new() { No = 7, Maintenance = "Monthly Preventive Maintenance", AckDate = "01/01/2024", DueDate = "01/01/2026", User = "Guest" },
+            new() { No = 8, Maintenance = "Quarterly Preventive Maintenance", AckDate = "01/01/2024", DueDate = "01/01/2026", User = "Guest" },
+        };
+    } *@
+
+    private void SetFilter(string filter)
+    {
+        ActiveFilter = filter;
+    }
+
+    private void FirstPage() => CurrentPage = 1;
+    private void PreviousPage()
+    {
+        if (CurrentPage > 1) CurrentPage--;
+    }
+    private void NextPage()
+    {
+        if (CurrentPage < TotalPages) CurrentPage++;
+    }
+    private void LastPage() => CurrentPage = TotalPages;
+
+    private async Task NavigateBack()
+    {
+        if (OnBack.HasDelegate)
+        {
+            await OnBack.InvokeAsync();
+        }
+        else
+        {
+            Nav.NavigateTo("/service");
+        }
+    }
+
+    private async Task OpenNew()
+    {
+        if (OnOptions.HasDelegate)
+        {
+            await OnOptions.InvokeAsync();
+        }
+        else
+        {
+            Nav.NavigateTo("/dashboard/options/datalog");
+        }
+        
+    }
+
+    private async Task OpenOptions()
+    {
+        if (OnOptions.HasDelegate)
+        {
+            await OnOptions.InvokeAsync();
+        }
+        else
+        {
+            Nav.NavigateTo("/dashboard/options/datalog");
+        }
+    }
+}

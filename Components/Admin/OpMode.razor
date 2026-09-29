@@ -1,0 +1,91 @@
+@page "/admin/opmode"
+@rendermode InteractiveServer
+@inject NavigationManager Nav
+
+<main class="hmi-shell">
+    <!-- Top Header -->
+    <InnerTopBar Title="Operation Mode"/>
+
+    <!-- Centered Viewport Wrapper -->
+    <section class="hmi-timer-compact-viewport" data-purpose="mode-selection">
+        <div class="hmi-option-item">
+            <button type="button"
+                    id="btn-qstart"
+                    class="hmi-tile hmi-tile-compact"
+                    title="Quick Start"
+                    data-purpose="open-timer-button"
+                    @onclick="QuickStartNav">
+                <img src="/images/quick-start.png" alt="Stopwatch" class="tile-icon" />
+            </button>
+            <span class="tile-label">
+                Quick Start
+            </span>
+        </div>
+
+        <div class="hmi-option-item">
+            <button type="button"
+                    id="btn-normal"
+                    class="hmi-tile hmi-tile-compact"
+                    title="Normal"
+                    data-purpose="open-stopwatch-button"
+                    @onclick="NormalNav">
+                <img src="/images/stopwatch.png" alt="Stopwatch" class="tile-icon" />
+            </button>
+            <span class="tile-label">
+                Normal Mode
+            </span>
+        </div>
+
+    </section>
+
+    <!-- Bottom Interaction Toolbar -->
+    <footer class="hmi-footer" data-purpose="hmi-footer">
+        <!-- Back Navigation Button -->
+        <button type="button"
+                id="btn-back"
+                class="hmi-button"
+                title="Return to Previous Screen"
+                data-purpose="back-navigation"
+                @onclick="NavigateBack">
+            <svg class="back-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Back</span>
+        </button>
+    </footer>
+</main>
+
+@code {
+    [Parameter] public EventCallback OnNavtoQStart { get; set; }
+    [Parameter] public EventCallback OnNavtoNormal { get; set; }
+    [Parameter] public EventCallback OnNavigateBack { get; set; }
+    [Parameter] public EventCallback<bool> OnPreferenceChanged { get; set; }
+
+    @* private bool _alwaysDisplayTimerOnHomeScreen = true; *@
+
+
+    private async Task QuickStartNav()
+    {
+        if (OnNavtoQStart.HasDelegate)
+            await OnNavtoQStart.InvokeAsync();
+        else 
+            Nav.NavigateTo("/admin/quickstart");
+    }
+
+    private async Task NormalNav()
+    {
+        if (OnNavtoNormal.HasDelegate)
+            await OnNavtoNormal.InvokeAsync();
+        else 
+            Nav.NavigateTo("/admin/normalmode");
+    }
+
+    private async Task NavigateBack()
+    {
+        if (OnNavigateBack.HasDelegate)
+            await OnNavigateBack.InvokeAsync();
+        else
+            Nav.NavigateTo("/admin");
+    }
+}

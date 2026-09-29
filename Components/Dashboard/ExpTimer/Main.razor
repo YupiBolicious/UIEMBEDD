@@ -63,7 +63,7 @@
                    id="chk-always-display"
                    class="hmi-checkbox" 
                    data-purpose="home-display-toggle" 
-                   @bind="AlwaysDisplayTimerOnHomeScreen" />
+                   @onchange="ToggleHomeDisplay" />
             <span class="toggle-text">
                 Always display timer on home screen
             </span>
@@ -76,11 +76,12 @@
     [Parameter] public EventCallback OnNavigateToStopwatch { get; set; }
     [Parameter] public EventCallback OnNavigateBack { get; set; }
     [Parameter] public EventCallback<bool> OnPreferenceChanged { get; set; }
+    [Parameter] public bool AlwaysDisplayTimerOnHomeScreen { get; set; } = true;
 
-    private bool _alwaysDisplayTimerOnHomeScreen = true;
 
-    [Parameter]
-    public bool AlwaysDisplayTimerOnHomeScreen
+    @* private bool _alwaysDisplayTimerOnHomeScreen = true; *@
+
+    @* [Parameter] public bool AlwaysDisplayTimerOnHomeScreen
     {
         get => _alwaysDisplayTimerOnHomeScreen;
         set
@@ -91,8 +92,13 @@
                 OnPreferenceChanged.InvokeAsync(value);
             }
         }
+    } *@
+    private async Task ToggleHomeDisplay(ChangeEventArgs e)
+    {
+        AlwaysDisplayTimerOnHomeScreen = bool.TryParse(e.Value?.ToString(), out var v) && v;
+        if (OnPreferenceChanged.HasDelegate)
+            await OnPreferenceChanged.InvokeAsync(AlwaysDisplayTimerOnHomeScreen);
     }
-
     private async Task NavigateToTimer()
     {
         if (OnNavigateToTimer.HasDelegate)

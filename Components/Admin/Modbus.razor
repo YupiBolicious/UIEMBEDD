@@ -1,0 +1,192 @@
+@page "/admin/modbus"
+@inject NavigationManager Nav
+@rendermode InteractiveServer
+
+<div class="hmi-shell">
+    <InnerTopBar Title="Remote Modbus"/>
+       <main class="hmi-modbus-workspace">
+            <div class="hmi-panel-card hmi-panel-left">
+                <div class="panel-section-title">
+                    <span>Master Connection Settings</span>
+                </div>
+                 <div class="hmi-input-trio">
+                    <!-- Slave ID (S-ID) -->
+                    <div class="hmi-field-group field-sid">
+                        <label class="hmi-field-label">S-ID</label>
+                        <div class="hmi-input-box" @onclick="OpenSidKeypad" role="button" tabindex="0">
+                            <span class="input-val font-mono">@SlaveId</span>
+                        </div>
+                    </div>
+
+                    <!-- IPv4 of Master -->
+                    <div class="hmi-field-group field-ipv4">
+                        <label class="hmi-field-label">IPv4 of Master</label>
+                        <div class="hmi-input-box" @onclick="OpenIpKeypad" role="button" tabindex="0">
+                            <span class="input-val font-mono">@MasterIp</span>
+                        </div>
+                    </div>
+
+                    <!-- Port (5502) -->
+                    <div class="hmi-field-group field-port">
+                        <label class="hmi-field-label">Port</label>
+                        <div class="hmi-input-box" @onclick="OpenPortKeypad" role="button" tabindex="0">
+                            <span class="input-val font-mono">@Port</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Verbatim Explanatory Bullet Points -->
+                <div class="hmi-notes-box">
+                    <ul class="hmi-rules-list">
+                        <li>
+                            <span class="rule-bullet">*</span>
+                            <span>The System will accept only the connection from master which has this IPv4 address, otherwise will be rejected.</span>
+                        </li>
+                        <li>
+                            <span class="rule-bullet">*</span>
+                            <span>To accept any masters connection, set the IPv4 to <code class="code-highlight">"0.0.0.0"</code>.</span>
+                        </li>
+                        <li>
+                            <span class="rule-bullet">*</span>
+                            <span>To reject any masters connection, set the IPv4 to <code class="code-highlight">"127.0.0.1"</code>. It's default.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Connection Telemetry Status Pill verbatim: Status: connected@192.168.2.110 -->
+                <div class="hmi-status-bar">
+                    <div class="flex items-center gap-2">
+                        <span class="status-pulse-dot"></span>
+                        <span class="text-xs text-sky-200/80 font-mono">Status:</span>
+                        <span class="text-white text-xs bg-sky-950/60 py-0.5">
+                            @ConnectionStatus
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="hmi-panel-card hmi-panel-right">
+                <div class="panel-section-title">
+                  <span>Allow the Remote Master Device to write the states of:</span>
+                </div>
+                <div class="hmi-switches-grid">
+                    <div class="hmi-switch-item" @onclick="ToggleFan">
+                        <button type="button" class="hmi-toggle-switch @(AllowWriteFan ? "switch-on" : "switch-off")" role="switch" aria-checked="@AllowWriteFan">
+                            <span class="switch-thumb @(AllowWriteFan ? "thumb-on" : "thumb-off")"></span>
+                        </button>
+                        <span class="switch-label @(AllowWriteFan ? "text-white font-bold" : "text-white/80")">Fan</span>
+                    </div>
+
+                    <!-- 2. Light Toggle -->
+                    <div class="hmi-switch-item" @onclick="ToggleLight">
+                        <button type="button" class="hmi-toggle-switch @(AllowWriteLight ? "switch-on" : "switch-off")" role="switch" aria-checked="@AllowWriteLight">
+                            <span class="switch-thumb @(AllowWriteLight ? "thumb-on" : "thumb-off")"></span>
+                        </button>
+                        <span class="switch-label @(AllowWriteLight ? "text-white font-bold" : "text-white/80")">Light</span>
+                    </div>
+
+                    <!-- 3. Light Intensity Toggle -->
+                    <div class="hmi-switch-item" @onclick="ToggleLightIntensity">
+                        <button type="button" class="hmi-toggle-switch @(AllowWriteLightIntensity ? "switch-on" : "switch-off")" role="switch" aria-checked="@AllowWriteLightIntensity">
+                            <span class="switch-thumb @(AllowWriteLightIntensity ? "thumb-on" : "thumb-off")"></span>
+                        </button>
+                        <span class="switch-label @(AllowWriteLightIntensity ? "text-white font-bold" : "text-white/80")">Light Intensity</span>
+                    </div>
+
+                    <!-- 4. Outlet Toggle -->
+                    <div class="hmi-switch-item" @onclick="ToggleOutlet">
+                        <button type="button" class="hmi-toggle-switch @(AllowWriteOutlet ? "switch-on" : "switch-off")" role="switch" aria-checked="@AllowWriteOutlet">
+                            <span class="switch-thumb @(AllowWriteOutlet ? "thumb-on" : "thumb-off")"></span>
+                        </button>
+                        <span class="switch-label @(AllowWriteOutlet ? "text-white font-bold" : "text-white/80")">Outlet</span>
+                    </div>
+
+                    <!-- 5. UV Light Toggle (spanning single item) -->
+                    <div class="hmi-switch-item" @onclick="ToggleUvLight">
+                        <button type="button" class="hmi-toggle-switch @(AllowWriteUvLight ? "switch-on" : "switch-off")" role="switch" aria-checked="@AllowWriteUvLight">
+                            <span class="switch-thumb @(AllowWriteUvLight ? "thumb-on" : "thumb-off")"></span>
+                        </button>
+                        <span class="switch-label @(AllowWriteUvLight ? "text-white font-bold" : "text-white/80")">UV Light</span>
+                    </div>
+
+                </div>
+
+                <!-- Verbatim Advisory Footnote -->
+                <div class="hmi-footnote-box">
+                    <span class="rule-bullet">*</span>
+                    <span class="text-xs italic text-sky-200/70">by default the system will only accept read operations</span>
+                </div>
+
+                <!-- Security Matrix Tag -->
+                <div class="mt-auto pt-3 border-t border-sky-400/20 flex items-center justify-between text-[11px] text-white/50 font-mono">
+                    <span>SECURITY: READ/WRITE PERMISSIONS</span>
+                </div>
+
+            </div>
+
+        </main>
+
+        <!-- 3. Bottom HMI Navigation & Footer Dock -->
+        <footer class="hmi-footer">
+            <!-- Tactile Back Navigation Button verbatim from reference -->
+            <button type="button" @onclick="NavigateBack" class="hmi-button">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                </svg>
+                <span>Back</span>
+            </button>
+        </footer>
+</div>
+
+@code {
+    [Parameter] public int SlaveId { get; set; } = 1;
+    [Parameter] public EventCallback<int> SlaveIdChanged { get; set; }
+    [Parameter] public string MasterIp { get; set; } = "0.0.0.0";
+    [Parameter] public EventCallback<string> MasterIpChanged { get; set; }
+    [Parameter] public int Port { get; set; } = 5502;
+    [Parameter] public EventCallback<int> PortChanged { get; set; }
+    [Parameter] public string ConnectionStatus { get; set; } = "connected@192.168.2.110";
+    [Parameter] public bool AllowWriteFan { get; set; } = false;
+    [Parameter] public bool AllowWriteLight { get; set; } = false;
+    [Parameter] public bool AllowWriteLightIntensity { get; set; } = false;
+    [Parameter] public bool AllowWriteOutlet { get; set; } = false;
+    [Parameter] public bool AllowWriteUvLight { get; set; } = false;
+    [Parameter] public EventCallback OnBack { get; set; }
+    [Parameter] public EventCallback OnOpenSidKeypad { get; set; }
+    [Parameter] public EventCallback OnOpenIpKeypad { get; set; }
+    [Parameter] public EventCallback OnOpenPortKeypad { get; set; }
+    
+    private void ToggleLight() => AllowWriteLight = !AllowWriteLight;
+    private void ToggleLightIntensity() => AllowWriteLightIntensity = !AllowWriteLightIntensity;
+    private void ToggleOutlet() => AllowWriteOutlet = !AllowWriteOutlet;
+    private void ToggleUvLight() => AllowWriteUvLight = !AllowWriteUvLight;
+    private void ToggleFan() => AllowWriteFan = !AllowWriteFan;
+    
+    private async Task OpenSidKeypad()
+    {
+        if (OnOpenSidKeypad.HasDelegate) await OnOpenSidKeypad.InvokeAsync();
+    }
+
+    private async Task OpenIpKeypad()
+    {
+        if (OnOpenIpKeypad.HasDelegate) await OnOpenIpKeypad.InvokeAsync();
+    }
+
+    private async Task OpenPortKeypad()
+    {
+        if (OnOpenPortKeypad.HasDelegate) await OnOpenPortKeypad.InvokeAsync();
+    }
+
+    private async Task NavigateBack()
+    {
+        if (OnBack.HasDelegate)
+        {
+            await OnBack.InvokeAsync();
+        }
+        else
+        {
+            Nav.NavigateTo("/admin");
+        }
+    }
+}

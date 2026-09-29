@@ -1,0 +1,576 @@
+/* 2-Column view: LEFT = card info + play button below it, RIGHT = timer */
+.hmi-cleaning-workspace {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    grid-template-rows: 1fr auto;
+    gap: 18px;
+    padding: 8px 32px;
+    z-index: 10;
+    align-items: center;
+    justify-items: center;
+}
+
+/* Unwrap the attention-card wrapper so its timer/button children join the workspace grid */
+.hmi-attention-card {
+    display: contents;
+}
+
+.hmi-attention-card > div {
+    display: contents;
+}
+
+/* Grid placement: info card + play button on the left, timer on the right */
+.hmi-wipe-trigger-card {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: center;
+    align-self: center;
+}
+
+.drum-picker-card,
+.timer-running-card {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: center;
+    align-self: center;
+}
+
+.start-play-btn {
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: center;
+    align-self: start;
+}
+
+.running-controls-group {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: center;
+}
+/* Interactive Start Wipe Trigger Card */
+.hmi-wipe-trigger-card {
+    position: relative;
+    background: linear-gradient(180deg, rgba(3, 35, 65, 0.88) 0%, rgba(1, 20, 38, 0.94) 100%);
+    border: 1px solid rgba(56, 189, 248, 0.45);
+    border-radius: 1.5rem;
+    padding: 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+/* Glowing Illustration Disc */
+.hmi-cloth-graphic-disc {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, rgba(2, 132, 199, 0.08) 70%, transparent 100%);
+    border: 1.5px solid rgba(56, 189, 248, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.9rem;
+    box-shadow: 0 0 24px rgba(56, 189, 248, 0.25);
+}
+
+.hmi-wipe-prompt {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    color: #ffffff;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.hmi-wipe-caption {
+    font-size: 0.72rem;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 0.6rem;
+    max-width: 240px;
+}
+
+/* Drum Wheel Card (timer panel on the right side) */
+.drum-picker-card {
+    height: 300px;
+    width: 300px;
+    background: linear-gradient(to bottom, rgba(4, 29, 59, 0.95), rgba(2, 19, 39, 0.95), rgba(0, 13, 28, 0.95));
+    border: 1px solid rgba(56, 189, 248, 0.6);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    backdrop-filter: blur(12px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.gloss-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 5rem;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), transparent);
+    pointer-events: none;
+}
+
+.picker-header {
+    width: 100%;
+    text-align: center;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(2, 132, 199, 0.4);
+}
+
+.format-label {
+    color: #ffffff;
+    font-size: 1.25rem;
+    font-weight: 900;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+}
+
+.wheel-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    user-select: none;
+    position: relative;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+}
+
+.magnifier-slot {
+    position: absolute;
+    left: 0.5rem;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 3.5rem;
+    background: linear-gradient(to right, rgba(2, 132, 199, 0.2), rgba(56, 189, 248, 0.35), rgba(2, 132, 199, 0.2));
+    border-top: 2px solid #38bdf8;
+    border-bottom: 2px solid #38bdf8;
+    border-radius: 0.5rem;
+    box-shadow: inset 0 0 12px rgba(56, 189, 248, 0.4);
+    pointer-events: none;
+}
+
+.time-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+    width: 4rem;
+}
+
+.step-btn {
+    background: transparent;
+    border: none;
+    padding: 0.125rem 0;
+    transition: color 150ms ease, transform 150ms ease;
+    cursor: pointer;
+}
+
+.step-btn:active {
+    transform: scale(0.9);
+}
+
+.step-far {
+    color: rgba(255, 255, 255, 0.25);
+    font-size: 1rem;
+}
+
+.step-far:hover {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.step-near {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 1.25rem;
+}
+
+.step-near:hover {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.active-time-value {
+    color: #ffffff;
+    font-weight: 900;
+    font-size: 2.25rem;
+    letter-spacing: 0.05em;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.75));
+    cursor: pointer;
+}
+
+.time-separator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.time-separator span {
+    color: #38bdf8;
+    font-weight: 700;
+    font-size: 1.875rem;
+    padding-bottom: 0.25rem;
+    filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.6));
+}
+
+/* Preset Chips */
+.preset-chips-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(2, 132, 199, 0.3);
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.preset-chip {
+    padding: 0.25rem 0.625rem;
+    border-radius: 0.25rem;
+    background-color: rgba(2, 132, 199, 0.3);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    color: #ffffff;
+    transition: background-color 150ms ease;
+    cursor: pointer;
+}
+
+.preset-chip:hover {
+    background-color: rgba(2, 132, 199, 0.6);
+}
+
+.chip-highlight {
+    background-color: rgba(2, 132, 199, 0.5);
+    border-color: rgba(56, 189, 248, 0.6);
+}
+
+.chip-highlight:hover {
+    background-color: rgba(2, 132, 199, 0.8);
+}
+
+/* 3D Cyan Start Button */
+.start-play-btn {
+    position: relative;
+    width: 5rem;
+    height: 3rem;
+    border-radius: 0.85rem;
+    background: linear-gradient(to bottom, #1cd2ff, #00b4e6, #008fca);
+    border: 1px solid #a5f3fc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 150ms ease;
+    cursor: pointer;
+}
+
+.start-play-btn:hover {
+    filter: brightness(1.05);
+}
+
+.start-play-btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 4px 12px rgba(0, 35, 70, 0.6);
+}
+
+.btn-glare {
+    position: absolute;
+    left: 0.375rem;
+    right: 0.375rem;
+    top: 0.25rem;
+    height: 1rem;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), transparent);
+    pointer-events: none;
+}
+
+.play-icon {
+    width: 2rem;
+    height: 2rem;
+    fill: #ffffff;
+    filter: drop-shadow(0 2px 4px rgba(0, 40, 80, 0.5));
+    margin-left: 0.25rem;
+    transition: transform 150ms ease;
+}
+
+.start-play-btn:hover .play-icon {
+    transform: scale(1.05);
+}
+
+.btn-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: grayscale(0.8);
+}
+
+/* Running Timer Card */
+.timer-running-card {
+    width: 300px;
+    height: 300px;
+    background: linear-gradient(to bottom, rgba(4, 29, 59, 0.95), rgba(2, 19, 39, 0.95), rgba(0, 13, 28, 0.95));
+    border: 1px solid rgba(56, 189, 248, 0.6);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* SVG Progress Ring */
+.progress-ring-wrapper {
+    position: relative;
+    width: 210px;
+    height: 210px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress-ring {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.ring-bg {
+    fill: none;
+    stroke: rgba(2, 132, 199, 0.25);
+    stroke-width: 4;
+}
+
+.ring-fill {
+    fill: none;
+    stroke: #38bdf8;
+    stroke-width: 5;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 300ms linear;
+}
+
+/* Live Countdown Readout */
+.countdown-readout {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.live-digits {
+    color: #ffffff;
+    font-size: 2rem;
+    font-weight: 500;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    letter-spacing: 0.05em;
+}
+
+.progress-percent {
+    font-size: 0.7rem;
+    color: #38bdf8;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    margin-top: 0.25rem;
+}
+
+/* Action Control Buttons Group (below the running timer card) */
+.running-controls-group {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.hmi-action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    width: 10rem;
+    height: 3.25rem;
+    border-radius: 0.75rem;
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 150ms ease;
+    box-shadow: 0 8px 18px rgba(0, 20, 40, 0.4);
+}
+
+.hmi-action-btn:active {
+    transform: scale(0.95);
+}
+
+.pause-btn {
+    background: linear-gradient(to bottom, #f59e0b, #d97706);
+    border: 1px solid #fcd34d;
+}
+
+.resume-btn {
+    background: linear-gradient(to bottom, #10b981, #059669);
+    border: 1px solid #6ee7b7;
+}
+
+.reset-btn {
+    background: linear-gradient(to bottom, #ef4444, #dc2626);
+    border: 1px solid #fca5a5;
+}
+
+.action-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: currentColor;
+}
+
+
+/* Center Interactive Configuration Card */
+.hmi-monitor-card {
+    position: relative;
+    width: 100%;
+    max-width: 580px;
+    background: linear-gradient(180deg, rgba(3, 33, 66, 0.92) 0%, rgba(2, 20, 42, 0.96) 100%);
+    border: 1.5px solid rgba(56, 189, 248, 0.45);
+    border-radius: 1.5rem;
+    padding: 2rem 2.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 18px 45px rgba(0, 10, 26, 0.65), inset 0 1px 2px rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    transition: all 0.3s ease;
+}
+
+.card-enabled {
+    border-color: rgba(56, 189, 248, 0.65);
+    box-shadow: 0 18px 45px rgba(2, 132, 199, 0.35), inset 0 0 20px rgba(56, 189, 248, 0.12);
+}
+
+.card-disabled {
+    border-color: rgba(148, 163, 184, 0.35);
+    opacity: 0.92;
+}
+
+/* Interactive Control Row: Graphic + Dropdown Selector */
+.hmi-control-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.75rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Airflow Out Graphic Housing */
+.hmi-airflow-out-graphic {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.graphic-bezel {
+    position: relative;
+    width: 145px;
+    height: 94px;
+    background: linear-gradient(180deg, #04254d 0%, #021733 100%);
+    border: 2px solid #38bdf8;
+    border-radius: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 0.5rem;
+    box-shadow: 0 0 18px rgba(56, 189, 248, 0.35), inset 0 2px 4px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+}
+
+.graphic-bezel-disabled {
+    border-color: #64748b;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Dropdown Selector Component verbatim from Reference Image */
+.hmi-select-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.hmi-select-label {
+    font-size: 0.72rem;
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    letter-spacing: 0.08em;
+    color: #bae6fd;
+    text-transform: uppercase;
+}
+
+.hmi-select-box {
+    position: relative;
+    width: 170px;
+}
+
+.hmi-dropdown {
+    width: 100%;
+    appearance: none;
+    -webkit-appearance: none;
+    background: linear-gradient(180deg, #032d5c 0%, #011f42 100%);
+    border: 2px solid #38bdf8;
+    border-radius: 0.65rem;
+    padding: 0.55rem 2.2rem 0.55rem 1rem;
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0, 15, 35, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.2);
+    transition: all 0.2s ease;
+}
+
+.hmi-dropdown:focus {
+    outline: none;
+    border-color: #7dd3fc;
+    box-shadow: 0 0 14px rgba(56, 189, 248, 0.6);
+}
+
+.hmi-dropdown option {
+    background-color: #042250;
+    color: #ffffff;
+}
+
+.hmi-select-chevron {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #38bdf8;
+}
+
+/* Feature Status Caption */
+.hmi-status-caption {
+    font-size: 0.88rem;
+    color: #bae6fd;
+    margin-bottom: 1.25rem;
+    text-align: center;
+    max-width: 440px;
+    line-height: 1.4;
+}

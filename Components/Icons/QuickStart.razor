@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" 
+     viewBox="0 0 512 512" 
+     width="@Width" 
+     height="@Height" 
+     class="@Class"
+     @attributes="AdditionalAttributes">
+  <defs>
+    <!-- Background Card Gradient -->
+    <linearGradient id="appBgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#EDF2F7"/>
+    </linearGradient>
+
+    <!-- Blue Wheel Arc Gradient -->
+    <linearGradient id="blueArcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </linearGradient>
+
+    <!-- Green Checkmark Arc Gradient -->
+    <linearGradient id="greenCheckGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4ADE80"/>
+      <stop offset="100%" stop-color="#16A34A"/>
+    </linearGradient>
+
+    <!-- Climber Orange Gradient -->
+    <linearGradient id="climberGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF8C42"/>
+      <stop offset="100%" stop-color="#FF5500"/>
+    </linearGradient>
+
+    <!-- Soft Drop Shadows -->
+    <filter id="shadowApp" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#0F172A" flood-opacity="0.3"/>
+    </filter>
+
+    <filter id="shadowClimber" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#FF5500" flood-opacity="0.25"/>
+    </filter>
+
+    <filter id="glowGreen" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#4ADE80" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- App Icon Rounded Container Base -->
+  <rect x="32" y="32" width="448" height="448" rx="96" fill="url(#appBgGrad)" filter="url(#shadowApp)"/>
+
+  <!-- Blue Pulley Arc & Cable -->
+  <g fill="none" stroke="url(#blueArcGrad)" stroke-width="20" stroke-linecap="round">
+    <!-- Circular Ring Section -->
+    <path d="M 230 76 A 120 120 0 1 1 370 200"/>
+    <!-- Straight Down Cable -->
+    <path d="M 370 200 L 370 450"/>
+  </g>
+
+  <!-- Green Checkmark Mechanical Lever -->
+  <path d="M 185 45 L 285 365 L 245 365" 
+        fill="none" 
+        stroke="url(#greenCheckGrad)" 
+        stroke-width="22" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"
+        filter="url(#glowGreen)"/>
+
+  <!-- Speed Motion Trails beneath Climber -->
+  <g stroke="#FFC09F" stroke-linecap="round" opacity="0.75">
+    <path d="M 220 310 L 220 390" stroke-width="8"/>
+    <path d="M 242 330 L 242 430" stroke-width="10"/>
+    <path d="M 264 320 L 264 370" stroke-width="8"/>
+  </g>
+
+  <!-- Climber Silhouette Figure -->
+  <g fill="url(#climberGrad)" filter="url(#shadowClimber)">
+    <!-- Head -->
+    <circle cx="195" cy="190" r="22"/>
+
+    <!-- Upper Body & Left Arm (Reaching Left/Up) -->
+    <path d="M 215 210 C 205 200, 180 185, 170 170 C 160 155, 172 145, 180 155 C 190 170, 210 188, 222 196 Z"/>
+
+    <!-- Right Arm (Bent Back/Down) -->
+    <path d="M 225 220 L 165 270 C 158 275, 150 262, 158 255 L 210 212 Z"/>
+
+    <!-- Torso -->
+    <path d="M 215 210 Q 250 250 230 300 Q 210 270 215 210 Z"/>
+
+    <!-- Right Leg (Bent Upward Angle) -->
+    <path d="M 230 280 L 290 230 C 298 223, 308 235, 298 245 L 250 300 C 242 308, 230 295, 230 280 Z"/>
+
+    <!-- Left Leg (Extended Downward Right) -->
+    <path d="M 230 290 L 320 380 C 335 395, 345 405, 330 405 C 315 405, 295 365, 220 305 Z"/>
+  </g>
+</svg>
+
+@code {
+    [Parameter] public string Width { get; set; } = "100%";
+    [Parameter] public string Height { get; set; } = "100%";
+    [Parameter] public string? Class { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] 
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
+}

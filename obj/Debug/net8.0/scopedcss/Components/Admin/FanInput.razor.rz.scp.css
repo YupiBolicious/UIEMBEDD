@@ -1,0 +1,306 @@
+/* Outer Centering Chassis Enclosure */
+.hmi-chassis[b-d83nv13vph] {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #000c18;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    overflow: hidden;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Ambient Glass Reflection Sheen */
+.hmi-ambient-reflection[b-d83nv13vph] {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, transparent 45%, rgba(255, 255, 255, 0.02) 100%);
+    z-index: 1;
+}
+
+/* 1. Top Header Telemetry */
+.hmi-header[b-d83nv13vph] {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 10;
+    border-bottom: 1px solid rgba(56, 189, 248, 0.25);
+    padding-bottom: 0.5rem;
+}
+
+.hmi-brand[b-d83nv13vph] {
+    font-size: 1.35rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    color: #ffffff;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.hmi-cabinet-badge[b-d83nv13vph] {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.75rem;
+    background: rgba(2, 132, 199, 0.35);
+    border: 1px solid rgba(56, 189, 248, 0.45);
+    border-radius: 0.4rem;
+    padding: 0.2rem 0.65rem;
+    color: #bae6fd;
+    font-family: ui-monospace, SFMono-Regular, monospace;
+}
+
+.status-pulse-dot[b-d83nv13vph] {
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background-color: var(--hmi-safe-green);
+    box-shadow: 0 0 8px var(--hmi-safe-green);
+    animation: pulseGlow-b-d83nv13vph 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.hmi-title-capsule[b-d83nv13vph] {
+    background: linear-gradient(90deg, rgba(4, 34, 80, 0.9) 0%, rgba(2, 22, 54, 0.95) 100%);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    border-radius: 0.5rem;
+    padding: 0.25rem 2rem;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.hmi-title[b-d83nv13vph] {
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: #ffffff;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* 2. Main PIN Workspace (Left Status + Right Keypad) */
+.hmi-pin-workspace[b-d83nv13vph] {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 2rem;
+    align-items: center;
+    padding: 10px;
+    z-index: 10;
+}
+
+/* Left PIN Status Card */
+.hmi-pin-left-card[b-d83nv13vph] {
+    background: linear-gradient(180deg, rgba(3, 30, 60, 0.88) 0%, rgba(2, 18, 38, 0.94) 100%);
+    border: 1.5px solid rgba(56, 189, 248, 0.45);
+    border-radius: 1.25rem;
+    padding: 1.6rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-shadow: 0 14px 32px rgba(0, 10, 24, 0.55), inset 0 1px 2px rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+}
+
+/* Shield Hologram Vector Disc */
+.hmi-shield-disc[b-d83nv13vph] {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.shield-entry[b-d83nv13vph] {
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.22) 0%, rgba(2, 132, 199, 0.08) 70%, transparent 100%);
+    border: 2px solid rgba(56, 189, 248, 0.45);
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.25);
+}
+
+.shield-complete[b-d83nv13vph] {
+    background: radial-gradient(circle, rgba(52, 211, 153, 0.25) 0%, rgba(16, 185, 129, 0.08) 70%, transparent 100%);
+    border: 2px solid rgba(52, 211, 153, 0.6);
+    box-shadow: 0 0 24px rgba(52, 211, 153, 0.35);
+}
+
+/* Prompt Texts */
+.hmi-prompt-title[b-d83nv13vph] {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: 0.03em;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    margin-bottom: 0.25rem;
+}
+
+.hmi-prompt-subtitle[b-d83nv13vph] {
+    font-size: 0.72rem;
+    color: rgba(186, 230, 253, 0.75);
+    margin-bottom: 1.25rem;
+    max-width: 260px;
+}
+
+/* 4 Glowing PIN Slots / Asterisk Digits Row */
+.hmi-pin-slots-row[b-d83nv13vph] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.85rem;
+    margin-bottom: 1rem;
+}
+
+.hmi-pin-slot[b-d83nv13vph] {
+    width: 3.4rem;
+    height: 3.4rem;
+    border-radius: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slot-empty[b-d83nv13vph] {
+    background: rgba(3, 20, 42, 0.85);
+    border: 1.5px solid rgba(56, 189, 248, 0.3);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.slot-current[b-d83nv13vph] {
+    background: rgba(3, 30, 62, 0.95);
+    border: 2px solid #38bdf8;
+    box-shadow: 0 0 14px rgba(56, 189, 248, 0.5), inset 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.slot-filled[b-d83nv13vph] {
+    background: linear-gradient(135deg, rgba(2, 132, 199, 0.6) 0%, rgba(3, 50, 100, 0.85) 100%);
+    border: 2px solid #7dd3fc;
+    box-shadow: 0 0 16px rgba(56, 189, 248, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+.animate-slot-pop[b-d83nv13vph] {
+    animation: slotPop-b-d83nv13vph 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes slotPop-b-d83nv13vph {
+    0% { transform: scale(0.4); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.hmi-pin-status-message[b-d83nv13vph] {
+    min-height: 20px;
+    font-size: 0.78rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Action Buttons inside status card */
+.hmi-btn-clear[b-d83nv13vph] {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.30rem 0.70rem;
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    color: #bae6fd;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.hmi-btn-clear:hover[b-d83nv13vph] {
+    background: rgba(56, 189, 248, 0.2);
+    border-color: #38bdf8;
+    color: #ffffff;
+}
+
+.hmi-btn-confirm[b-d83nv13vph] {
+    margin-left: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.30rem 0.70rem;
+    border-radius: 0.5rem;
+    background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+    border: 1px solid #34d399;
+    color: #ffffff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+    transition: all 0.15s ease;
+}
+
+.hmi-btn-confirm:hover[b-d83nv13vph] {
+    filter: brightness(1.12);
+}
+
+/* Right Keypad Panel */
+.hmi-keypad-panel[b-d83nv13vph] {
+    background: linear-gradient(180deg, rgba(3, 26, 54, 0.85) 0%, rgba(2, 16, 34, 0.92) 100%);
+    border: 1.5px solid rgba(56, 189, 248, 0.4);
+    border-radius: 1.25rem;
+    padding: 1.35rem 1.4rem;
+    box-shadow: 0 14px 32px rgba(0, 10, 24, 0.55), inset 0 1px 2px rgba(255, 255, 255, 0.12);
+}
+
+/* 3x4 Modernized Oval Numeric Keypad Grid */
+.hmi-keypad-grid[b-d83nv13vph] {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem 0.85rem;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Oval Pill Keypad Button - matching reference photo with 3D tactile elevation */
+.hmi-key-btn[b-d83nv13vph] {
+    position: relative;
+    height: 36px;
+    border-radius: 9999px; /* Smooth rounded oval matching reference keypad */
+    background: linear-gradient(180deg, rgba(4, 45, 86, 0.92) 0%, rgba(2, 28, 56, 0.96) 100%);
+    border: 1.5px solid rgba(56, 189, 248, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    cursor: pointer;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 10, 25, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.2);
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hmi-key-btn:hover[b-d83nv13vph] {
+    background: linear-gradient(180deg, rgba(2, 132, 199, 0.6) 0%, rgba(4, 45, 86, 0.95) 100%);
+    border-color: #38bdf8;
+    box-shadow: 0 6px 16px rgba(2, 132, 199, 0.4), inset 0 1px 3px rgba(255, 255, 255, 0.35);
+    transform: translateY(-1.5px);
+}
+
+.hmi-key-btn:active[b-d83nv13vph] {
+    transform: scale(0.94);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6), inset 0 2px 4px rgba(0, 0, 0, 0.4);
+    background: rgba(2, 132, 199, 0.85);
+}
+
+.hmi-key-number[b-d83nv13vph] {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    color: #ffffff;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    font-family: Inter, ui-sans-serif, system-ui;
+}
+
+
+
+@keyframes pulseGlow-b-d83nv13vph {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.9); }
+}

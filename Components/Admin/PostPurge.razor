@@ -1,0 +1,99 @@
+@page "/admin/postpurge"
+@rendermode InteractiveServer
+@inject NavigationManager Nav
+
+
+<div class="hmi-shell">
+    <InnerTopBar Title="Post Purge Timer"/>
+        <main class="hmi-monitor-workspace">
+            
+            <!-- Modernized Glowing Airflow Out Card -->
+            <div class="hmi-monitor-card @(IsPurgeActive ? "card-enabled" : "card-disabled")">
+                <div class="hmi-control-row">
+                    <div class="hmi-airflow-out-graphic">
+                        <div class="graphic-bezel @(IsPurgeActive ? "" : "graphic-bezel-disabled")">
+                        <PostPurge/>
+                        </div>
+                    </div>
+
+                    <!-- Dropdown Select Box verbatim from reference: "Disable" / "Enable" -->
+                    <div class="hmi-select-container">
+                        <span class="hmi-select-label">Post Purge Timer</span>
+                        <div class="hmi-select-box">
+                            <select value="@SelectedOption" @onchange="OnStatusSelectionChanged" class="hmi-dropdown">
+                                <option value="Disable">Disable</option>
+                                <option value="Enable">Enable</option>
+                            </select>
+                            <!-- Dropdown Chevron Caret -->
+                            <div class="hmi-select-chevron">
+                                <svg class="w-5 h-5 stroke-[3]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Dynamic Status Caption Underneath -->
+                <div class="hmi-status-caption">
+                    @if (IsPurgeActive)
+                    {
+                        <span class="text-sky-200">
+                            Post purge active.
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="text-amber-300">
+                            To ensure that all contaminations are purged from the work zone, if internal fan turned off, post-purge period follows. 
+                        </span>
+                    }
+                </div>
+            </div>
+
+        </main>
+        <footer class="hmi-footer">
+            <button type="button" @onclick="NavigateBack" class="hmi-button">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                </svg>
+                <span>Back</span>
+            </button>
+        </footer>
+</div>
+
+@code {
+    [Parameter] public string SelectedOption { get; set; } = "Disable";
+    [Parameter] public EventCallback<string> SelectedOptionChanged { get; set; }
+    public bool IsPurgeActive => SelectedOption.Equals("Enable", StringComparison.OrdinalIgnoreCase);
+    [Parameter] public DateTime CurrentTime { get; set; } = new DateTime(2026, 9, 28, 11, 24, 0);
+    [Parameter] public EventCallback<bool> OnPurgeStateChanged { get; set; }
+    [Parameter] public EventCallback OnBack { get; set; }
+
+    private async Task OnStatusSelectionChanged(ChangeEventArgs e)
+    {
+        SelectedOption = e.Value?.ToString() ?? "Disable";
+        if (SelectedOptionChanged.HasDelegate)
+        {
+            await SelectedOptionChanged.InvokeAsync(SelectedOption);
+        }
+
+        if (OnPurgeStateChanged.HasDelegate)
+        {
+            await OnPurgeStateChanged.InvokeAsync(IsPurgeActive);
+        }
+    }
+
+    private async Task NavigateBack()
+    {
+        if (OnBack.HasDelegate)
+        {
+            await OnBack.InvokeAsync();
+        }
+        else
+        {
+            Nav.NavigateTo("/admin");
+        }
+    }
+}

@@ -123,20 +123,8 @@
 </div>
 
 @code {
-    /// <summary>
-    /// Current state of the Fan Scheduler toggle (true = Scheduler On, false = Off)
-    /// </summary>
     [Parameter] public bool IsSchedulerOn { get; set; } = true;
     [Parameter] public EventCallback<bool> IsSchedulerOnChanged { get; set; }
-
-    /// <summary>
-    /// Live clock readout
-    /// </summary>
-    [Parameter] public DateTime CurrentTime { get; set; } = new DateTime(2026, 9, 21, 10, 27, 0);
-
-    /// <summary>
-    /// External callback for Back button navigation
-    /// </summary>
     [Parameter] public EventCallback OnBack { get; set; }
 
     private async Task ToggleScheduler()

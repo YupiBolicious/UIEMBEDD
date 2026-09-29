@@ -1,0 +1,85 @@
+/* Centered Smaller Viewport */
+.hmi-timer-compact-viewport[b-jx7f9lr9ui] {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3.5rem;
+    width: 100%;
+    z-index: 10;
+}
+
+/* Compact Tile Items */
+.hmi-option-item[b-jx7f9lr9ui] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hmi-tile-compact[b-jx7f9lr9ui] {
+    width: 100px;  /* Reduced from w-32/w-44 */
+    height: 100px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+
+.tile-icon[b-jx7f9lr9ui] {
+    width: 68px; /* Scaled down icon */
+    height: 68px;
+    object-fit: contain;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+}
+
+.tile-label[b-jx7f9lr9ui] {
+    margin-top: 10px;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: 0.025em;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8));
+}
+
+.hmi-toggle-label[b-jx7f9lr9ui] {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.toggle-text[b-jx7f9lr9ui] {
+    color: #ffffff;
+    font-size: 0.95rem;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8));
+}
+
+.hmi-checkbox[b-jx7f9lr9ui] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    background: #e2e8f0;
+    border: 1px solid #cbd5e1;
+    border-radius: 2px;
+    display: inline-grid;
+    place-content: center;
+    cursor: pointer;
+}
+
+.hmi-checkbox:checked[b-jx7f9lr9ui] {
+    background-color: #f8fafc;
+}
+
+.hmi-checkbox:checked[b-jx7f9lr9ui]::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: #0284c7;
+    border-radius: 1px;
+}

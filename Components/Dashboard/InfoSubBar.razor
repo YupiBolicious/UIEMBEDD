@@ -55,7 +55,7 @@
         var state = await Auth.GetAuthenticationStateAsync();
         var user = state.User;
         _isLoggedIn = user.Identity?.IsAuthenticated == true;
-        _userName = _isLoggedIn ? user.Identity.Name ?? "" : "";
+        _userName = _isLoggedIn ? user?.Identity?.Name ?? "" : "";
         StateHasChanged();
     }
 

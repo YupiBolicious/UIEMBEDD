@@ -1,0 +1,149 @@
+@page "/admin/mutetimer"
+@rendermode InteractiveServer
+@inject NavigationManager Navigation
+
+<div class="hmi-shell">
+    <InnerTopBar Title="Mute Timer"/>
+        <!-- 2. Main Interactive Workspace (Central Mute Timer Control Card) -->
+        <main class="hmi-mute-workspace">
+            
+            <!-- Modernized Tactile Glassmorphic Mute Timer Card -->
+            <div class="hmi-mute-card" @onclick="OpenDurationPicker" role="button" tabindex="0">
+                
+                <div class="hmi-mute-content-row">
+                    <!-- Left: Mute Speaker & Digital Timer Graphic Badge verbatim from reference -->
+                    <div class="hmi-mute-badge-container">
+                        <div class="hmi-mute-icon-tile">
+                            <svg class="hmi-mute-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="speakerBodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#38bdf8" />
+                                        <stop offset="50%" stop-color="#0284c7" />
+                                        <stop offset="100%" stop-color="#0369a1" />
+                                    </linearGradient>
+                                    <linearGradient id="strikeSlashGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#f59e0b" />
+                                        <stop offset="50%" stop-color="#fbbf24" />
+                                        <stop offset="100%" stop-color="#fef08a" />
+                                    </linearGradient>
+                                    <filter id="tileGlow" x="-20%" y="-20%" width="140%" height="140%">
+                                        <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0284c7" flood-opacity="0.4" />
+                                    </filter>
+                                </defs>
+
+                                <!-- Speaker Horn Graphic -->
+                                <g filter="url(#tileGlow)">
+                                    <!-- Speaker Base Box -->
+                                    <rect x="20" y="38" width="14" height="24" rx="2.5" fill="url(#speakerBodyGrad)" stroke="#38bdf8" stroke-width="1.2" />
+                                    <!-- Speaker Flared Cone -->
+                                    <path d="M 34 38 L 52 24 L 52 76 L 34 62 Z" fill="url(#speakerBodyGrad)" stroke="#38bdf8" stroke-width="1.2" />
+                                    
+                                    <!-- Sound Waves -->
+                                    <path d="M 59 38 C 65 44, 65 56, 59 62" stroke="#bae6fd" stroke-width="3" stroke-linecap="round" />
+                                    <path d="M 66 31 C 76 41, 76 59, 66 69" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" opacity="0.8" />
+
+                                    <!-- Digital Timer Display Box ('XXXs' timer indicator) verbatim from physical HMI -->
+                                    <rect x="27" y="44" width="46" height="18" rx="3.5" fill="#03254c" stroke="#38bdf8" stroke-width="1.5" />
+                                    <!-- 'XXXs' Text -->
+                                    <text x="50" y="57" font-family="ui-monospace, monospace" font-size="11" font-weight="900" letter-spacing="1.5" fill="#fef08a" text-anchor="middle">XXXs</text>
+
+                                    <!-- Diagonal Mute Strike-Through Slash -->
+                                    <line x1="16" y1="78" x2="84" y2="22" stroke="#ea580c" stroke-width="6.5" stroke-linecap="round" />
+                                    <line x1="16" y1="78" x2="84" y2="22" stroke="url(#strikeSlashGrad)" stroke-width="4.5" stroke-linecap="round" />
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Right: Timer Label, Current Duration, and Tap Action -->
+                    <div class="hmi-timer-text-container">
+                        <!-- Label verbatim from reference: "Current timer:" -->
+                        <span class="hmi-timer-label">Current timer:</span>
+                        
+                        <!-- Prominent Duration Value verbatim: "15 min" -->
+                        <div class="hmi-timer-value">
+                            <span class="duration-number">@SelectedMinutes</span>
+                            <span class="duration-unit">min</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Telemetry Line inside Card -->
+                <div class="hmi-card-meta">
+                    <span class="meta-label">ALARM SUPPRESSION LIMIT</span>
+                    <span class="meta-value">MAX 30 MIN</span>
+                </div>
+
+            </div>
+
+            <!-- Quick Preset Duration Shortcuts -->
+            <div class="hmi-preset-row">
+                <span class="preset-label">PRESETS:</span>
+                @foreach (var preset in AvailablePresets)
+                {
+                    <button type="button" 
+                            @onclick="() => SelectPreset(preset)" 
+                            class="hmi-btn-preset @(SelectedMinutes == preset ? "preset-selected" : "")">
+                        @preset min
+                    </button>
+                }
+            </div>
+
+        </main>
+
+        <!-- 3. Bottom HMI Navigation & Footer Dock -->
+        <footer class="hmi-footer">
+            <!-- Tactile Back Navigation Button verbatim from reference -->
+            <button type="button" @onclick="NavigateBack" class="hmi-button">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                </svg>
+                <span>Back</span>
+            </button>
+        </footer>
+</div>
+
+@code {
+    [Parameter] public int SelectedMinutes { get; set; } = 15;
+    [Parameter] public EventCallback<int> SelectedMinutesChanged { get; set; }
+    private readonly int[] AvailablePresets = new[] { 5, 10, 15, 30 };
+
+    [Parameter] public EventCallback OnOpenPicker { get; set; }
+    [Parameter] public EventCallback OnBack { get; set; }
+
+    private async Task SelectPreset(int minutes)
+    {
+        SelectedMinutes = minutes;
+        if (SelectedMinutesChanged.HasDelegate)
+        {
+            await SelectedMinutesChanged.InvokeAsync(SelectedMinutes);
+        }
+    }
+
+    private async Task OpenDurationPicker()
+    {
+        if (OnOpenPicker.HasDelegate)
+        {
+            await OnOpenPicker.InvokeAsync();
+        }
+        else
+        {
+            // By default cycles presets or navigates to timer setting
+            var currentIndex = Array.IndexOf(AvailablePresets, SelectedMinutes);
+            var nextIndex = (currentIndex + 1) % AvailablePresets.Length;
+            await SelectPreset(AvailablePresets[nextIndex]);
+        }
+    }
+
+    private async Task NavigateBack()
+    {
+        if (OnBack.HasDelegate)
+        {
+            await OnBack.InvokeAsync();
+        }
+        else
+        {
+            Navigation.NavigateTo("/admin");
+        }
+    }
+}

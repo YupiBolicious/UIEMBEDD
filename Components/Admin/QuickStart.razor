@@ -1,0 +1,41 @@
+@page "/admin/quickstart"
+@rendermode InteractiveServer
+@inject NavigationManager Nav
+
+<main class="hmi-shell">
+    <InnerTopBar Title="Quick Start"/>
+    <section>
+        <div></div>
+    </section>
+     <!-- Bottom Interaction Toolbar -->
+    <footer class="hmi-footer" data-purpose="hmi-footer">
+        <!-- Back Navigation Button -->
+        <button type="button"
+                id="btn-back"
+                class="hmi-button"
+                title="Return to Previous Screen"
+                data-purpose="back-navigation"
+                @onclick="NavigateBack">
+            <svg class="back-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Back</span>
+        </button>
+    </footer>
+</main>
+
+@code {
+    [Parameter] public EventCallback OnNavigateBack { get; set; }
+    [Parameter] public EventCallback<bool> OnPreferenceChanged { get; set; }
+
+
+
+    private async Task NavigateBack()
+    {
+        if (OnNavigateBack.HasDelegate)
+            await OnNavigateBack.InvokeAsync();
+        else
+            Nav.NavigateTo("/admin/opmode");
+    }
+}

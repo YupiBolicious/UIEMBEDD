@@ -9,15 +9,9 @@
         {
             <div class="hmi-blanking-overlay select-none" @onclick="AbortCleaning">
                 <div class="hmi-blank-inner">
-                    <svg class="hmi-blank-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
-                    </svg>
                     <div class="hmi-blank-label">LCD CLEANING IN PROGRESS</div>
                     <div class="hmi-blank-sub">Touch Input Disabled for Safety</div>
-
-                    <!-- Large Glowing Countdown -->
                     <div class="hmi-blanking-countdown">@CleaningCountdown</div>
-
                     <div class="hmi-blank-note">
                         Cycle ends automatically in @CleaningCountdown seconds (Tap to abort)
                     </div>
@@ -159,6 +153,7 @@
             </button>
         </footer>
 </div>
+
 @code {
     [Parameter] public int DurationSeconds { get; set; } = 15;
     [Parameter] public EventCallback OnCleaningStarted { get; set; }

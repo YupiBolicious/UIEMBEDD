@@ -1,0 +1,141 @@
+.hmi-monitor-workspace {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem 0;
+    z-index: 10;
+}
+
+/* Center Interactive Configuration Card */
+.hmi-monitor-card {
+    position: relative;
+    width: 100%;
+    max-width: 580px;
+    background: linear-gradient(180deg, rgba(3, 33, 66, 0.92) 0%, rgba(2, 20, 42, 0.96) 100%);
+    border: 1.5px solid rgba(56, 189, 248, 0.45);
+    border-radius: 1.5rem;
+    padding: 2rem 2.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 18px 45px rgba(0, 10, 26, 0.65), inset 0 1px 2px rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    transition: all 0.3s ease;
+}
+
+.card-enabled {
+    border-color: rgba(56, 189, 248, 0.65);
+    box-shadow: 0 18px 45px rgba(2, 132, 199, 0.35), inset 0 0 20px rgba(56, 189, 248, 0.12);
+}
+
+.card-disabled {
+    border-color: rgba(148, 163, 184, 0.35);
+    opacity: 0.92;
+}
+
+/* Interactive Control Row: Graphic + Dropdown Selector */
+.hmi-control-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.75rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Airflow Out Graphic Housing */
+.hmi-airflow-out-graphic {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.graphic-bezel {
+    position: relative;
+    width: 145px;
+    height: 94px;
+    background: linear-gradient(180deg, #04254d 0%, #021733 100%);
+    border: 2px solid #38bdf8;
+    border-radius: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 0.5rem;
+    box-shadow: 0 0 18px rgba(56, 189, 248, 0.35), inset 0 2px 4px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+}
+
+.graphic-bezel-disabled {
+    border-color: #64748b;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Dropdown Selector Component verbatim from Reference Image */
+.hmi-select-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.hmi-select-label {
+    font-size: 0.72rem;
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    letter-spacing: 0.08em;
+    color: #bae6fd;
+    text-transform: uppercase;
+}
+
+.hmi-select-box {
+    position: relative;
+    width: 170px;
+}
+
+.hmi-dropdown {
+    width: 100%;
+    appearance: none;
+    -webkit-appearance: none;
+    background: linear-gradient(180deg, #032d5c 0%, #011f42 100%);
+    border: 2px solid #38bdf8;
+    border-radius: 0.65rem;
+    padding: 0.55rem 2.2rem 0.55rem 1rem;
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0, 15, 35, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.2);
+    transition: all 0.2s ease;
+}
+
+.hmi-dropdown:focus {
+    outline: none;
+    border-color: #7dd3fc;
+    box-shadow: 0 0 14px rgba(56, 189, 248, 0.6);
+}
+
+.hmi-dropdown option {
+    background-color: #042250;
+    color: #ffffff;
+}
+
+.hmi-select-chevron {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #38bdf8;
+}
+
+/* Feature Status Caption */
+.hmi-status-caption {
+    font-size: 0.88rem;
+    color: #bae6fd;
+    margin-bottom: 1.25rem;
+    text-align: center;
+    max-width: 440px;
+    line-height: 1.4;
+}

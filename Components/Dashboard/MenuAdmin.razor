@@ -193,32 +193,32 @@
 
 private static MenuTile[] CreatePage1() => new[]
 {
-    new MenuTile("Shut Down", Icon:"/images/Shutdown.png", Route:"/shut-down"),
+    new MenuTile("Shut Down", Icon:"/images/Shutdown.png", Route:"/admin/shutdown"),
     new MenuTile("Users", Icon:"/images/User%20Mgnt.png", Route:"/user-registration"),
     new MenuTile("Logout Time", Icon:"/images/logout-time.png", Route:"/logout"),
     new MenuTile("Languages", Icon:"/images/Language.png", Route :"/language"),
-    new MenuTile("Cabinet Name", Icon:"/images/Cabinet%20Name.png", Route :"/cabinet-name"),
-    new MenuTile("TimeZone", Icon:"/images/Time%20Zone.png", Route :"/time-zone"),
-    new MenuTile("Date", Icon:"/images/Set-Date.png", Route :"/set-date"),
-    new MenuTile("Time", Icon:"/images/Set-Time.png", Route :"/set-time"),
+    new MenuTile("Cabinet Name", Icon:"/images/Cabinet%20Name.png", Route :"/admin/cabinetname"),
+    new MenuTile("TimeZone", Icon:"/images/Time%20Zone.png", Route :"/admin/timezone"),
+    new MenuTile("Date", Icon:"/images/Set-Date.png", Route :"/admin/setdate"),
+    new MenuTile("Time", Icon:"/images/Set-Time.png", Route :"/admin/settime"),
 };
 
 private static MenuTile[] CreatePage2() => new[]
 {
-    new MenuTile("Fan PIN", Icon:"/images/Blower-PIN.png", Route :"/blower-pin"),
-    new MenuTile("Operation Mode", Icon: "/images/Set-User-Mode.png", Route :"/set-user-mode"),
-    new MenuTile("Airflow Monitor", Icon: "/images/Airflow-Monitor.png", Route :"/airflow-monitor"),
-    new MenuTile("Airflow Out Temperature", Icon: "/images/Airflow-Out.png", Route :"/airflow-out"),
-    new MenuTile("Mute Timer", Icon: "/images/Mute-Timer.png", Route :"/mute-timer"),
+    new MenuTile("Fan PIN", Icon:"/images/Blower-PIN.png", Route :"/admin/faninput"),
+    new MenuTile("Operation Mode", Icon: "/images/Set-User-Mode.png", Route :"/admin/opmode"),
+    new MenuTile("Airflow Monitor", Icon: "/images/Airflow-Monitor.png", Route :"/admin/airflow"),
+    new MenuTile("Airflow Out Temperature", Icon: "/images/Airflow-Out.png", Route :"/admin/airflowout"),
+    new MenuTile("Mute Timer", Icon: "/images/Mute-Timer.png", Route :"/admin/mutetimer"),
     
     // Explicitly target Icon using named parameters:
-    new MenuTile("Warmup Timer", Icon: "/images/Warm-Up.png", Route :"/warm-up"),
-    new MenuTile("Post Purge Timer", Icon: "/images/Post-Purge.png", Route :"/post-purge"),
-    new MenuTile("Network", Icon: "/images/wifi.png", Route :"/wifi"),
+    new MenuTile("Warmup Timer", Icon: "/images/Warm-Up.png", Route :"/admin/warmup"),
+    new MenuTile("Post Purge Timer", Icon: "/images/Post-Purge.png", Route :"/admin/postpurge"),
+    new MenuTile("Network", Icon: "/images/wifi.png", Route :"/admin/wifi"),
 };
 
 private static MenuTile[] CreatePage3() => new[] 
 {
-    new MenuTile("Remote Modbus", Icon: "/images/Remote-modbus.png", Route :"/modbus")  
+    new MenuTile("Remote Modbus", Icon: "/images/Remote-modbus.png", Route :"/admin/modbus")  
 };
 }

@@ -64,3 +64,13 @@ C:\Users\luthiah.nabilah\UiEmbed\obj\Debug\net8.0\scopedcss\Components\LoginProf
 C:\Users\luthiah.nabilah\UiEmbed\obj\Debug\net8.0\scopedcss\Components\Dashboard\StatusHeader.razor.rz.scp.css
 C:\Users\luthiah.nabilah\UiEmbed\obj\Debug\net8.0\scopedcss\Components\Service\ComponentRecord.razor.rz.scp.css
 C:\Users\luthiah.nabilah\UiEmbed\obj\Debug\net8.0\scopedcss\Components\Service\Maintenance.razor.rz.scp.css
+C:\Users\luthiah.nabilah\UiEmbed\obj\Debug\net8.0\scopedcss\Components\Admin\FanInput.razor.rz.scp.css
+C:\Users\luthiah.nabilah\UiEmbed\obj\Debug\net8.0\scopedcss\Components\Admin\OpMode.razor.rz.scp.css
+C:\Users\luthiah.nabilah\UiEmbed\obj\Debug\net8.0\scopedcss\Components\Admin\NormalMode.razor.rz.scp.css
+C:\Users\luthiah.nabilah\UiEmbed\obj\Debug\net8.0\scopedcss\Components\Admin\QuickStart.razor.rz.scp.css
+C:\Users\luthiah.nabilah\UiEmbed\obj\Debug\net8.0\scopedcss\Components\Admin\airflow.razor.rz.scp.css
+C:\Users\luthiah.nabilah\UiEmbed\obj\Debug\net8.0\scopedcss\Components\Admin\AirflowOut.razor.rz.scp.css
+C:\Users\luthiah.nabilah\UiEmbed\obj\Debug\net8.0\scopedcss\Components\Admin\MuteTimer.razor.rz.scp.css
+C:\Users\luthiah.nabilah\UiEmbed\obj\Debug\net8.0\scopedcss\Components\Admin\PostPurge.razor.rz.scp.css
+C:\Users\luthiah.nabilah\UiEmbed\obj\Debug\net8.0\scopedcss\Components\Admin\Warmup.razor.rz.scp.css
+C:\Users\luthiah.nabilah\UiEmbed\obj\Debug\net8.0\scopedcss\Components\Admin\Modbus.razor.rz.scp.css

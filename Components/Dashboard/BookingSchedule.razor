@@ -345,12 +345,12 @@
         Nav.NavigateTo($"/booking-details?hour={slot.HourIndex}");
     }
 
-    private void QuickBookCurrentSlot()
+    private async Task QuickBookCurrentSlot()
     {
         var nextAvailable = FullDaySlots.FirstOrDefault(s => !s.IsBooked && !s.IsMaintenance && s.HourIndex >= CurrentTime.Hour);
         if (nextAvailable != null)
         {
-            BookSlot(nextAvailable);
+            await BookSlot(nextAvailable);
         }
     }
 

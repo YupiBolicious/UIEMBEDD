@@ -1,0 +1,229 @@
+@page "/admin/faninput"
+@inject NavigationManager Nav
+@rendermode InteractiveServer
+<div class="hmi-shell">
+<InnerTopBar Title="Fan PIN"/>
+    <main class="hmi-pin-workspace">
+            
+            <div class="hmi-pin-left-card">
+                <!-- Prompt Title verbatim from reference: "Enter new PIN" -->
+                <div class="hmi-prompt-title">@PromptText</div>
+                <div class="hmi-prompt-subtitle">Please enter 4-digit security code for fan blower control</div>
+
+                <!-- Modernized Glowing PIN Slots / Asterisk Digits -->
+                <div class="hmi-pin-slots-row">
+                    @for (int i = 0; i < MaxPinLength; i++)
+                    {
+                        var isFilled = i < Pin.Length;
+                        var isCurrent = i == Pin.Length;
+                        <div class="hmi-pin-slot @(isFilled ? "slot-filled" : (isCurrent ? "slot-current" : "slot-empty"))">
+                            @if (isFilled)
+                            {
+                                <!-- Glowing Asterisk / Star Vector -->
+                                <svg class="w-6 h-6 text-sky-200 animate-slot-pop" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2l2.4 7.2h7.6l-6.1 4.5 2.3 7.3-6.2-4.5-6.2 4.5 2.3-7.3-6.1-4.5h7.6z"/>
+                                </svg>
+                            }
+                            else if (isCurrent)
+                            {
+                                <!-- Pulsing Focus Cursor -->
+                                <div class="w-2.5 h-2.5 rounded-full bg-sky-400 animate-ping"></div>
+                            }
+                            else
+                            {
+                                <!-- Empty Dot Placeholder -->
+                                <div class="w-2 h-2 rounded-full bg-sky-800/60"></div>
+                            }
+                        </div>
+                    }
+                </div>
+
+                <!-- Feedback Message / Validation Status -->
+                <div class="hmi-pin-status-message">
+                    @if (!string.IsNullOrEmpty(ErrorMessage))
+                    {
+                        <span class="text-rose-400 font-semibold flex items-center gap-1.5">
+                            <svg class="w-4 h-4 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>
+                            @ErrorMessage
+                        </span>
+                    }
+                    else if (Pin.Length == MaxPinLength)
+                    {
+                        <span class="text-emerald-400 font-semibold flex items-center gap-1.5">
+                            @* <svg class="w-4 h-4 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4.5 12.75l6 6 9-13.5"/></svg> *@
+                            PIN Ready • Tap Confirm or continue
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="text-sky-300/70 font-mono text-xs">
+                            Digits remaining: @(MaxPinLength - Pin.Length)
+                        </span>
+                    }
+                </div>
+
+                <!-- Clear / Reset Shortcut -->
+                <div class="mt-2 items-center">
+                    <button type="button" @onclick="ClearPin" disabled="@(Pin.Length == 0)" class="hmi-btn-clear @(Pin.Length == 0 ? "opacity-40 pointer-events-none" : "")">
+                        <svg class="w-4 h-4 stroke-[2.2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/></svg>
+                        <span>Clear</span>
+                    </button>
+                    @if (Pin.Length == MaxPinLength)
+                    {
+                        <button type="button" @onclick="SubmitPin" class="hmi-btn-confirm animate-pulse">
+                            <svg class="w-4 h-4 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4.5 12.75l6 6 9-13.5"/></svg>
+                            <span>Confirm</span>
+                        </button>
+                    }
+                </div>
+
+            </div>
+
+            <!-- Right Column: Tactile Modern 3x4 Capacitive Oval Numeric Keypad -->
+            <div class="hmi-keypad-panel">
+                <div class="hmi-keypad-grid">
+                    
+                    <!-- Row 1: 1, 2, 3 -->
+                    <button type="button" @onclick='() => AppendDigit("1")' class="hmi-key-btn">
+                        <span class="hmi-key-number">1</span>
+                    </button>
+                    <button type="button" @onclick='() => AppendDigit("2")' class="hmi-key-btn">
+                        <span class="hmi-key-number">2</span>
+                    </button>
+                    <button type="button" @onclick='() => AppendDigit("3")' class="hmi-key-btn">
+                        <span class="hmi-key-number">3</span>
+                    </button>
+
+                    <!-- Row 2: 4, 5, 6 -->
+                    <button type="button" @onclick='() => AppendDigit("4")' class="hmi-key-btn">
+                        <span class="hmi-key-number">4</span>
+                    </button>
+                    <button type="button" @onclick='() => AppendDigit("5")' class="hmi-key-btn">
+                        <span class="hmi-key-number">5</span>
+                    </button>
+                    <button type="button" @onclick='() => AppendDigit("6")' class="hmi-key-btn">
+                        <span class="hmi-key-number">6</span>
+                    </button>
+
+                    <!-- Row 3: 7, 8, 9 -->
+                    <button type="button" @onclick='() => AppendDigit("7")' class="hmi-key-btn">
+                        <span class="hmi-key-number">7</span>
+                    </button>
+                    <button type="button" @onclick='() => AppendDigit("8")' class="hmi-key-btn">
+                        <span class="hmi-key-number">8</span>
+                    </button>
+                    <button type="button" @onclick='() => AppendDigit("9")' class="hmi-key-btn">
+                        <span class="hmi-key-number">9</span>
+                    </button>
+
+                    <!-- Row 4: Backspace (⌫), 0, Confirm/Enter (↵) -->
+                    <button type="button" @onclick="Backspace" class="hmi-key-btn hmi-key-action" title="Backspace">
+                       ✘
+                    </button>
+
+                    <button type="button" @onclick='() => AppendDigit("0")' class="hmi-key-btn">
+                        <span class="hmi-key-number">0</span>
+                    </button>
+
+                    <button type="button" @onclick="SubmitPin" class="hmi-key-btn hmi-key-action @(Pin.Length == MaxPinLength ? "key-enter-ready" : "")" title="Enter">
+                        ✔
+                    </button>
+
+                </div>
+            </div>
+
+        </main>
+
+        <!-- 3. Bottom HMI Navigation & Footer Dock -->
+        <footer class="hmi-footer">
+            <!-- Tactile Back Navigation Button verbatim from reference -->
+            <button type="button" @onclick="NavigateBack" class="hmi-button">
+                <svg class="w-5 h-5 stroke-[3]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                </svg>
+                <span>Back</span>
+            </button>
+        </footer>
+
+    </div>
+
+
+@code {
+    [Parameter] public string Pin { get; set; } = "";
+    [Parameter] public EventCallback<string> PinChanged { get; set; }
+    [Parameter] public int MaxPinLength { get; set; } = 4;
+    [Parameter] public string PromptText { get; set; } = "Enter new PIN";
+    [Parameter] public string ErrorMessage { get; set; } = "";
+    [Parameter] public DateTime CurrentTime { get; set; } = new DateTime(2026, 9, 21, 10, 27, 0);
+    [Parameter] public EventCallback<string> OnPinConfirmed { get; set; }
+    [Parameter] public EventCallback OnBack { get; set; }
+
+    private async Task AppendDigit(string digit)
+    {
+        if (Pin.Length < MaxPinLength)
+        {
+            Pin += digit;
+            ErrorMessage = "";
+            if (PinChanged.HasDelegate)
+            {
+                await PinChanged.InvokeAsync(Pin);
+            }@* 
+            // Auto-submit option when 4 digits reached if desired
+            if (Pin.Length == MaxPinLength && OnPinConfirmed.HasDelegate)
+            {} *@
+        }
+    }
+
+    private async Task Backspace()
+    {
+        if (Pin.Length > 0)
+        {
+            Pin = Pin[..^1];
+            ErrorMessage = "";
+            if (PinChanged.HasDelegate)
+            {
+                await PinChanged.InvokeAsync(Pin);
+            }
+        }
+    }
+
+    private async Task ClearPin()
+    {
+        Pin = "";
+        ErrorMessage = "";
+        if (PinChanged.HasDelegate)
+        {
+            await PinChanged.InvokeAsync(Pin);
+        }
+    }
+
+    private async Task SubmitPin()
+    {
+        if (Pin.Length < MaxPinLength)
+        {
+            ErrorMessage = $"PIN must be {MaxPinLength} digits";
+            return;
+        }
+
+        if (OnPinConfirmed.HasDelegate)
+        {
+            await OnPinConfirmed.InvokeAsync(Pin);
+        }
+        else
+        {
+            Nav.NavigateTo("/admin");
+        }
+    }
+
+    private async Task NavigateBack()
+    {
+        if (OnBack.HasDelegate)
+        {
+            await OnBack.InvokeAsync();
+        }
+        else
+        {
+            Nav.NavigateTo("/admin");
+        }
+    }
+}
