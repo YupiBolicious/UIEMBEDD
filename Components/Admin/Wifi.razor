@@ -1,0 +1,165 @@
+@page "/admin/wifi"
+@inject NavigationManager Nav
+@rendermode InteractiveServer
+
+<div class="hmi-shell">
+    <InnerTopBar Title="WiFi Settings" />
+        <main class="hmi-language-workspace">
+
+            <!-- Left Column: Current Time Zone Overview Card -->
+            <section class="hmi-current-card">
+                <div class="hmi-current-text-group">
+                    <span class="hmi-label-sub">Connected to:</span>
+                    <span class="hmi-current-name">@CurrentWifi</span>
+                </div>
+            </section>
+
+            <!-- Right Column: Choose Time Zone List -->
+            <section class="hmi-picker-card">
+                <div class="hmi-picker-header">
+                    <span class="hmi-picker-title">Connect to:</span></div>
+
+                <!-- Scrollable Touch List -->
+                <div class="hmi-language-list" role="listbox" aria-label="Available Connections">
+                    @foreach (var wf in Wifis)
+                    {
+                        var isSelected = SelectedWifi == wf.Code;
+                        <button type="button"
+                                @onclick="() => SelectWifi(wf)"
+                                class="hmi-lang-item @(isSelected ? "lang-selected" : "")"
+                                role="option"
+                                aria-selected="@isSelected">
+
+                            <div class="flex items-center gap-3">
+                                <span class="lang-label">
+                                    <svg class="wifi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12.55a11 11 0 0 1 14.08 0" />
+                                    <path d="M1.42 9a16 16 0 0 1 21.16 0" />
+                                    <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
+                                    <line x1="12" y1="20" x2="12.01" y2="20" />
+                                </svg>
+                                    <strong class="lang-primary-name">@wf.Name</strong>
+                                </span>
+                            </div>
+
+                            @if (isSelected)
+                            {
+                                <div class="lang-check-badge">
+                                    <svg class="w-4 h-4 text-emerald-400 stroke-[3]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                    </svg>
+                                </div>
+                            }
+                        </button>
+                    }
+                </div>
+
+                <!-- Bottom Action Controls -->
+                <div class="hmi-picker-actions">
+                    <button type="button" @onclick="ResetToDefault" class="hmi-button-cancel">
+                        Reset Default
+                    </button>
+
+                    <button type="button"
+                            @onclick="ApplySelectedWifi"
+                            disabled="@(ActiveWifi.Code == SelectedWifi)"
+                            class="hmi-button @(ActiveWifi.Code != SelectedWifi ? "apply-active" : "apply-disabled")">
+
+                        <span>Apply Change</span>
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <!-- 3. Bottom HMI Navigation & Footer Dock -->
+        <footer class="hmi-footer">
+            <!-- Tactile Back Navigation Button -->
+            <button type="button" @onclick="HandleBack" class="hmi-button">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                </svg>
+                <span>Back</span>
+            </button>
+             <button type="button" @onclick="HandleWired" class="hmi-button">
+                <span>Wired Connection</span>
+            </button>
+            <button type="button" class="hmi-button">
+                <span>Scan</span>
+            </button>
+        </footer>
+</div>
+
+@code {
+    public class WifiItem
+    {
+        public string Code { get; set; } = "WIFI-001";
+        public string Name { get; set; } = "MyWiFiNetwork";
+    }
+
+
+    [Parameter] public string CurrentWifi { get; set; } = "G4Point";
+    [Parameter] public EventCallback<string> CurrentWifiChanged { get; set; }
+
+    [Parameter] public EventCallback<WifiItem> WifiChanged { get; set; }
+    [Parameter] public EventCallback OnBack { get; set; }
+    private string SelectedWifi = "G4Point";
+    private WifiItem ActiveWifi => Wifis.FirstOrDefault(w => w.Code == SelectedWifi) ?? Wifis[0];
+
+    private readonly List<WifiItem> Wifis = new()
+    {
+        new WifiItem { Code = "WIFI-001", Name = "G4Point" },
+        new WifiItem { Code = "WIFI-002", Name = "MyWiFiNetwork" },
+        new WifiItem { Code = "WIFI-003", Name = "GuestWiFi" },
+        new WifiItem { Code = "WIFI-004", Name = "WorkWiFi" },
+    };
+
+    protected override void OnInitialized()
+    {
+        SelectedWifi = CurrentWifi;
+    }
+
+
+    private void SelectWifi(WifiItem wifi)
+    {
+        SelectedWifi = wifi.Code;
+    }
+
+    private void ResetToDefault()
+    {
+        SelectedWifi = "G4Point (Default)";
+        _ = ApplySelectedWifi();
+    }
+
+    private async Task ApplySelectedWifi()
+    {
+        CurrentWifi = SelectedWifi;
+        if (CurrentWifiChanged.HasDelegate)
+        {
+            await CurrentWifiChanged.InvokeAsync(CurrentWifi);
+        }
+
+        if (WifiChanged.HasDelegate)
+        {
+            await WifiChanged.InvokeAsync(ActiveWifi);
+        }
+    }
+
+    private async Task HandleWired()
+    {
+        // Logic to handle wired connection
+        // For example, navigate to a wired connection settings page
+        Nav.NavigateTo("/admin/wired");
+    }
+
+    private async Task HandleBack()
+    {
+        if (OnBack.HasDelegate)
+        {
+            await OnBack.InvokeAsync();
+        }
+        else
+        {
+            Nav.NavigateTo("/admin");
+        }
+    }
+}

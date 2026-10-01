@@ -146,17 +146,13 @@
                 </svg>
                 <span>Back</span>
             </button>
-
-            <!-- Faint System Status -->
-            <div class="hmi-footer-status">SYSTEM READY &bull; CAPACITIVE TOUCH ACTIVE</div>
-
             <!-- Tactile Submit Registration Button -->
             <button type="button" 
                     @onclick="SubmitRegistration" 
                     disabled="@(!IsConfirmed)"
                     class="hmi-button @(IsConfirmed ? "submit-active" : "submit-disabled")">
                 <!-- User ID Badge Icon verbatim from reference -->
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 5v14M5 12h14" />
                 </svg>
                 <span>Submit</span>
@@ -165,9 +161,6 @@
 </div>
 
 @code {
-    /// <summary>
-    /// Registration Form Data Model
-    /// </summary>
     public class UserRegistrationModel
     {
         public string FullName { get; set; } = "";
@@ -182,9 +175,6 @@
     [Parameter] public bool IsConfirmed { get; set; } = true;
     [Parameter] public DateTime CurrentTime { get; set; } = new DateTime(2024, 9, 20, 8, 36, 0);
 
-    /// <summary>
-    /// Event callbacks for hardware/controller integration
-    /// </summary>
     [Parameter] public EventCallback<UserRegistrationModel> OnSubmit { get; set; }
     [Parameter] public EventCallback OnBack { get; set; }
 

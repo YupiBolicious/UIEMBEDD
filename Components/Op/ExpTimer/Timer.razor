@@ -1,0 +1,396 @@
+@page "/op/exptimer/timer"
+@using Microsoft.AspNetCore.Components.Web
+@implements IDisposable
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+<div class="hmi-shell">
+        <InnerTopBar Title="Timer"/>
+
+    <!-- Center Workspace -->
+    <main class="center-workspace">
+
+        @if (!isRunning && !isPaused)
+        {
+            <!-- ================= SETTING MODE: DRUM WHEEL PICKER ================= -->
+            <div class="drum-picker-card">
+                <div class="gloss-overlay"></div>
+
+                <div class="picker-header">
+                    <span class="format-label">HH:MM:SS</span>
+                </div>
+
+                <div class="wheel-section">
+                    <div class="magnifier-slot"></div>
+
+                    <!-- Column: Hours -->
+                    <div class="time-column">
+                        <button type="button" @onclick="() => StepHours(-1)" class="step-btn step-far">
+                            @GetWrappedHours(-2).ToString("D2")
+                        </button>
+                        <button type="button" @onclick="() => StepHours(-1)" class="step-btn step-near">
+                            @GetWrappedHours(-1).ToString("D2")
+                        </button>
+                        
+                        <div class="active-time-value" @onwheel="HandleHoursWheel">
+                            @Hours.ToString("D2")
+                        </div>
+
+                        <button type="button" @onclick="() => StepHours(1)" class="step-btn step-near">
+                            @GetWrappedHours(1).ToString("D2")
+                        </button>
+                        <button type="button" @onclick="() => StepHours(1)" class="step-btn step-far">
+                            @GetWrappedHours(2).ToString("D2")
+                        </button>
+                    </div>
+
+                    <div class="time-separator"><span>:</span></div>
+
+                    <!-- Column: Minutes -->
+                    <div class="time-column">
+                        <button type="button" @onclick="() => StepMinutes(-1)" class="step-btn step-far">
+                            @GetWrappedMinutes(-2).ToString("D2")
+                        </button>
+                        <button type="button" @onclick="() => StepMinutes(-1)" class="step-btn step-near">
+                            @GetWrappedMinutes(-1).ToString("D2")
+                        </button>
+                        
+                        <div class="active-time-value" @onwheel="HandleMinutesWheel">
+                            @Minutes.ToString("D2")
+                        </div>
+
+                        <button type="button" @onclick="() => StepMinutes(1)" class="step-btn step-near">
+                            @GetWrappedMinutes(1).ToString("D2")
+                        </button>
+                        <button type="button" @onclick="() => StepMinutes(1)" class="step-btn step-far">
+                            @GetWrappedMinutes(2).ToString("D2")
+                        </button>
+                    </div>
+
+                    <div class="time-separator"><span>:</span></div>
+
+                    <!-- Column: Seconds -->
+                    <div class="time-column">
+                        <button type="button" @onclick="() => StepSeconds(-1)" class="step-btn step-far">
+                            @GetWrappedSeconds(-2).ToString("D2")
+                        </button>
+                        <button type="button" @onclick="() => StepSeconds(-1)" class="step-btn step-near">
+                            @GetWrappedSeconds(-1).ToString("D2")
+                        </button>
+                        
+                        <div class="active-time-value" @onwheel="HandleSecondsWheel">
+                            @Seconds.ToString("D2")
+                        </div>
+
+                        <button type="button" @onclick="() => StepSeconds(1)" class="step-btn step-near">
+                            @GetWrappedSeconds(1).ToString("D2")
+                        </button>
+                        <button type="button" @onclick="() => StepSeconds(1)" class="step-btn step-far">
+                            @GetWrappedSeconds(2).ToString("D2")
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quick Selection Chips -->
+                <div class="preset-chips-container">
+                    <button type="button" @onclick="() => SetPreset(0, 5, 0)" class="preset-chip">5m</button>
+                    <button type="button" @onclick="() => SetPreset(0, 7, 0)" class="preset-chip chip-highlight">7m</button>
+                    <button type="button" @onclick="() => SetPreset(0, 15, 0)" class="preset-chip">15m</button>
+                    <button type="button" @onclick="() => SetPreset(0, 30, 0)" class="preset-chip">30m</button>
+                    <button type="button" @onclick="() => SetPreset(1, 0, 0)" class="preset-chip">1h</button>
+                </div>
+            </div>
+
+            <!-- Start Pushbutton -->
+            <button type="button"
+                    @onclick="StartTimer"
+                    disabled="@(TotalConfiguredSeconds <= 0)"
+                    title="Start Timer Countdown"
+                    class="start-play-btn @(TotalConfiguredSeconds <= 0 ? "btn-disabled" : "")">
+                <div class="btn-glare"></div>
+                <svg class="play-icon" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+            </button>
+        }
+        else
+        {
+            <!-- ================= RUNNING MODE: LIVE COUNTDOWN & CONTROLS ================= -->
+            <div class="timer-running-card">
+                <div class="gloss-overlay"></div>
+
+                <!-- SVG Progress Ring Container -->
+                <div class="progress-ring-wrapper">
+                    <svg class="progress-ring" viewBox="0 0 120 120">
+                        <circle class="ring-bg" cx="60" cy="60" />
+                        <circle class="ring-fill"
+                                cx="60" cy="60" r="52"
+                                style="stroke-dasharray: 326.72; stroke-dashoffset: @StrokeDashOffset;" />
+                    </svg>
+
+                    <!-- Big Live Time Display -->
+                    <div class="countdown-readout">
+                        <span class="live-digits">@FormattedRemainingTime</span>
+                        <span class="progress-percent">@((int)(ProgressPercentage))% REMAINING</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Controls: Pause/Resume & Reset Buttons -->
+            <div class="running-controls-group">
+                @if (isRunning)
+                {
+                    <button type="button" @onclick="PauseTimer" class="hmi-action-btn pause-btn" title="Pause Timer">
+                        <svg viewBox="0 0 24 24" class="action-icon">
+                            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                        </svg>
+                        <span>PAUSE</span>
+                    </button>
+                }
+                else
+                {
+                    <button type="button" @onclick="ResumeTimer" class="hmi-action-btn resume-btn" title="Resume Timer">
+                        <svg viewBox="0 0 24 24" class="action-icon">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                        <span>RESUME</span>
+                    </button>
+                }
+
+                <button type="button" @onclick="ResetTimer" class="hmi-action-btn reset-btn" title="Reset/Stop Timer">
+                    <svg viewBox="0 0 24 24" class="action-icon">
+                        <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
+                    </svg>
+                    <span>STOP / RESET</span>
+                </button>
+            </div>
+        }
+
+    </main>
+
+    <!-- Bottom Navigation Dock -->
+   <footer class="hmi-footer" data-purpose="hmi-footer">
+        <!-- Back Navigation Button -->
+        <button type="button"
+                id="btn-back"
+                class="hmi-button"
+                title="Return to Previous Screen"
+                data-purpose="back-navigation"
+                @onclick="OnBackClicked">
+            <svg class="back-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Back</span>
+        </button>
+
+        <div class="telemetry-info">
+            <span>Total Set: <strong>@TotalConfiguredSeconds s</strong></span>
+            <span class="telemetry-divider">|</span>
+            <span>Remaining: <strong class="text-cyan">@remainingSeconds s</strong></span>
+            <span class="telemetry-divider">|</span>
+            <span>HMI Touch Target: Active</span>
+        </div>
+    </footer>
+</div>
+
+@code {
+    // PARAMETERS & BOUND VALUES
+    [Parameter] public int Hours { get; set; } = 0;
+    [Parameter] public EventCallback<int> HoursChanged { get; set; }
+
+    [Parameter] public int Minutes { get; set; } = 7;
+    [Parameter] public EventCallback<int> MinutesChanged { get; set; }
+
+    [Parameter] public int Seconds { get; set; } = 0;
+    [Parameter] public EventCallback<int> SecondsChanged { get; set; }
+
+    [Parameter] public EventCallback<TimeSpan> OnTimerStarted { get; set; }
+    [Parameter] public EventCallback OnTimerCompleted { get; set; }
+    [Parameter] public EventCallback OnBack { get; set; }
+
+    // TIMER EXECUTION STATE
+    private int remainingSeconds;
+    private bool isRunning = false;
+    private bool isPaused = false;
+    private CancellationTokenSource? cts;
+
+    private int TotalConfiguredSeconds => (Hours * 3600) + (Minutes * 60) + Seconds;
+
+    private string FormattedRemainingTime =>
+        TimeSpan.FromSeconds(remainingSeconds).ToString(@"hh\:mm\:ss");
+
+    private double ProgressPercentage => TotalConfiguredSeconds > 0
+        ? ((double)remainingSeconds / TotalConfiguredSeconds) * 100.0
+        : 0;
+
+    // SVG Circumference = 2 * PI * r = 2 * 3.14159 * 52 ≈ 326.72
+    private double StrokeDashOffset =>
+        326.72 - (326.72 * (ProgressPercentage / 100.0));
+
+    // ASYNCHRONOUS TIMER CONTROLS
+    private async Task StartTimer()
+    {
+        if (TotalConfiguredSeconds <= 0) return;
+
+        remainingSeconds = TotalConfiguredSeconds;
+        isRunning = true;
+        isPaused = false;
+
+        if (OnTimerStarted.HasDelegate)
+        {
+            await OnTimerStarted.InvokeAsync(TimeSpan.FromSeconds(remainingSeconds));
+        }
+
+        RunTimerLoop();
+    }
+
+    private void RunTimerLoop()
+    {
+        cts?.Cancel();
+        cts?.Dispose();
+        cts = new CancellationTokenSource();
+
+        var token = cts.Token;
+
+        // Fire background execution loop using non-blocking PeriodicTimer
+        _ = Task.Run(async () =>
+        {
+            using var timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
+
+            try
+            {
+                while (await timer.WaitForNextTickAsync(token))
+                {
+                    if (remainingSeconds > 0)
+                    {
+                        remainingSeconds--;
+
+                        // Thread-safe UI update trigger
+                        await InvokeAsync(StateHasChanged);
+                    }
+                    else
+                    {
+                        isRunning = false;
+                        isPaused = false;
+
+                        await InvokeAsync(async () =>
+                        {
+                            StateHasChanged();
+                            if (OnTimerCompleted.HasDelegate)
+                            {
+                                await OnTimerCompleted.InvokeAsync();
+                            }
+                        });
+                        break;
+                    }
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                // Timer paused or cancelled gracefully
+            }
+        }, token);
+    }
+
+    private void PauseTimer()
+    {
+        if (!isRunning) return;
+
+        cts?.Cancel();
+        isRunning = false;
+        isPaused = true;
+        StateHasChanged();
+    }
+
+    private void ResumeTimer()
+    {
+        if (!isPaused || remainingSeconds <= 0) return;
+
+        isRunning = true;
+        isPaused = false;
+        RunTimerLoop();
+        StateHasChanged();
+    }
+
+    private void ResetTimer()
+    {
+        cts?.Cancel();
+        cts?.Dispose();
+        cts = null;
+
+        isRunning = false;
+        isPaused = false;
+        remainingSeconds = TotalConfiguredSeconds;
+        StateHasChanged();
+    }
+
+    // ----------------------------------------------------------------------------------
+    // DRUM WHEEL INTERACTION HELPERS
+    // ----------------------------------------------------------------------------------
+    private int GetWrappedHours(int offset)
+    {
+        int val = (Hours + offset) % 24;
+        return val < 0 ? val + 24 : val;
+    }
+
+    private int GetWrappedMinutes(int offset)
+    {
+        int val = (Minutes + offset) % 60;
+        return val < 0 ? val + 60 : val;
+    }
+
+    private int GetWrappedSeconds(int offset)
+    {
+        int val = (Seconds + offset) % 60;
+        return val < 0 ? val + 60 : val;
+    }
+
+    private async Task StepHours(int delta)
+    {
+        Hours = GetWrappedHours(delta);
+        if (HoursChanged.HasDelegate) await HoursChanged.InvokeAsync(Hours);
+    }
+
+    private async Task StepMinutes(int delta)
+    {
+        Minutes = GetWrappedMinutes(delta);
+        if (MinutesChanged.HasDelegate) await MinutesChanged.InvokeAsync(Minutes);
+    }
+
+    private async Task StepSeconds(int delta)
+    {
+        Seconds = GetWrappedSeconds(delta);
+        if (SecondsChanged.HasDelegate) await SecondsChanged.InvokeAsync(Seconds);
+    }
+
+    private async Task SetPreset(int h, int m, int s)
+    {
+        Hours = h; Minutes = m; Seconds = s;
+        if (HoursChanged.HasDelegate) await HoursChanged.InvokeAsync(Hours);
+        if (MinutesChanged.HasDelegate) await MinutesChanged.InvokeAsync(Minutes);
+        if (SecondsChanged.HasDelegate) await SecondsChanged.InvokeAsync(Seconds);
+    }
+
+    private async Task HandleHoursWheel(WheelEventArgs e) => await StepHours(e.DeltaY > 0 ? 1 : -1);
+    private async Task HandleMinutesWheel(WheelEventArgs e) => await StepMinutes(e.DeltaY > 0 ? 1 : -1);
+    private async Task HandleSecondsWheel(WheelEventArgs e) => await StepSeconds(e.DeltaY > 0 ? 1 : -1);
+
+    private async Task OnBackClicked()
+    {
+        if (OnBack.HasDelegate)
+        {
+            await OnBack.InvokeAsync();
+        }
+        else
+        {
+            Navigation.NavigateTo("/dashboard/exptimer/main");
+        }
+    }
+
+    public void Dispose()
+    {
+        cts?.Cancel();
+        cts?.Dispose();
+    }
+}

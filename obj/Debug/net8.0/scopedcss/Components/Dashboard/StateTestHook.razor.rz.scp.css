@@ -1,0 +1,52 @@
+.state-test-hook[b-xs3j1ne041] {
+    position: absolute;
+    left: 12px;
+    bottom: 12px;
+    z-index: 20;
+    font-family: Inter, system-ui, sans-serif;
+}
+
+.test-header[b-xs3j1ne041] {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #f3c734;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.test-toggle[b-xs3j1ne041] {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    line-height: 1;
+    padding: 2px 6px;
+    cursor: pointer;
+}
+
+.test-grid[b-xs3j1ne041] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 6px;
+    max-width: 420px;
+}
+
+.test-btn[b-xs3j1ne041] {
+    padding: 3px 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(4, 34, 80, 0.85);
+    color: #e0f2fe;
+    font-size: 0.68rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.test-btn:hover[b-xs3j1ne041] {
+    background: #0d5ba8;
+}

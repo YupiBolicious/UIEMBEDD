@@ -1,16 +1,21 @@
 @inject CabinetStateService State
 @implements IDisposable
 
-<header class="status-header @ConditionClass">
-    <div class="status-icon">
-        @StatusIcon
+<header class="top-status-bar">
+    <div class="brand-slot">
+        <EscoBrand />
     </div>
-    <div class="status-text">
-        <span class="status-title">@StatusTitle</span>
-        @if (!string.IsNullOrEmpty(StatusSubtitle))
-        {
-            <span class="status-subtitle">@StatusSubtitle</span>
-        }
+    <div class="status-banner @ConditionClass">
+        <div class="status-icon">
+            @StatusIcon
+        </div>
+        <div class="status-text">
+            <span class="status-title">@StatusTitle</span>
+            @if (!string.IsNullOrEmpty(StatusSubtitle))
+            {
+                <span class="status-subtitle">@StatusSubtitle</span>
+            }
+        </div>
     </div>
 </header>
 
@@ -29,8 +34,13 @@
 
     private string ConditionClass => State.Condition switch
     {
-        CabinetCondition.WarmingUp => "status-warming",
         CabinetCondition.AirflowFail => "status-alarm",
+        CabinetCondition.StandBy => "status-standby",
+        CabinetCondition.SashUnsafe => "status-alarm",
+        CabinetCondition.EnvTempHigh => "status-alarm",
+        CabinetCondition.EnvTempLow => "status-alarm",
+        CabinetCondition.SensorUncalibrated => "status-alarm",
+        CabinetCondition.WarmingUp => "status-warming",
         CabinetCondition.UvOn => "status-uv",
         _ => "status-safe"
     };
@@ -38,7 +48,11 @@
     private string StatusTitle => State.Condition switch
     {
         CabinetCondition.WarmingUp => "WARMING UP",
+        CabinetCondition.StandBy => "STANDBY",
         CabinetCondition.AirflowFail => "AIRFLOW FAIL",
+        CabinetCondition.SashUnsafe => "SASH UNSAFE",
+        CabinetCondition.EnvTempHigh => "ENV TEMP HIGH",
+        CabinetCondition.EnvTempLow => "ENV TEMP LOW",
         CabinetCondition.UvOn => "UV ON",
         _ => "Cabinet is safe"
     };
@@ -46,12 +60,16 @@
     private string? StatusSubtitle => State.Condition switch
     {
         CabinetCondition.AirflowFail => "The inflow value is too low!",
+        CabinetCondition.SashUnsafe => "Close the sash!",
+        CabinetCondition.EnvTempHigh => "Ambient temperature too high!",
+        CabinetCondition.EnvTempLow => "Ambient temperature too low!",
         _ => null
     };
 
     private RenderFragment StatusIcon => State.Condition switch
     {
-        CabinetCondition.AirflowFail => AlarmIcon,
+        CabinetCondition.AirflowFail or CabinetCondition.SashUnsafe
+            or CabinetCondition.EnvTempHigh or CabinetCondition.EnvTempLow => AlarmIcon,
         CabinetCondition.WarmingUp => WarmingIcon,
         CabinetCondition.UvOn => UvIcon,
         _ => CheckIcon

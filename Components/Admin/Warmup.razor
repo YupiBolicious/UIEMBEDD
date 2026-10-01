@@ -8,7 +8,7 @@
     <main class="hmi-cleaning-workspace">
             <div class="hmi-wipe-trigger-card @(WarmupEnable ? "card-enabled" : "card-disabled")">
                 <div class="hmi-cloth-graphic-disc">
-                <img src="/images/warm-up.png" alt="Stopwatch" class="tile-icon" />
+                <img src="/images/warm-up_logo.png" alt="Warmup" class="tile-icon" />
                 </div>
                 <!-- Primary Prompt Text -->
                 <div class="hmi-wipe-prompt">
@@ -25,7 +25,6 @@
                 <div>
                     @if (!isRunning && !isPaused) 
         {
-            <!-- ================= DRUM WHEEL PICKER : HH:MM:SS ================= -->
             <div class="drum-picker-card">
                 <div class="gloss-overlay"></div>
 

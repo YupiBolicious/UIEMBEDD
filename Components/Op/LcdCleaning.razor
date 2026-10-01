@@ -1,0 +1,176 @@
+@page "/op/lcdcleaning"
+@rendermode InteractiveServer
+@inject NavigationManager Navigation
+@implements IDisposable
+
+<div class="hmi-shell">
+    <InnerTopBar Title="LCD Cleaning"/>
+        @if (IsCleaningActive)
+        {
+            <div class="hmi-blanking-overlay select-none" @onclick="AbortCleaning">
+                <div class="hmi-blank-inner">
+                    <div class="hmi-blank-label">LCD CLEANING IN PROGRESS</div>
+                    <div class="hmi-blank-sub">Touch Input Disabled for Safety</div>
+                    <div class="hmi-blanking-countdown">@CleaningCountdown</div>
+                    <div class="hmi-blank-note">
+                        Cycle ends automatically in @CleaningCountdown seconds (Tap to abort)
+                    </div>
+                </div>
+            </div>
+        }
+
+        <!-- Main Interactive Cleaning Workspace (2 Columns) -->
+        <main class="hmi-cleaning-workspace">
+            
+            <!-- Left Column: Capacitive Cleaning Mode Activation Card -->
+            <div class="hmi-wipe-trigger-card" @onclick="StartCleaningMode">
+                <!-- Primary Prompt Text -->
+                <div class="hmi-wipe-prompt">
+                    Tap here to start.
+                </div>
+
+                <!-- Duration Pill Badge -->
+                <div class="hmi-cycle-badge">
+                    <svg class="hmi-badge-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>15 SECONDS DEACTIVATION CYCLE</span>
+                </div>
+
+                <div class="hmi-wipe-caption">
+                    Screen touch sensors will lock temporarily to allow thorough sanitization.
+                </div>
+
+            </div>
+
+            <!-- Right Column: Attention & Cleaning Safety Protocol Card -->
+            <div class="hmi-attention-card">
+                
+                <div>
+                    <!-- Header -->
+                    <div class="hmi-attention-title">
+                        <div>
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+                            </svg>
+                        </div>
+                        <span>Attention!</span>
+                    </div>
+
+                    <!-- Verbatim Protocol Checklist -->
+                    <ul class="hmi-instruction-list">
+                        <li class="hmi-instruction-item">
+                            <span class="hmi-instruction-bullet">#</span>
+                            <span>Recommended to wipe the surface with a lint-free microfiber cloth.</span>
+                        </li>
+                        <li class="hmi-instruction-item">
+                            <span class="hmi-instruction-bullet">#</span>
+                            <span>Never directly apply cleaning solution to the screen.</span>
+                        </li>
+                        <li class="hmi-instruction-item">
+                            <span class="hmi-instruction-bullet">#</span>
+                            <span>Do not use the moist section of the cloth to clean the corners of the screen.</span>
+                        </li>
+                        <li class="hmi-instruction-item">
+                            <span class="hmi-instruction-bullet">#</span>
+                            <span>Start from the center and gently wipe the screen in a circular motion.</span>
+                        </li>
+                        <li class="hmi-instruction-item">
+                            <span class="hmi-instruction-bullet">#</span>
+                            <span>Upon starting, the screen will go blank and then back to normal after 15 seconds.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Bottom HMI Dock Navigation Bar -->
+        <footer class="hmi-footer">
+            <!-- Back Navigation Button -->
+            <button type="button" @onclick="NavigateBack" class="hmi-button">
+                <svg class="hmi-foot-ico" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                </svg>
+                <span>Back</span>
+            </button>
+
+            <!-- Direct Start Action Button -->
+            <button type="button" @onclick="StartCleaningMode" class="hmi-button">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
+                </svg>
+                <span>Start Cleaning Mode</span>
+            </button>
+        </footer>
+</div>
+
+@code {
+    [Parameter] public int DurationSeconds { get; set; } = 15;
+    [Parameter] public EventCallback OnCleaningStarted { get; set; }
+
+    [Parameter] public EventCallback OnCleaningFinished { get; set; }
+    [Parameter] public EventCallback OnBack { get; set; }
+
+    private DateTime CurrentTime = new DateTime(2026, 9, 21, 10, 28, 0);
+    private bool IsCleaningActive = false;
+    private int CleaningCountdown = 15;
+    private System.Threading.Timer? CountdownTimer;
+
+    private async Task StartCleaningMode()
+    {
+        if (IsCleaningActive) return;
+
+        IsCleaningActive = true;
+        CleaningCountdown = DurationSeconds;
+
+        if (OnCleaningStarted.HasDelegate)
+        {
+            await OnCleaningStarted.InvokeAsync();
+        }
+
+        CountdownTimer?.Dispose();
+        CountdownTimer = new System.Threading.Timer(async _ =>
+        {
+            if (CleaningCountdown > 1)
+            {
+                CleaningCountdown--;
+                await InvokeAsync(StateHasChanged);
+            }
+            else
+            {
+                await StopCleaningMode();
+            }
+        }, null, 1000, 1000);
+    }
+
+    private async Task StopCleaningMode()
+    {
+        CountdownTimer?.Dispose();
+        CountdownTimer = null;
+        IsCleaningActive = false;
+        CleaningCountdown = DurationSeconds;
+
+        if (OnCleaningFinished.HasDelegate)
+        {
+            await OnCleaningFinished.InvokeAsync();
+        }
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private void AbortCleaning()
+    {
+        _ = StopCleaningMode();
+    }
+
+    private async Task NavigateBack()
+    { 
+        Navigation.NavigateTo("/operator");
+    }
+
+    public void Dispose()
+    {
+        CountdownTimer?.Dispose();
+    }
+}

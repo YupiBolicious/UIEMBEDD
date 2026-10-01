@@ -1,0 +1,153 @@
+@page "/admin/shutdown"
+@rendermode InteractiveServer
+@inject NavigationManager Nav
+
+@if (IsShutdown)
+{
+    <div class="shutdown-black-screen"></div>
+}
+else
+{
+    <div class="hmi-shell">
+        <InnerTopBar Title="Shutdown"/>
+            <main class="hmi-cleaning-workspace">
+
+                <!-- Left Column: Capacitive Cleaning Mode Activation Card -->
+                <div class="hmi-wipe-trigger-card">
+                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+                            <path 
+                                d="M 50,11 
+                                C 52.5,11 54.8,12.3 56,14.5 
+                                L 94.7,81.5 
+                                C 95.9,83.7 95.9,86.3 94.7,88.5 
+                                C 93.5,90.7 91.1,92 88.7,92 
+                                L 11.3,92 
+                                C 8.9,92 6.5,90.7 5.3,88.5 
+                                C 4.1,86.3 4.1,83.7 5.3,81.5 
+                                L 44,14.5 
+                                C 45.2,12.3 47.5,11 50,11 Z" 
+                                fill="#FFC107" 
+                                stroke="#FFA000" 
+                                stroke-width="2" 
+                                stroke-linejoin="round"
+                            />
+
+                            <!-- Exclamation Mark Top Bar -->
+                            <path 
+                                d="M 50,36 
+                                C 52.8,36 55,38.2 54.8,41 
+                                L 53.8,61 
+                                C 53.6,63.2 51.8,65 49.6,65 
+                                C 47.4,65 45.6,63.2 45.4,61 
+                                L 44.4,41 
+                                C 44.2,38.2 46.4,36 49.2,36 Z" 
+                                fill="#212121"
+                            />
+
+                            <!-- Exclamation Mark Bottom Dot -->
+                            <circle 
+                                cx="50" 
+                                cy="75" 
+                                r="4.8" 
+                                fill="#212121"
+                            />
+                        </svg>
+
+                </div>
+
+                <!-- Right Column: Attention & Cleaning Safety Protocol Card -->
+                <div class="hmi-attention-card">
+
+                    <div>
+                        <!-- Header -->
+                        <div class="hmi-attention-title">
+                            <div>
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+                                </svg>
+                            </div>
+                            <span>Attention!</span>
+                        </div>
+
+                        <!-- Verbatim Protocol Checklist -->
+                        <ul class="hmi-instruction-list">
+                            <li class="hmi-instruction-item">
+                                <span class="hmi-instruction-bullet">#</span>
+                                <span>This action is only needed if you want to turn off the unit</span>
+                            </li>
+                            <li class="hmi-instruction-item">
+                                <span class="hmi-instruction-bullet">#</span>
+                                <span>This is to ensure all the tasks are stopped properly and will not cause disk error.</span>
+                            </li>
+                            <li class="hmi-instruction-item">
+                                <span class="hmi-instruction-bullet">#</span>
+                                <span>System will automatically turn off all the functions (LED, UV lamp, blower, etc.), then displays black screen.</span>
+                            </li>
+                            <li class="hmi-instruction-item">
+                                <span class="hmi-instruction-bullet">#</span>
+                                <span>After the black screen displays for 5 seconds, switch off the power and remove the cord.</span>
+                            </li>
+                            <li class="hmi-instruction-item">
+                                <span class="hmi-instruction-bullet">#</span>
+                                <span>If you intend to turn on the unit again, please plug in the cord and switch on the power.</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <label class="hmi-toggle-label" data-purpose="home-display-toggle-container">
+                        <input type="checkbox" 
+                            id="chk-always-display"
+                            class="hmi-checkbox" 
+                            data-purpose="home-display-toggle" 
+                            @onchange="ToggleAgree" />
+                        <span class="toggle-text">
+                            Yes, I'm ready to turn off the unit.
+                        </span>
+                    </label>
+                </div>
+
+            </main>
+
+            <!-- Bottom HMI Dock Navigation Bar -->
+            <footer class="hmi-footer">
+                <!-- Back Navigation Button -->
+                <button type="button" @onclick="NavigateBack" class="hmi-button">
+                    <svg class="hmi-foot-ico" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                    </svg>
+                    <span>Back</span>
+                </button>
+
+                <!-- Direct Start Action Button -->
+                <button type="button" 
+                        @onclick="ExecuteShutdown" 
+                        class="hmi-button @(!AgreeShutdown ? "apply-disabled" : "apply-active")"
+                        disabled="@(!AgreeShutdown)">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <Shutdown/>
+                    </svg>
+                    <span>Shutdown</span>
+                </button>
+            </footer>
+    </div>
+}
+
+@code {
+    private bool AgreeShutdown = false;
+    private bool IsShutdown = false;
+
+    private void ToggleAgree(ChangeEventArgs e)
+    {
+        AgreeShutdown = bool.TryParse(e.Value?.ToString(), out var v) && v;
+    }
+
+    private void ExecuteShutdown()
+    {
+        if (!AgreeShutdown) return;
+        IsShutdown = true;
+    }
+
+    private void NavigateBack()
+    {
+        Nav.NavigateTo("/admin");
+    }
+}

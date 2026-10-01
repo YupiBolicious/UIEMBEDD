@@ -1,0 +1,125 @@
+@page "/op/exptimer/main"
+@rendermode InteractiveServer
+@inject NavigationManager Nav
+
+<main class="hmi-shell">
+    <!-- Top Header -->
+    <InnerTopBar Title="Experiment Timer"/>
+
+    <!-- Centered Viewport Wrapper -->
+    <section class="hmi-timer-compact-viewport" data-purpose="mode-selection">
+        
+        <!-- Option 1: Timer -->
+        <div class="hmi-option-item">
+            <button type="button"
+                    id="btn-timer"
+                    class="hmi-tile hmi-tile-compact"
+                    title="Experiment Timer"
+                    data-purpose="open-timer-button"
+                    @onclick="NavigateToTimer">
+                <img src="/images/Experiment-Timer.png" alt="Experiment Timer" class="tile-icon" />
+            </button>
+            <span class="tile-label">
+                Timer
+            </span>
+        </div>
+
+        <!-- Option 2: Stopwatch -->
+        <div class="hmi-option-item">
+            <button type="button"
+                    id="btn-stopwatch"
+                    class="hmi-tile hmi-tile-compact"
+                    title="Stopwatch"
+                    data-purpose="open-stopwatch-button"
+                    @onclick="NavigateToStopwatch">
+                <img src="/images/stopwatch.png" alt="Stopwatch" class="tile-icon" />
+            </button>
+            <span class="tile-label">
+                Stopwatch
+            </span>
+        </div>
+
+    </section>
+
+    <!-- Bottom Interaction Toolbar -->
+    <footer class="hmi-footer" data-purpose="hmi-footer">
+        <!-- Back Navigation Button -->
+        <button type="button"
+                id="btn-back"
+                class="hmi-button"
+                title="Return to Previous Screen"
+                data-purpose="back-navigation"
+                @onclick="NavigateBack">
+            <svg class="back-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Back</span>
+        </button>
+
+        <!-- Preference Checkbox -->
+        <label class="hmi-toggle-label" data-purpose="home-display-toggle-container">
+            <input type="checkbox" 
+                   id="chk-always-display"
+                   class="hmi-checkbox" 
+                   data-purpose="home-display-toggle" 
+                   @onchange="ToggleHomeDisplay" />
+            <span class="toggle-text">
+                Always display timer on home screen
+            </span>
+        </label>
+    </footer>
+</main>
+
+@code {
+    [Parameter] public EventCallback OnNavigateToTimer { get; set; }
+    [Parameter] public EventCallback OnNavigateToStopwatch { get; set; }
+    [Parameter] public EventCallback OnNavigateBack { get; set; }
+    [Parameter] public EventCallback<bool> OnPreferenceChanged { get; set; }
+    [Parameter] public bool AlwaysDisplayTimerOnHomeScreen { get; set; } = true;
+
+
+    @* private bool _alwaysDisplayTimerOnHomeScreen = true; *@
+
+    @* [Parameter] public bool AlwaysDisplayTimerOnHomeScreen
+    {
+        get => _alwaysDisplayTimerOnHomeScreen;
+        set
+        {
+            if (_alwaysDisplayTimerOnHomeScreen != value)
+            {
+                _alwaysDisplayTimerOnHomeScreen = value;
+                OnPreferenceChanged.InvokeAsync(value);
+            }
+        }
+    } *@
+    private async Task ToggleHomeDisplay(ChangeEventArgs e)
+    {
+        AlwaysDisplayTimerOnHomeScreen = bool.TryParse(e.Value?.ToString(), out var v) && v;
+        if (OnPreferenceChanged.HasDelegate)
+            await OnPreferenceChanged.InvokeAsync(AlwaysDisplayTimerOnHomeScreen);
+    }
+    private async Task NavigateToTimer()
+    {
+        if (OnNavigateToTimer.HasDelegate)
+            await OnNavigateToTimer.InvokeAsync();
+        else 
+            Nav.NavigateTo("/dashboard/exptimer/timer");
+    }
+
+    private async Task NavigateToStopwatch()
+    {
+        if (OnNavigateToStopwatch.HasDelegate)
+            await OnNavigateToStopwatch.InvokeAsync();
+        else 
+            Nav.NavigateTo("/dashboard/exptimer/stopwatch");
+    }
+
+    private async Task NavigateBack()
+    {
+        if (OnNavigateBack.HasDelegate)
+            await OnNavigateBack.InvokeAsync();
+        else
+            Nav.NavigateTo("/operator");
+    }
+}

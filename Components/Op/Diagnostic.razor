@@ -1,0 +1,75 @@
+@page "/op/diagnostic"
+@rendermode InteractiveServer
+@inject NavigationManager Nav
+
+<div class="hmi-shell">
+    <InnerTopBar Title="Diagnostics" />
+
+    <main class="diagnostic-workspace">
+        <div class="diagnostic-panel">
+            <div class="table-scroll">
+                <div class="diagnostic-row">
+                    <span class="diagnostic-label">Serial number</span>
+                    <span class="diagnostic-value">2026-216060</span>
+                </div>
+                <div class="diagnostic-row">
+                    <span class="diagnostic-label">Software version</span>
+                    <span class="diagnostic-value">SBC103 - 1.2.3</span>
+                </div>
+                <div class="diagnostic-row">
+                    <span class="diagnostic-label">Operation mode</span>
+                    <span class="diagnostic-value">Quick Start</span>
+                </div>
+                <div class="diagnostic-row">
+                    <span class="diagnostic-label">Sash state</span>
+                    <span class="diagnostic-value">Safe height</span>
+                </div>
+                <div class="diagnostic-row">
+                    <span class="diagnostic-label">Fan state</span>
+                    <span class="diagnostic-value">55% / 878 RPM</span>
+                </div>
+                <div class="diagnostic-row">
+                    <span class="diagnostic-label">Fan usage meter</span>
+                    <span class="diagnostic-value">771 hours 1 min</span>
+                </div>
+                <div class="diagnostic-row">
+                    <span class="diagnostic-label">Filter life</span>
+                    <span class="diagnostic-value">98% (49071 hours 17 min)</span>
+                </div>
+                <div class="diagnostic-row">
+                    <span class="diagnostic-label">UV life</span>
+                    <span class="diagnostic-value">100% (1998 hours 11 min)</span>
+                </div>
+                <div class="diagnostic-row">
+                    <span class="diagnostic-label">UV timer</span>
+                    <span class="diagnostic-value">1 hour</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="hmi-footer">
+        <button type="button" @onclick="NavigateBack" class="hmi-button">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+            </svg>
+            <span>Back</span>
+        </button>
+    </footer>
+</div>
+
+@code {
+    [Parameter] public EventCallback OnBack { get; set; }
+
+    private async Task NavigateBack()
+    {
+        if (OnBack.HasDelegate)
+        {
+            await OnBack.InvokeAsync();
+        }
+        else
+        {
+            Nav.NavigateTo("/operator");
+        }
+    }
+}

@@ -1,0 +1,170 @@
+@page "/admin/timezone"
+@inject NavigationManager Nav
+@rendermode InteractiveServer
+
+<div class="hmi-shell">
+    <InnerTopBar Title="Timezone Settings" />
+        <main class="hmi-language-workspace">
+
+            <!-- Left Column: Current Time Zone Overview Card -->
+            <section class="hmi-current-card">
+                <div class="hmi-current-text-group">
+                    <span class="hmi-label-sub">Current Time Zone:</span>
+                    <span class="hmi-current-name">UTC@ActiveTzone.UtcOffset</span>
+                    <span class="hmi-greeting-quote">@ActiveTzone.Name</span>
+                </div>
+            </section>
+
+            <!-- Right Column: Choose Time Zone List -->
+            <section class="hmi-picker-card">
+                <div class="hmi-picker-header">
+                    <span class="hmi-picker-title">Choose Time Zone:</span></div>
+
+                <!-- Scrollable Touch List -->
+                <div class="hmi-language-list" role="listbox" aria-label="Available Time Zones">
+                    @foreach (var tz in Tzones)
+                    {
+                        var isSelected = SelectedTZones == tz.Code;
+                        <button type="button"
+                                @onclick="() => SelectTzone(tz)"
+                                class="hmi-lang-item @(isSelected ? "lang-selected" : "")"
+                                role="option"
+                                aria-selected="@isSelected">
+
+                            <div class="flex items-center gap-3">
+                                <span class="lang-bullet @(isSelected ? "bullet-active" : "")"></span>
+                                <span class="lang-label">
+                                    <strong class="lang-primary-name">@tz.Name</strong>
+                                </span>
+                            </div>
+
+                            @if (isSelected)
+                            {
+                                <div class="lang-check-badge">
+                                    <svg class="w-4 h-4 text-emerald-400 stroke-[3]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                    </svg>
+                                </div>
+                            }
+                        </button>
+                    }
+                </div>
+
+                <!-- Bottom Action Controls -->
+                <div class="hmi-picker-actions">
+                    <button type="button" @onclick="ResetToDefault" class="hmi-button-cancel">
+                        Reset Default
+                    </button>
+
+                    <button type="button"
+                            @onclick="ApplySelectedTzone"
+                            disabled="@(ActiveTzone.Code == SelectedTZones)"
+                            class="hmi-button @(ActiveTzone.Code != SelectedTZones ? "apply-active" : "apply-disabled")">
+
+                        <span>Apply Change</span>
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <!-- 3. Bottom HMI Navigation & Footer Dock -->
+        <footer class="hmi-footer">
+            <!-- Tactile Back Navigation Button -->
+            <button type="button" @onclick="HandleBack" class="hmi-button">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                </svg>
+                <span>Back</span>
+            </button>
+        </footer>
+</div>
+
+@code {
+    public class TzoneItem
+    {
+        public string Code { get; set; } = "UTC+07:00";
+        public string UtcOffset { get; set; } = "+07:00";
+        public string Name { get; set; } = "Asia/Jakarta";
+    }
+
+    [Parameter] public string CurrentTZones { get; set; } = "UTC+07:00";
+    [Parameter] public EventCallback<string> CurrentTZonesChanged { get; set; }
+
+    [Parameter] public EventCallback<TzoneItem> TZoneChanged { get; set; }
+    [Parameter] public EventCallback OnBack { get; set; }
+    private string SelectedTZones = "UTC+07:00";
+    private TzoneItem ActiveTzone => Tzones.FirstOrDefault(t => t.Code == CurrentTZones) ?? Tzones[0];
+
+    private readonly List<TzoneItem> Tzones = new()
+    {
+        new TzoneItem { Code = "UTC-12:00", UtcOffset = "-12:00", Name = "Etc/GMT+12" },
+        new TzoneItem { Code = "UTC-11:00", UtcOffset = "-11:00", Name = "Pacific/Midway, American Samoa" },
+        new TzoneItem { Code = "UTC-10:00", UtcOffset = "-10:00", Name = "Pacific/Honolulu, Hawaii" },
+        new TzoneItem { Code = "UTC-09:00", UtcOffset = "-09:00", Name = "America/Anchorage, Alaska" },
+        new TzoneItem { Code = "UTC-08:00", UtcOffset = "-08:00", Name = "America/Los_Angeles, Pacific Time (US & Canada)" },
+        new TzoneItem { Code = "UTC-07:00", UtcOffset = "-07:00", Name = "America/Denver, Mountain Time (US & Canada)" },
+        new TzoneItem { Code = "UTC-06:00", UtcOffset = "-06:00", Name = "America/Chicago, Central Time (US & Canada)" },
+        new TzoneItem { Code = "UTC-05:00", UtcOffset = "-05:00", Name = "America/New_York, Eastern Time (US & Canada)" },
+        new TzoneItem { Code = "UTC-04:00", UtcOffset = "-04:00", Name = "America/Halifax, Atlantic Time (Canada)" },
+        new TzoneItem { Code = "UTC-03:00", UtcOffset = "-03:00", Name = "America/Sao_Paulo, Brasilia" },
+        new TzoneItem { Code = "UTC-02:00", UtcOffset = "-02:00", Name = "Etc/GMT+2" },
+        new TzoneItem { Code = "UTC-01:00", UtcOffset = "-01:00", Name = "Atlantic/Azores" },
+        new TzoneItem { Code = "UTC+00:00", UtcOffset = "+00:00", Name = "Europe/London, Dublin, Lisbon" },
+        new TzoneItem { Code = "UTC+01:00", UtcOffset = "+01:00", Name = "Europe/Paris, Berlin, Madrid, Warsaw" },
+        new TzoneItem { Code = "UTC+02:00", UtcOffset = "+02:00", Name = "Europe/Istanbul, Cairo, Athens" },
+        new TzoneItem { Code = "UTC+03:00", UtcOffset = "+03:00", Name = "Europe/Moscow, Baghdad, Nairobi" },
+        new TzoneItem { Code = "UTC+04:00", UtcOffset = "+04:00", Name = "Asia/Dubai, Baku, Tbilisi" },
+        new TzoneItem { Code = "UTC+05:00", UtcOffset = "+05:00", Name = "Asia/Karachi, Tashkent" },
+        new TzoneItem { Code = "UTC+05:30", UtcOffset = "+05:30", Name = "Asia/Kolkata, New Delhi" },
+        new TzoneItem { Code = "UTC+06:00", UtcOffset = "+06:00", Name = "Asia/Dhaka, Almaty" },
+        new TzoneItem { Code = "UTC+07:00", UtcOffset = "+07:00", Name = "Asia/Jakarta, Bangkok, Hanoi" },
+        new TzoneItem { Code = "UTC+08:00", UtcOffset = "+08:00", Name = "Asia/Shanghai, Beijing, Singapore, Taipei" },
+        new TzoneItem { Code = "UTC+09:00", UtcOffset = "+09:00", Name = "Asia/Tokyo, Seoul, Osaka" },
+        new TzoneItem { Code = "UTC+10:00", UtcOffset = "+10:00", Name = "Australia/Sydney, Brisbane, Guam" },
+        new TzoneItem { Code = "UTC+11:00", UtcOffset = "+11:00", Name = "Pacific/Noumea, Solomon Islands" },
+        new TzoneItem { Code = "UTC+12:00", UtcOffset = "+12:00", Name = "Pacific/Auckland, Fiji" },
+        new TzoneItem { Code = "UTC+13:00", UtcOffset = "+13:00", Name = "Pacific/Tongatapu, Apia" }
+    };
+
+    protected override void OnInitialized()
+    {
+        SelectedTZones = CurrentTZones;
+    }
+
+    private void SelectTzone(TzoneItem tzone)
+    {
+        SelectedTZones = tzone.Code;
+    }
+
+    private void ResetToDefault()
+    {
+        SelectedTZones = "UTC+07:00";
+        _ = ApplySelectedTzone();
+    }
+
+    private async Task ApplySelectedTzone()
+    {
+        CurrentTZones = SelectedTZones;
+        if (CurrentTZonesChanged.HasDelegate)
+        {
+            await CurrentTZonesChanged.InvokeAsync(CurrentTZones);
+        }
+
+        if (TZoneChanged.HasDelegate)
+        {
+            await TZoneChanged.InvokeAsync(ActiveTzone);
+        }
+    }
+
+    private async Task HandleBack()
+    {
+        if (OnBack.HasDelegate)
+        {
+            await OnBack.InvokeAsync();
+        }
+        else
+        {
+            Nav.NavigateTo("/admin");
+        }
+    }
+}

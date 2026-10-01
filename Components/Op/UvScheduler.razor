@@ -1,0 +1,149 @@
+@page "/op/uvscheduler"
+@rendermode InteractiveServer
+@inject NavigationManager Nav
+
+
+<div class="hmi-shell">
+    <InnerTopBar Title="UV Scheduler"/>
+        <!-- 2. Main Interactive Workspace (Centered Fan Scheduler Card) -->
+        <main class="hmi-scheduler-workspace">
+            
+            <!-- Large Modernized Glowing Fan Scheduler Card -->
+            <div class="hmi-scheduler-card @(IsSchedulerOn ? "card-active" : "card-inactive")">
+                
+                <!-- UV Dial Vector Graphic Hologram -->
+                <div class="hmi-cloth-graphic-disc @(IsSchedulerOn ? "disc-active" : "disc-inactive")">
+                    <svg class="hmi-cloth-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="uvGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#38bdf8" />
+                                <stop offset="60%" stop-color="#818cf8" />
+                                <stop offset="100%" stop-color="#c084fc" />
+                            </linearGradient>
+
+                            <filter id="uvGlow" x="-20%" y="-20%" width="140%" height="140%">
+                                <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#818cf8" flood-opacity="0.6" />
+                            </filter>
+                        </defs>
+
+                        <g stroke="#38bdf8" stroke-width="2" stroke-linecap="round" opacity="0.75">
+                            <line x1="50" y1="10" x2="50" y2="16" />
+                            <line x1="50" y1="84" x2="50" y2="90" />
+                            <line x1="10" y1="50" x2="16" y2="50" />
+                            <line x1="84" y1="50" x2="90" y2="50" />
+                            <line x1="22" y1="22" x2="26" y2="26" />
+                            <line x1="74" y1="74" x2="78" y2="78" />
+                            <line x1="22" y1="78" x2="26" y2="74" />
+                            <line x1="74" y1="26" x2="78" y2="22" />
+                        </g>
+
+                        <g filter="url(#uvGlow)">
+                            <circle cx="50" cy="50" r="28" stroke="url(#uvGrad)" stroke-width="3" fill="none" opacity="0.3" />
+                            <circle cx="50" cy="50" r="28" stroke="url(#uvGrad)" stroke-width="3.5" fill="none"
+                                    stroke-dasharray="176" stroke-dashoffset="44" stroke-linecap="round" transform="rotate(-90 50 50)" />
+                            <path d="M 47 18 L 53 18 L 53 22 L 47 22 Z" fill="#38bdf8" />
+                            <line x1="50" y1="50" x2="50" y2="33" stroke="#e0f2fe" stroke-width="2.5" stroke-linecap="round" />
+                            <line x1="50" y1="50" x2="62" y2="50" stroke="#e0f2fe" stroke-width="2" stroke-linecap="round" />
+                            <circle cx="50" cy="50" r="3" fill="#38bdf8" />
+                        </g>
+
+                        <text x="50" y="66" font-family="sans-serif" font-weight="900" font-size="9" fill="#bae6fd" text-anchor="middle" letter-spacing="1">UV</text>
+                    </svg>
+                </div>
+
+                <!-- Feature Label: "Scheduler On" verbatim as in reference -->
+                <div class="hmi-feature-label">
+                    <span class="text-white font-extrabold text-2xl md:text-3xl tracking-wide">
+                        Scheduler:
+                    </span>
+                    <span class="hmi-state-indicator @(IsSchedulerOn ? "state-on" : "state-off")">
+                        @(IsSchedulerOn ? "ON" : "STANDBY")
+                    </span>
+                </div>
+
+                <!-- Modern Tactile Capacitive Toggle Switch -->
+                <div class="hmi-toggle-container">
+                    <button type="button" 
+                            @onclick="ToggleScheduler" 
+                            role="switch" 
+                            aria-checked="@IsSchedulerOn" 
+                            class="hmi-switch-track @(IsSchedulerOn ? "track-on" : "track-off")">
+                        <!-- Sliding Pill Knob -->
+                        <span class="hmi-switch-knob @(IsSchedulerOn ? "knob-on" : "knob-off")">
+                            @if (IsSchedulerOn)
+                            {
+                                <svg class="knob-check" viewBox="0 0 24 24">
+                                    <path d="M4.5 12.75l6 6 9-13.5" />
+                                </svg>
+                            }
+                            else
+                            {
+                                <div class="knob-dot"></div>
+                            }
+                        </span>
+                    </button>
+                </div>
+
+                <!-- Dynamic Status Caption Underneath Switch -->
+                <div class="hmi-card-caption">
+                    @if (IsSchedulerOn)
+                    {
+                        <div class="flex items-center gap-2 text-sky-200 text-sm font-medium">
+                            <span class="status-pulse-dot"></span>
+                            <span>Automated UV schedule is enabled and running.</span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="flex items-center gap-2 text-white/50 text-sm font-medium">
+                            <span class="w-2 h-2 rounded-full bg-slate-500"></span>
+                            <span>Scheduler is disabled. UV operates under manual control.</span>
+                        </div>
+                    }
+                </div>
+
+            </div>
+
+        </main>
+
+        <!-- 3. Bottom HMI Navigation & Footer Dock -->
+        <footer class="hmi-footer">
+            <!-- Tactile Back Navigation Button -->
+            <button type="button" @onclick="NavigateBack" class="hmi-button">
+                <svg stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                </svg>
+                <span>Back</span>
+            </button>
+        </footer>
+</div>
+
+@code {
+    [Parameter] public bool IsSchedulerOn { get; set; } = true;
+    [Parameter] public EventCallback<bool> IsSchedulerOnChanged { get; set; }
+
+    [Parameter] public DateTime CurrentTime { get; set; } = new DateTime(2026, 9, 21, 10, 27, 0);
+
+    [Parameter] public EventCallback OnBack { get; set; }
+
+    private async Task ToggleScheduler()
+    {
+        IsSchedulerOn = !IsSchedulerOn;
+        if (IsSchedulerOnChanged.HasDelegate)
+        {
+            await IsSchedulerOnChanged.InvokeAsync(IsSchedulerOn);
+        }
+    }
+
+    private async Task NavigateBack()
+    {
+        if (OnBack.HasDelegate)
+        {
+            await OnBack.InvokeAsync();
+        }
+        else
+        {
+            Nav.NavigateTo("/operator");
+        }
+    }
+}

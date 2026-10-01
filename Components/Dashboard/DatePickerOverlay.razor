@@ -38,11 +38,9 @@
     </div>
 
     <footer class="cal-footer">
-        <button class="hmi-btn footer-btn" @onclick="GoBack" type="button">&#8592; Back</button>
-        <div class="footer-right">
-            <button class="hmi-btn footer-btn primary" @onclick="Confirm" type="button">Close</button>
-            <button class="hmi-btn footer-btn" @onclick="GoToday" type="button">Today</button>
-        </div>
+        <button class="hmi-button-cancel" @onclick="Cancel" type="button">Cancel</button>
+        <button class="hmi-button" @onclick="GoToday" type="button">Today</button>
+        <button class="hmi-button" @onclick="Confirm" type="button">Apply</button>
     </footer>
 </div>
 
@@ -116,13 +114,15 @@
 
     private void NextYear() => _viewYear++;
 
-    private void SelectDay(DayCell cell) => State.ConfirmDate(cell.Date);
+    private void SelectDay(DayCell cell) => _pending = cell.Date;
 
-    private void GoBack() => State.CloseCalendar();
+    @* private void GoBack() => State.CloseCalendar(); *@
 
     private void GoToday() => State.ConfirmDate(Today);
 
     private void Confirm() => State.ConfirmDate(_pending);
+
+    private void Cancel() => State.CloseCalendar();
 
     private sealed record DayCell(DateOnly Date, bool InMonth);
 }

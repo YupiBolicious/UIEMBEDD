@@ -1,0 +1,215 @@
+@page "/admin/logout"
+@inject NavigationManager Nav
+@rendermode InteractiveServer
+
+<div class="hmi-shell">
+    <InnerTopBar Title="Logout"/>
+        <main class="hmi-time-workspace">        
+            @if (!IsPickerActive)
+            {
+                <div class="hmi-state-fade-in flex flex-col items-center w-full">    
+                    <div class="hmi-time-card" 
+                         @onclick="OpenInlinePicker" 
+                         role="button" 
+                         tabindex="0"
+                         title="Tap to adjust time">
+                        
+                        <div class="hmi-time-content-row">
+                            <div class="hmi-clock-badge-container">
+                            </div>
+
+                            <!-- Right: Current Time Readout verbatim -->
+                            <div class="hmi-time-text-container">
+                                <span class="hmi-time-label">Current:</span>
+                                
+                                <div class="hmi-time-value">
+                                    <span class="time-digits">@DisplayedTimeString</span>
+                                </div>
+
+                                <div class="hmi-tap-to-change">
+                                    <span>Tap to change</span
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            }
+            else
+            {
+                <!-- STATE B: INLINE TIME PICKER (Transitioned in-place without page routing) -->
+                <div class="hmi-state-fade-in flex flex-col items-center w-full">
+                    
+                    <div class="hmi-picker-container">
+
+                        <!-- Drum Wheel Time Picker Columns -->
+                        <div class="picker-wheels-assembly">
+                            
+                            <!-- Focus Glass Loupe Band across the 3 wheels -->
+                            <div class="picker-focus-loupe"></div>
+                            <!-- Column 1: Minutes -->
+                            <div class="wheel-column">
+                                <span class="wheel-label">MINUTES</span>
+                                <button type="button" @onclick="() => StepMinutes(1)" class="wheel-arrow-btn" title="Increment Minutes">
+                                    <svg class="w-5 h-5 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4.5 15.75l7.5-7.5 7.5 7.5" /></svg>
+                                </button>
+                                
+                                <div class="wheel-slot-container">
+                                    <span class="wheel-num-preview">@GetMinuteOffset(-1).ToString("D2")</span>
+                                    <span class="wheel-num-active">@PickerMinute.ToString("D2")</span>
+                                    <span class="wheel-num-preview">@GetMinuteOffset(1).ToString("D2")</span>
+                                </div>
+
+                                <button type="button" @onclick="() => StepMinutes(-1)" class="wheel-arrow-btn" title="Decrement Minutes">
+                                    <svg class="w-5 h-5 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+                                </button>
+                            </div>
+                            <!-- Colon Separator -->
+                            <div class="wheel-separator">:</div>
+
+                            <!-- Column 2: Seconds -->
+                            <div class="wheel-column">
+                                <span class="wheel-label">SECONDS</span>
+                                <button type="button" @onclick="() => StepSeconds(1)" class="wheel-arrow-btn" title="Increment Seconds">
+                                    <svg class="w-5 h-5 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4.5 15.75l7.5-7.5 7.5 7.5" /></svg>
+                                </button>
+                                
+                                <div class="wheel-slot-container">
+                                    <span class="wheel-num-preview">@GetSecondOffset(-1).ToString("D2")</span>
+                                    <span class="wheel-num-active text-sky-200">@PickerSecond.ToString("D2")</span>
+                                    <span class="wheel-num-preview">@GetSecondOffset(1).ToString("D2")</span>
+                                </div>
+
+                                <button type="button" @onclick="() => StepSeconds(-1)" class="wheel-arrow-btn" title="Decrement Seconds">
+                                    <svg class="w-5 h-5 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <!-- Picker Actions: Cancel (Back to Current Time) / Apply (Save) -->
+                        <div class="picker-actions-row">
+                            <button type="button" @onclick="CancelPicker" class="hmi-button-cancel">
+                                <svg class="w-4 h-4 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                                <span>Cancel</span>
+                            </button>
+
+                            <div class="flex items-center gap-1">
+                                <button type="button" @onclick="ApplyTime" class="hmi-button">
+                                    <span>Apply</span>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+
+        </main>
+
+        <!-- 3. Bottom HMI Navigation & Footer Dock -->
+        <footer class="hmi-footer">
+            <button type="button" @onclick="HandleFooterBack" class="hmi-button">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                </svg>
+                <span>@(IsPickerActive ? "Discard" : "Back")</span>
+            </button>
+        </footer>
+</div>
+
+@code {
+    [Parameter] public string DisplayedTimeString { get; set; } = "2 min";
+    [Parameter] public EventCallback<string> DisplayedTimeStringChanged { get; set; }
+
+    [Parameter] public EventCallback<string> FormatModeChanged { get; set; }
+    [Parameter] public EventCallback OnBack { get; set; }
+
+    private bool IsPickerActive = false;
+    private int PickerMinute = 02;
+    private int PickerSecond = 00;
+
+    protected override void OnInitialized()
+    {
+        ParseTimeString(DisplayedTimeString);
+    }
+
+    private void ParseTimeString(string timeStr)
+    {
+        if (TimeSpan.TryParse(timeStr, out var ts))
+        {
+            PickerMinute = ts.Minutes;
+            PickerSecond = ts.Seconds;
+        }
+    }
+
+    private void OpenInlinePicker()
+    {
+        ParseTimeString(DisplayedTimeString);
+        IsPickerActive = true;
+    }
+
+    private void CancelPicker()
+    {
+        IsPickerActive = false;
+    }
+
+    private async Task ApplyTime()
+    {
+
+        DisplayedTimeString = $"{PickerMinute:D2}:{PickerSecond:D2}";
+        
+        if (DisplayedTimeStringChanged.HasDelegate)
+        {
+            await DisplayedTimeStringChanged.InvokeAsync(DisplayedTimeString);
+        }
+
+        // Return back to Current Time view with updated values
+        IsPickerActive = false;
+    }
+
+
+    private void StepMinutes(int delta)
+    {
+        PickerMinute = (PickerMinute + delta + 60) % 60;
+    }
+
+    private void StepSeconds(int delta)
+    {
+        PickerSecond = (PickerSecond + delta + 60) % 60;
+    }
+    private int GetMinuteOffset(int offset)
+    {
+        return (PickerMinute + offset + 60) % 60;
+    }
+
+    private int GetSecondOffset(int offset)
+    {
+        return (PickerSecond + offset + 60) % 60;
+    }
+
+
+
+    private async Task HandleFooterBack()
+    {
+        if (IsPickerActive)
+        {
+            // Transition back to overview inside the component
+            IsPickerActive = false;
+        }
+        else
+        {
+            if (OnBack.HasDelegate)
+            {
+                await OnBack.InvokeAsync();
+            }
+            else
+            {
+                Nav.NavigateTo("/admin");
+            }
+        }
+    }
+}

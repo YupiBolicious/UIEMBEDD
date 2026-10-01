@@ -195,12 +195,12 @@ private static MenuTile[] CreatePage1() => new[]
 {
     new MenuTile("Shut Down", Icon:"/images/Shutdown.png", Route:"/admin/shutdown"),
     new MenuTile("Users", Icon:"/images/User%20Mgnt.png", Route:"/user-registration"),
-    new MenuTile("Logout Time", Icon:"/images/logout-time.png", Route:"/logout"),
-    new MenuTile("Languages", Icon:"/images/Language.png", Route :"/language"),
+    new MenuTile("Logout Time", Icon:"/images/logout-time.png", Route:"/admin/logout"),
+    new MenuTile("Languages", Icon:"/images/Language.png", Route :"/admin/language"),
     new MenuTile("Cabinet Name", Icon:"/images/Cabinet%20Name.png", Route :"/admin/cabinetname"),
     new MenuTile("TimeZone", Icon:"/images/Time%20Zone.png", Route :"/admin/timezone"),
-    new MenuTile("Date", Icon:"/images/Set-Date.png", Route :"/admin/setdate"),
-    new MenuTile("Time", Icon:"/images/Set-Time.png", Route :"/admin/settime"),
+    new MenuTile("Date", Icon:"/images/Set-Date.png", Route :"/admin/datesetting"),
+    new MenuTile("Time", Icon:"/images/Set-Time.png", Route :"/admin/timesetting"),
 };
 
 private static MenuTile[] CreatePage2() => new[]
@@ -212,7 +212,7 @@ private static MenuTile[] CreatePage2() => new[]
     new MenuTile("Mute Timer", Icon: "/images/Mute-Timer.png", Route :"/admin/mutetimer"),
     
     // Explicitly target Icon using named parameters:
-    new MenuTile("Warmup Timer", Icon: "/images/Warm-Up.png", Route :"/admin/warmup"),
+    new MenuTile("Warmup Timer", Icon: "/images/warm-up_logo.png", Route :"/admin/warmup"),
     new MenuTile("Post Purge Timer", Icon: "/images/Post-Purge.png", Route :"/admin/postpurge"),
     new MenuTile("Network", Icon: "/images/wifi.png", Route :"/admin/wifi"),
 };

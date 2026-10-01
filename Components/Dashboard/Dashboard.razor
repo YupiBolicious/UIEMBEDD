@@ -1,10 +1,12 @@
+@using UiEmbed.Components.Service
 @inject CabinetStateService State
 @inject HeaderStateService Header
 @inject NavigationManager Nav
 @inject AppAuthStateProvider Auth
 @implements IDisposable
 
-<div class="hmi-shell">
+<div class="hmi-shell @ShellClass">
+    <StateTestHook />
     <div aria-hidden="true" class="screen-glow-arc"></div>
     <StatusHeader />
     <InfoSubBar />
@@ -16,7 +18,11 @@
             <ContentList />
         </div>
     </div>
+    
     <BottomDock OnAction="HandleDockAction" />
+    
+    <AlertModal />
+    
     @if (State.ShowCalendar)
     {
         <DatePickerOverlay />
@@ -35,6 +41,10 @@
     }
 
     private void OnStateChanged() => InvokeAsync(StateHasChanged);
+
+    private string ShellClass => State.Condition is CabinetCondition.AirflowFail
+        or CabinetCondition.SashUnsafe
+        or CabinetCondition.EnvTempHigh ? "hmi-alert" : "";
 
     public void Dispose()
     {

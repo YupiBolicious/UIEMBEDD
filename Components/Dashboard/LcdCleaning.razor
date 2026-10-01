@@ -1,4 +1,4 @@
-@page "/dashboard/lcdcleaning"
+@page "/op/lcdcleaning"
 @rendermode InteractiveServer
 @inject NavigationManager Navigation
 @implements IDisposable
@@ -26,7 +26,7 @@
             <div class="hmi-wipe-trigger-card" @onclick="StartCleaningMode">
                 
                 <!-- Microfiber Cloth & Hand Vector Graphic Disc -->
-                <div class="hmi-cloth-graphic-disc">
+                @* <div class="hmi-cloth-graphic-disc">
                     <svg class="hmi-cloth-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <defs>
                             <linearGradient id="clothGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -71,7 +71,7 @@
                         <!-- Circular Motion Swipe Beam -->
                         <path d="M 26 72 A 38 38 0 0 1 76 72" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 4" opacity="0.65" />
                     </svg>
-                </div>
+                </div> *@
 
                 <!-- Primary Prompt Text -->
                 <div class="hmi-wipe-prompt">

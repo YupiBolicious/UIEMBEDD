@@ -1,0 +1,28 @@
+@inject CabinetStateService State
+@implements IDisposable
+
+<div class="state-test-hook">
+    <div class="test-header">
+        <span>STATE TEST (TEMP)</span>
+        <button type="button" class="test-toggle" @onclick="() => toggle = !toggle">@(toggle ? "▾" : "▸")</button>
+    </div>
+    @if (toggle)
+    {
+        <div class="test-grid">
+            @foreach (var condition in System.Enum.GetValues<CabinetCondition>())
+            {
+                <button type="button" class="test-btn" @onclick="() => State.Condition = condition">@condition</button>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    private bool toggle;
+
+    protected override void OnInitialized() => State.OnChange += OnStateChanged;
+
+    private void OnStateChanged() => InvokeAsync(StateHasChanged);
+
+    public void Dispose() => State.OnChange -= OnStateChanged;
+}

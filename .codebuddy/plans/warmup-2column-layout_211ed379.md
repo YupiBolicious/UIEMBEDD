@@ -13,82 +13,37 @@ todos:
 ---
 
 ## Product Overview
-
-Restyle the Warmup page (`Warmup.razor` + `Warmup.razor.css`) into a clean two-column layout within a single view. Right column shows the timer (drum picker or running countdown), left column shows the info card with the play button directly below it. No features, logic, or event handlers are changed — only layout and styling.
+Create a new Blazor page at `/op/about` that replicates the Esco Lifesciences "Contact Us" reference image, matching its layout, typography, colors, and visual elements.
 
 ## Core Features
-
-- Two-column grid: left = info card + play button stacked vertically; right = timer card + controls
-- Fix incorrect CSS class name (`.hmi-monitor-workspace` → `.hmi-cleaning-workspace`)
-- Add missing scoped styles for drum picker, timer running card, progress ring, and action controls (currently unstyled because they only exist in `UVTimer.razor.css`)
-- Minimal markup rearrangement to place play button under info card (no C# changes)
+- Custom top header with Esco brand badge (left), "Contact Us" title banner (center), and date/time badge (right)
+- World-map background with location markers
+- Centered "We'd love to hear from you!" heading and subtitle
+- Contact details card for Esco Lifesciences Group Ltd. with address, phone, fax, email, website and small icons
+- Light-blue/cyan color palette matching the reference photo
 
 ## Tech Stack
-
-- Blazor Server (.NET 8) with scoped CSS isolation (`Warmup.razor.css`)
-- Existing pattern: CSS Grid two-column layout (`grid-template-columns: 1fr 1.3fr`) from `LcdCleaning.razor.css`
+- Blazor Server (.NET 8) with scoped CSS isolation (`About.razor.css`)
+- Route: `@page "/op/about"` in `Components/Op/About.razor`
+- Reuse existing `EscoBrand` component for the left header badge
+- Inline SVG for the world-map background and contact icons (no new static assets required)
 
 ## Implementation Approach
-
-The current `Warmup.razor` already uses `<main class="hmi-cleaning-workspace">` with two child divs — but the CSS file accidentally names the class `.hmi-monitor-workspace`, so the grid never applies. Additionally, the timer sub-components (`drum-picker-card`, `wheel-section`, `timer-running-card`, `progress-ring`, `running-controls-group`, etc.) have **zero CSS definitions** in `Warmup.razor.css`; they only exist as scoped styles in `UVTimer.razor.css` and therefore don't render correctly in Warmup.
-
-**Strategy:**
-
-1. **Markup** — Move the play button (`.start-play-btn`) and the running-mode controls (`.running-controls-group`) out of `.hmi-attention-card` into the left column, directly below `.hmi-wipe-trigger-card`. Wrap both columns in a left-column container div. No `@onclick`, no parameters, no C# logic changes.
-2. **CSS** — Fix the class name, add the full set of missing timer/drum-picker/running styles (adapted from `UVTimer.razor.css` to Warmup's cyan-blue palette), and style the left column as `flex-direction: column` so the card sits on top and the button below.
-
-**Key decisions:**
-
-- Pure CSS cannot relocate an element to a different DOM parent, so a minimal HTML restructure is necessary. This changes only element nesting, not any feature or behavior.
-- Copying timer styles into `Warmup.razor.css` (rather than extracting to a shared stylesheet) follows the existing project convention where each component has its own scoped CSS file.
+Create `About.razor` as a read-only contact screen wrapped in the existing `hmi-shell` class. Build a custom three-part header inline (EscoBrand + centered title banner + right date/time badge) instead of using `InnerTopBar`, because the reference image has a distinct dashboard-style header. Use an inline SVG world map as the main background with subtle continent shapes and red location pins. Style all typography, shadows, gradients, and spacing in the scoped CSS file to match the image. Expose `CurrentTime` as a `[Parameter]` so the date/time badge matches the reference by default but can be overridden.
 
 ## Implementation Notes
+- The existing `EscoBrand.razor` already renders the exact "ESCO / CLASS II A2 / AC2" badge seen in the image — reuse it unchanged.
+- No world-map image asset exists, so an inline SVG is the cleanest zero-asset solution.
+- No contact icons exist in `Components/Icons/`, so use small inline SVGs for building, phone, fax, email, and website.
+- Keep the page non-interactive (no buttons, no navigation callbacks) because the reference image is a static contact screen.
 
-- The `.hmi-cleaning-workspace` grid pattern already exists in `LcdCleaning.razor.css` — reuse the same `grid-template-columns: 1fr 1.3fr; gap: 18px` for visual consistency.
-- The drum picker and timer styles from `UVTimer.razor.css` use a purple theme (`rgba(126, 34, 206, ...)`) — adapt all accent colors to cyan (`rgba(56, 189, 248, ...)`) to match Warmup's existing card styling.
-- The `@if/else` conditional block that switches between setting mode and running mode must stay intact; only the wrapping `<div>` structure changes.
-- Preserve all existing `@onclick`, `@bind`, `disabled`, and `@onwheel` attributes exactly as-is.
+## Design Style
+Clean, corporate HMI contact screen with a soft cyan/blue palette. The background uses a faint world-map watermark so the text remains highly readable. The header is a dark blue dashboard-style bar with the Esco badge on the left, a centered gradient "Contact Us" banner, and a compact date/time badge on the right. Typography is clear and sans-serif, with a bold dark-blue heading and smaller contact details.
 
-## Architecture Design
-
-No architectural changes. The component keeps the same parameters, event callbacks, and timer logic. Only the DOM nesting within `<main>` and the scoped CSS change.
-
-```mermaid
-graph TD
-    A["main.hmi-cleaning-workspace<br/>grid: 1fr 1.3fr"] --> B["div.left-column<br/>flex-column"]
-    A --> C["div.hmi-attention-card<br/>(right column)"]
-    B --> D["div.hmi-wipe-trigger-card<br/>info card"]
-    B --> E["Setting mode:<br/>button.start-play-btn"]
-    B --> F["Running mode:<br/>div.running-controls-group"]
-    C --> G["Setting mode:<br/>div.drum-picker-card"]
-    C --> H["Running mode:<br/>div.timer-running-card"]
-```
-
-## Directory Structure
-
-```
-project-root/
-├── Components/
-│   └── Admin/
-│       ├── Warmup.razor          # [MODIFY] Restructure DOM: move play button + running controls into left column wrapper. Keep all @onclick/@bind/disabled attributes unchanged. No C# changes.
-│       └── Warmup.razor.css      # [MODIFY] Fix .hmi-monitor-workspace→.hmi-cleaning-workspace; add missing drum-picker, timer-running, progress-ring, running-controls styles (cyan theme); add left-column flex layout.
-└── Components/
-    └── Dashboard/
-        └── UVTimer.razor.css      # [READ-ONLY REFERENCE] Source of timer/drum-picker styles to adapt and copy into Warmup.razor.css
-```
-
-### File Details
-
-**`Warmup.razor` [MODIFY]**
-
-- Wrap `.hmi-wipe-trigger-card` + play button/running controls in a new `<div class="warmup-left-column">`
-- Move `.start-play-btn` and `.running-controls-group` from inside `.hmi-attention-card` to inside the left column div
-- Keep `.hmi-attention-card` containing only the drum picker (setting mode) or timer-running-card (running mode)
-- All `@onclick`, `@bind`, `disabled`, `@onwheel` handlers stay exactly as-is
-
-**`Warmup.razor.css` [MODIFY]**
-
-- Fix line 1: `.hmi-monitor-workspace` → `.hmi-cleaning-workspace`
-- Add `.warmup-left-column { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }`
-- Add all missing styles adapted from `UVTimer.razor.css`: `.drum-picker-card`, `.gloss-overlay`, `.picker-header`, `.format-label`, `.wheel-section`, `.magnifier-slot`, `.timer-running-card`, `.progress-ring-wrapper`, `.progress-ring`, `.ring-bg`, `.ring-fill`, `.countdown-readout`, `.live-digits`, `.progress-percent`, `.running-controls-group`, `.hmi-action-btn`, `.action-icon`, `.pause-btn`, `.resume-btn`, `.reset-btn`, `.btn-disabled`, `.tile-icon`
-- Adapt purple accents → cyan accents throughout
+## Page Layout
+Single full-screen view inside `hmi-shell`:
+1. **Top header bar** — three-column flex: brand badge | title banner | date/time badge
+2. **Main viewport** — centered content block over a world-map watermark:
+   - Heading "We'd love to hear from you!"
+   - Subheading paragraph
+   - Left-aligned contact card with icon + text rows

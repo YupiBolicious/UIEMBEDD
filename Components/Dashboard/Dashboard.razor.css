@@ -38,6 +38,12 @@
     min-height: 0;
 }
 
+.hmi-shell.hmi-alert {
+    background: radial-gradient(130% 100% at 50% 115%, #b91c1c 0%, #991b1b 40%, #5f1414 85%);
+    border-color: rgba(252, 165, 165, 0.7);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), 0 0 0 2px #b91c1c, inset 0 0 12px rgba(252, 165, 165, 0.25);
+}
+
 @media (max-width: 1024px) {
     .hmi-shell {
         max-width: 100%;

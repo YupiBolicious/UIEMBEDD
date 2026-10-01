@@ -1,0 +1,162 @@
+@page "/admin/language"
+@inject NavigationManager Nav
+@rendermode InteractiveServer
+
+<div class="hmi-shell">
+    <InnerTopBar Title="Language Settings" />
+        <main class="hmi-language-workspace">
+            
+            <!-- Left Column: Current Language Overview Card -->
+            <section class="hmi-current-card">
+                <div class="hmi-current-text-group">
+                    <span class="hmi-label-sub">Current language:</span>
+                    <span class="hmi-current-name">@ActiveLanguage.Name</span>
+                    <span class="hmi-greeting-quote">"@ActiveLanguage.Greeting"</span>
+                </div>
+            </section>
+
+            <!-- Right Column: Choose Language List -->
+            <section class="hmi-picker-card">
+                <div class="hmi-picker-header">
+                    <span class="hmi-picker-title">Choose language:</span></div>
+
+                <!-- Scrollable Touch List -->
+                <div class="hmi-language-list" role="listbox" aria-label="Available Languages">
+                    @foreach (var lang in Languages)
+                    {
+                        var isSelected = SelectedLanguageCode == lang.Code;
+                        <button type="button" 
+                                @onclick="() => SelectLanguage(lang)"
+                                class="hmi-lang-item @(isSelected ? "lang-selected" : "")"
+                                role="option"
+                                aria-selected="@isSelected">
+                            
+                            <div class="flex items-center gap-3">
+                                <span class="lang-bullet @(isSelected ? "bullet-active" : "")"></span>
+                                <span class="lang-label">
+                                    <strong class="lang-primary-name">@lang.Name</strong>
+                                    @if (!string.IsNullOrEmpty(lang.NativeName) && lang.NativeName != lang.Name)
+                                    {
+                                        <span class="lang-native-name">(@lang.NativeName)</span>
+                                    }
+                                </span>
+                            </div>
+
+                            @if (isSelected)
+                            {
+                                <div class="lang-check-badge">
+                                    <svg class="w-4 h-4 text-emerald-400 stroke-[3]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                    </svg>
+                                </div>
+                            }
+                        </button>
+                    }
+                </div>
+
+                <!-- Bottom Action Controls -->
+                <div class="hmi-picker-actions">
+                    <button type="button" @onclick="ResetToDefault" class="hmi-button-cancel">
+                        Reset Default
+                    </button>
+
+                    <button type="button" 
+                            @onclick="ApplySelectedLanguage" 
+                            disabled="@(ActiveLanguage.Code == SelectedLanguageCode)"
+                            class="hmi-button @(ActiveLanguage.Code != SelectedLanguageCode ? "apply-active" : "apply-disabled")">
+                        
+                        <span>Apply Change</span>
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <!-- 3. Bottom HMI Navigation & Footer Dock -->
+        <footer class="hmi-footer">
+            <!-- Tactile Back Navigation Button -->
+            <button type="button" @onclick="HandleBack" class="hmi-button">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                </svg>
+                <span>Back</span>
+            </button>
+        </footer>
+</div>
+
+@code {
+    public class LanguageItem
+    {
+        public string Code { get; set; } = "en";
+        public string Name { get; set; } = "English";
+        public string NativeName { get; set; } = "";
+        public string Greeting { get; set; } = "Hello";
+    }
+
+    [Parameter] public string CurrentLanguageCode { get; set; } = "en";
+    [Parameter] public EventCallback<string> CurrentLanguageCodeChanged { get; set; }
+
+    [Parameter] public EventCallback<LanguageItem> OnLanguageChanged { get; set; }
+    [Parameter] public EventCallback OnBack { get; set; }
+
+    [Parameter] public DateTime CurrentTime { get; set; } = new DateTime(2026, 9, 21, 14, 22, 0);
+
+    private string SelectedLanguageCode = "en";
+    private LanguageItem ActiveLanguage => Languages.FirstOrDefault(l => l.Code == CurrentLanguageCode) ?? Languages[0];
+
+    // Languages verbatim from physical reference Image 1
+    private readonly List<LanguageItem> Languages = new()
+    {
+        new LanguageItem { Code = "en", Name = "English", NativeName = "", Greeting = "Hello" },
+        new LanguageItem { Code = "zh", Name = "Chinese", NativeName = "中文", Greeting = "你好" },
+        new LanguageItem { Code = "fi", Name = "Finnish", NativeName = "Suomi", Greeting = "Hei" },
+        new LanguageItem { Code = "fr", Name = "French", NativeName = "Française", Greeting = "Bonjour" },
+        new LanguageItem { Code = "de", Name = "German", NativeName = "Deutsche", Greeting = "Guten Tag" },
+        new LanguageItem { Code = "it", Name = "Italian", NativeName = "Italiano", Greeting = "Ciao" },
+        new LanguageItem { Code = "ja", Name = "Japanese", NativeName = "日本語", Greeting = "こんにちは" },
+        new LanguageItem { Code = "ko", Name = "Korean", NativeName = "한국어", Greeting = "안녕하세요" },
+        new LanguageItem { Code = "es", Name = "Spanish", NativeName = "Español", Greeting = "Hola" },
+        new LanguageItem { Code = "ru", Name = "Russian", NativeName = "Русский", Greeting = "Здравствуйте" }
+    };
+
+    protected override void OnInitialized()
+    {
+        SelectedLanguageCode = CurrentLanguageCode;
+    }
+
+    private void SelectLanguage(LanguageItem lang)
+    {
+        SelectedLanguageCode = lang.Code;
+    }
+
+    private void ResetToDefault()
+    {
+        SelectedLanguageCode = "en";
+        _ = ApplySelectedLanguage();
+    }
+
+    private async Task ApplySelectedLanguage()
+    {
+        CurrentLanguageCode = SelectedLanguageCode;
+        if (CurrentLanguageCodeChanged.HasDelegate)
+        {
+            await CurrentLanguageCodeChanged.InvokeAsync(CurrentLanguageCode);
+        }
+
+        if (OnLanguageChanged.HasDelegate)
+        {
+            await OnLanguageChanged.InvokeAsync(ActiveLanguage);
+        }
+    }
+
+    private async Task HandleBack()
+    {
+        if (OnBack.HasDelegate)
+        {
+            await OnBack.InvokeAsync();
+        }
+        else
+        {
+            Nav.NavigateTo("/admin");
+        }
+    }
+}

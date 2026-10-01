@@ -24,8 +24,38 @@
                  alt="UV Sash Indicator"
                  class="bsc-layer bsc-layer-uv-sash" />
         }
+        else if(State.Condition == CabinetCondition.StandBy)
+        {
+            <div class="bsc-uv-glow" title="Cabinet is standby"></div>
+            <img src="/images/yellow-sash.png"
+                 alt="Standby Sash Indicator"
+                 class="bsc-layer bsc-layer-uv-sash" />
+                 <div class="bsc-stream bsc-stream-downflow" title="Downflow Velocity: @DownflowVelocity">
+                <img src="@DownArrowImage"
+                     alt="Downflow Airflow Arrows Primary"
+                     class="bsc-layer bsc-arrow-df df-wave-1 @ArrowFilterClass" />
+                <img src="@DownArrowImage"
+                     alt="Downflow Airflow Arrows Secondary"
+                     class="bsc-layer bsc-arrow-df df-wave-2 @ArrowFilterClass" />
+            </div>
+
+            <!-- 5. Inflow Air Intake Streams (Front Sash Air Barrier Suction) -->
+            <div class="bsc-stream bsc-stream-inflow" title="Inflow Velocity: @InflowVelocity">
+                <img src="@ElbowArrowImage"
+                     alt="Inflow Airflow Elbow Vector Primary"
+                     class="bsc-layer bsc-arrow-if if-elbow-1 @ArrowFilterClass" />
+                <img src="@ElbowArrowImage"
+                     alt="Inflow Airflow Elbow Vector Secondary"
+                     class="bsc-layer bsc-arrow-if if-elbow-2 @ArrowFilterClass" />
+                <img src="@ElbowArrowImage"
+                     alt="Inflow Airflow Intake Vector"
+                     class="bsc-layer bsc-arrow-if if-base-1 @ArrowFilterClass" />
+            </div>
+        }
         else if (IsBlowerActive)
         {
+            <div class="bsc-uv-glow" title="normal state"></div>
+            <img src="/images/white-sash.png" alt="Normal Sash Indicator" class="bsc-layer bsc-layer-uv-sash"/>
             <!-- 4. Downflow Laminar Airflow Stream (Descending HEPA Clean Air) -->
             <div class="bsc-stream bsc-stream-downflow" title="Downflow Velocity: @DownflowVelocity">
                 <img src="@DownArrowImage"
@@ -72,9 +102,13 @@
     private string BaseImage => State.Condition switch
     {
         CabinetCondition.AirflowFail => "/images/BSC3Dbase-red.png",
+        CabinetCondition.SashUnsafe => "/images/BSC3Dbase-red.png",
+        CabinetCondition.EnvTempLow => "/images/BSC3Dbase-red.png",
+        CabinetCondition.EnvTempHigh => "/images/BSC3Dbase-red.png",
         CabinetCondition.WarmingUp => "/images/BSC3Dbase-orange.png",
         CabinetCondition.UvOn => "/images/BSC3Dbase.png",
         _ => "/images/BSC3Dbase.png"
+        
     };
 
     private string DownArrowImage => State.Condition switch

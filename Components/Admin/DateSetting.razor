@@ -1,0 +1,206 @@
+@page "/admin/datesetting"
+@inject NavigationManager Nav
+@inject CabinetStateService State
+@inject HeaderStateService Header
+@rendermode InteractiveServer
+@implements IDisposable
+
+<div class="hmi-shell">
+    <InnerTopBar Title="Date Setting"/>
+        <main class="hmi-date-workspace">
+            @if (!State.ShowCalendar)
+            {
+                <!-- STATE A: Current Date Overview Card (Tapping transitions to inline calendar overlay) -->
+                <div class="hmi-state-fade-in flex flex-col items-center w-full">
+                    
+                    <div class="hmi-date-card" 
+                         @onclick="OpenInlinePicker" 
+                         role="button" 
+                         tabindex="0"
+                         title="Tap to adjust date with Calendar">
+                        
+                        <div class="hmi-date-content-row">
+                            <!-- Left: Modern Precision Calendar Vector Graphic Badge -->
+                            <div class="hmi-calendar-badge-container">
+                                <div class="hmi-calendar-icon-tile">
+                                    <svg class="hmi-calendar-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <defs>
+                                            <linearGradient id="calOuterRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" stop-color="#38bdf8" />
+                                                <stop offset="50%" stop-color="#0284c7" />
+                                                <stop offset="100%" stop-color="#0369a1" />
+                                            </linearGradient>
+                                            <linearGradient id="calBodyGlassGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                                <stop offset="0%" stop-color="#052c54" />
+                                                <stop offset="70%" stop-color="#021a36" />
+                                                <stop offset="100%" stop-color="#011024" />
+                                            </linearGradient>
+                                            <linearGradient id="calHeaderBarGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                                <stop offset="0%" stop-color="#0284c7" />
+                                                <stop offset="50%" stop-color="#0ea5e9" />
+                                                <stop offset="100%" stop-color="#38bdf8" />
+                                            </linearGradient>
+                                        </defs>
+
+                                        <g>
+                                            <!-- Calendar Main Baseplate -->
+                                            <rect x="14" y="20" width="72" height="66" rx="10" fill="url(#calBodyGlassGrad)" stroke="url(#calOuterRingGrad)" stroke-width="2.2" />
+                                            
+                                            <!-- Top Header Bar with Accent Cyan Band -->
+                                            <path d="M 15 28 C 15 22.5, 18.5 21, 24 21 L 76 21 C 81.5 21, 85 22.5, 85 28 L 85 38 L 15 38 Z" fill="url(#calHeaderBarGrad)" />
+                                            
+                                            <!-- 2 Industrial Ring Binder Posts -->
+                                            <rect x="29" y="13" width="7" height="15" rx="3.5" fill="#f8fafc" stroke="#0284c7" stroke-width="1.8" />
+                                            <rect x="64" y="13" width="7" height="15" rx="3.5" fill="#f8fafc" stroke="#0284c7" stroke-width="1.8" />
+                                            
+                                            <!-- Active Numeric Day Highlight (Center Day) -->
+                                            <text x="50" y="66" font-family="ui-monospace, SFMono-Regular, monospace" font-size="26" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="1">@CurrentDateTime.Day.ToString("D2")</text>
+                                            
+                                            <!-- Sub-Label: Active Month (e.g. SEP) -->
+                                            <text x="50" y="78" font-family="Inter, system-ui, sans-serif" font-size="9" font-weight="800" fill="#38bdf8" text-anchor="middle" letter-spacing="2">@CurrentDateTime.ToString("MMM").ToUpper()</text>
+                                        </g>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Right: Current Date Readout -->
+                            <div class="hmi-date-text-container">
+                                <span class="hmi-date-label">Current date:</span>
+                                
+                                <div class="hmi-date-value">
+                                    <span class="date-digits">@DisplayedDateString</span>
+                                </div>
+
+                                <div class="hmi-tap-to-change">
+                                    <span>Tap to change (Calendar)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+            </main>
+
+        <!-- 3. Bottom HMI Navigation & Footer Dock -->
+        <footer class="hmi-footer">
+            <button type="button" @onclick="HandleFooterBack" class="hmi-button">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                </svg>
+                <span>@(State.ShowCalendar ? "Discard & Return" : "Back")</span>
+            </button>
+        </footer>
+         @if (State.ShowCalendar)
+        {
+            <DatePickerOverlay/>
+        }
+          
+
+       
+</div>
+
+@code {
+    [Parameter] public string DisplayedDateString { get; set; } = "21 Sep 2026";
+    [Parameter] public EventCallback<string> DisplayedDateStringChanged { get; set; }
+
+    [Parameter] public string FormatMode { get; set; } = "DD/MM/YYYY";
+    [Parameter] public EventCallback<string> FormatModeChanged { get; set; }
+
+    [Parameter] public DateTime CurrentDateTime { get; set; } = new DateTime(2026, 9, 21, 14, 23, 17);
+    [Parameter] public EventCallback<DateTime> CurrentDateTimeChanged { get; set; }
+
+    [Parameter] public EventCallback OnBack { get; set; }
+
+    private bool _wasCalOpen;
+
+    protected override void OnInitialized()
+    {
+        State.OnChange += OnStateChanged;
+        State.ShowCalendar = false;
+        UpdateFormattedDateString();
+    }
+
+    private void OnStateChanged()
+    {
+        if (_wasCalOpen && !State.ShowCalendar)
+        {
+            var picked = State.SelectedDate;
+            CurrentDateTime = new DateTime(picked.Year, picked.Month, picked.Day,
+                CurrentDateTime.Hour, CurrentDateTime.Minute, CurrentDateTime.Second);
+            UpdateFormattedDateString();
+        }
+        _wasCalOpen = State.ShowCalendar;
+        InvokeAsync(async () =>
+        {
+            StateHasChanged();
+            if (!_wasCalOpen && DisplayedDateStringChanged.HasDelegate)
+                await DisplayedDateStringChanged.InvokeAsync(DisplayedDateString);
+            if (!_wasCalOpen && CurrentDateTimeChanged.HasDelegate)
+                await CurrentDateTimeChanged.InvokeAsync(CurrentDateTime);
+        });
+    }
+
+    public void Dispose()
+    {
+        State.OnChange -= OnStateChanged;
+        Header.ShowStatus();
+    }
+
+    private void OpenInlinePicker()
+    {
+        State.SelectedDate = DateOnly.FromDateTime(CurrentDateTime);
+        State.OpenCalendar();
+    }
+
+    private async Task SetFormatMode(string mode)
+    {
+        FormatMode = mode;
+        UpdateFormattedDateString();
+        if (FormatModeChanged.HasDelegate)
+        {
+            await FormatModeChanged.InvokeAsync(FormatMode);
+        }
+    }
+
+    private async Task ToggleFormatMode()
+    {
+        var next = FormatMode switch
+        {
+            "DD/MM/YYYY" => "MM/DD/YYYY",
+            "MM/DD/YYYY" => "YYYY-MM-DD",
+            _ => "DD/MM/YYYY"
+        };
+        await SetFormatMode(next);
+    }
+
+    private void UpdateFormattedDateString()
+    {
+        DisplayedDateString = FormatMode switch
+        {
+            "MM/DD/YYYY" => CurrentDateTime.ToString("MM/dd/yyyy"),
+            "YYYY-MM-DD" => CurrentDateTime.ToString("yyyy-MM-dd"),
+            _ => CurrentDateTime.ToString("dd MMM yyyy")
+        };
+    }
+
+    private async Task HandleFooterBack()
+    {
+        if (State.ShowCalendar)
+        {
+            State.CloseCalendar();
+        }
+        else
+        {
+            if (OnBack.HasDelegate)
+            {
+                await OnBack.InvokeAsync();
+            }
+            else
+            {
+                Nav.NavigateTo("/admin");
+            }
+        }
+    }
+}

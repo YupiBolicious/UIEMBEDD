@@ -1,5 +1,8 @@
+@using UiEmbed.Services
 @inject CabinetStateService State
+@inject IHmiAlertService Alerts
 @implements IDisposable
+
 
 <nav aria-label="Touchscreen Navigation Controls" class="dock">
     <button class="hmi-btn dock-btn" @onclick="ToggleMenu" title="System Menu" type="button">
@@ -141,18 +144,29 @@
         await OnAction.InvokeAsync("uv");
     }
 
-    private async Task ToggleAlarm()
+  private async Task ToggleAlarm()
+{
+    var isMuted = State.AlarmMuted;
+
+    var confirmed = await Alerts.ShowAsync(new HmiAlertOptions
     {
-        State.ToggleAlarmMuted();
+        Title = isMuted ? "Audible Alarm" : "Audible Alarm",
+        Message = isMuted
+            ? "Turn ON the audible alarm?"
+            : "Turn OFF the audible alarm?",
+        Level = isMuted
+            ? HmiAlertLevel.Warning
+            : HmiAlertLevel.Warning,
+        ConfirmText = isMuted ? "Unmute" : "Mute",
+        CancelText = isMuted ? "Keep Muted" : "Keep On",
+        ShowCancel = true
+    });
 
-        // TEST: Alarm unmuted → AirflowFail, Alarm muted → Safe
-        State.Condition = !State.AlarmMuted
-            ? CabinetCondition.AirflowFail
-            : CabinetCondition.Safe;
+    if (!confirmed)
+        return;
 
-        await OnAction.InvokeAsync("alarm");
-    }
-
+    State.ToggleAlarmMuted();
+}
     private void OnLightPointerDown(PointerEventArgs args)
     {
         CancelLightPress();

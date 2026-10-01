@@ -1,0 +1,103 @@
+@page "/op/contact"
+@rendermode InteractiveServer
+
+<div class="hmi-shell">
+    <InnerTopBar Title="Contact Us" />
+
+    <main class="about-workspace">
+        <!-- World map background -->
+        <div class="world-map-bg">
+            <svg viewBox="0 0 900 520" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                <!-- Simplified continent shapes -->
+                <g fill="rgba(56, 189, 248, 0.10)" stroke="rgba(56, 189, 248, 0.22)" stroke-width="0.8">
+                    <!-- North America -->
+                    <path d="M80,80 C60,120 80,180 130,190 C180,200 220,230 230,180 C240,140 210,100 190,90 C160,70 110,60 80,80Z" />
+                    <!-- South America -->
+                    <path d="M250,260 C230,300 240,360 250,390 C260,420 280,440 300,430 C320,420 330,370 310,330 C290,280 270,250 250,260Z" />
+                    <!-- Europe -->
+                    <path d="M420,80 C440,70 480,75 490,110 C500,140 470,130 450,125 C430,120 410,100 420,80Z" />
+                    <!-- Africa -->
+                    <path d="M470,170 C490,180 520,170 530,230 C540,290 520,340 480,360 C450,370 440,310 445,260 C450,210 460,175 470,170Z" />
+                    <!-- Asia -->
+                    <path d="M520,70 C600,55 700,65 740,100 C770,130 760,180 730,190 C690,200 620,180 570,160 C530,140 500,90 520,70Z" />
+                    <!-- Australia -->
+                    <path d="M680,330 C720,320 760,340 770,370 C780,400 750,410 710,400 C680,390 660,360 680,330Z" />
+                </g>
+                <!-- Location pins -->
+                <circle cx="460" cy="140" r="4" fill="#ef4444" />
+                <circle cx="460" cy="140" r="8" fill="none" stroke="#ef4444" stroke-width="1" opacity="0.4" />
+                <circle cx="250" cy="200" r="4" fill="#ef4444" />
+                <circle cx="250" cy="200" r="8" fill="none" stroke="#ef4444" stroke-width="1" opacity="0.4" />
+                <circle cx="640" cy="180" r="4" fill="#ef4444" />
+                <circle cx="640" cy="180" r="8" fill="none" stroke="#ef4444" stroke-width="1" opacity="0.4" />
+            </svg>
+        </div>
+
+        <!-- Content overlay -->
+        <div class="about-content">
+            <h1 class="about-heading">We'd love to hear from you!</h1>
+            <p class="about-subheading">
+                Whether you're curious about our products, features, services or technical support&nbsp;&mdash; we're here to answer all your questions.
+            </p>
+
+            <div class="contact-card">
+                <div class="contact-company">Esco Lifesciences Group Ltd.</div>
+                <ul class="contact-list">
+                    <li class="contact-row">
+                        <span class="contact-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 22s8-7 8-13a8 8 0 1 0-16 0c0 6 8 13 8 13z"/>
+                                <circle cx="12" cy="9" r="3"/>
+                            </svg>
+                        </span>
+                        <span class="contact-label">Address:</span>
+                        <span class="contact-value">21 Changi North Street 1, Singapore 498751</span>
+                    </li>
+                    <li class="contact-row">
+                        <span class="contact-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                            </svg>
+                        </span>
+                        <span class="contact-label">Phone:</span>
+                        <span class="contact-value">+65 6542 0883</span>
+                    </li>
+                    <li class="contact-row">
+                        <span class="contact-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 18H3v-2a4 4 0 0 1 4-4h2"/>
+                                <path d="M19 18h2v-2a4 4 0 0 0-4-4h-2"/>
+                                <path d="M8 6h8l1 3a4 4 0 0 1-10 0z"/>
+                                <path d="M12 6v12"/>
+                                <path d="M5 18h14"/>
+                            </svg>
+                        </span>
+                        <span class="contact-label">Fax:</span>
+                        <span class="contact-value">+65 6542 6920</span>
+                    </li>
+                    <li class="contact-row">
+                        <span class="contact-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                                <path d="m22 7-10 5L2 7"/>
+                            </svg>
+                        </span>
+                        <span class="contact-label">Email:</span>
+                        <span class="contact-value">sales@escoglobal.com</span>
+                    </li>
+                    <li class="contact-row">
+                        <span class="contact-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M2 12h20"/>
+                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                            </svg>
+                        </span>
+                        <span class="contact-label">Website:</span>
+                        <span class="contact-value">www.escoglobal.com</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+</div>

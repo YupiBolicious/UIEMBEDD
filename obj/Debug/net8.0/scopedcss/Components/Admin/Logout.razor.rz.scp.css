@@ -1,0 +1,279 @@
+.hmi-time-workspace[b-nur59syydc] {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 2rem 2.75rem;
+    z-index: 10;
+    overflow: hidden;
+}
+
+.hmi-time-card[b-nur59syydc] {
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+    background: linear-gradient(180deg, rgba(3, 33, 66, 0.92) 0%, rgba(2, 20, 42, 0.96) 100%);
+    border: 1.5px solid rgba(56, 189, 248, 0.45);
+    border-radius: 1.5rem;
+    padding: 1.85rem 2.4rem;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.hmi-time-card:hover[b-nur59syydc] {
+    border-color: rgba(56, 189, 248, 0.85);
+    transform: translateY(-2px);
+}
+
+.hmi-time-card:active[b-nur59syydc] {
+    transform: scale(0.985);
+}
+
+.hmi-time-content-row[b-nur59syydc] {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* Analog Clock Bezel Disc */
+.hmi-clock-badge-container[b-nur59syydc] {
+    flex-shrink: 0;
+}
+
+.hmi-clock-icon-tile[b-nur59syydc] {
+    width: 110px;
+    height: 110px;
+    background: linear-gradient(180deg, #032b56 0%, #011d3d 100%);
+    border: 2px solid #38bdf8;
+    border-radius: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.2rem;
+}
+
+.hmi-clock-svg[b-nur59syydc] {
+    width: 100%;
+    height: 100%;
+}
+
+/* Clock Hands Dynamic Motion */
+.clock-sec-hand[b-nur59syydc] {
+    animation: rotateSecond-b-nur59syydc 60s steps(60) infinite;
+    transform-origin: 50px 50px;
+}
+
+@keyframes rotateSecond-b-nur59syydc {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Right Text Container */
+.hmi-time-text-container[b-nur59syydc] {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.15rem;
+}
+
+.hmi-time-label[b-nur59syydc] {
+    font-size: 0.95rem;
+    color: #bae6fd;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.hmi-time-value[b-nur59syydc] {
+    display: flex;
+    align-items: baseline;
+    gap: 0.65rem;
+    line-height: 1.1;
+    margin: 0.2rem 0 0.45rem 0;
+}
+
+.time-digits[b-nur59syydc] {
+    font-size: 2.85rem;
+    font-weight: 900;
+    color: #ffffff;
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    letter-spacing: -0.01em;
+}
+
+.time-format-mode[b-nur59syydc] {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #7dd3fc;
+    font-family: ui-monospace, SFMono-Regular, monospace;
+}
+
+.hmi-tap-to-change[b-nur59syydc] {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.88rem;
+    color: #38bdf8;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    transition: transform 0.15s ease;
+}
+
+.hmi-picker-container[b-nur59syydc] {
+    position: relative;
+    width: 100%;
+    max-width: 580px;
+    background: linear-gradient(180deg, rgba(3, 32, 64, 0.94) 0%, rgba(1, 18, 38, 0.98) 100%);
+    border: 2px solid rgba(56, 189, 248, 0.55);
+    border-radius: 1.5rem;
+    padding: 1.35rem 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+}
+
+.picker-header-row[b-nur59syydc] {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid rgba(56, 189, 248, 0.25);
+}
+
+.picker-step-pill[b-nur59syydc] {
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #38bdf8;
+    background: rgba(2, 132, 199, 0.3);
+    border: 1px solid rgba(56, 189, 248, 0.45);
+    border-radius: 0.4rem;
+    padding: 0.2rem 0.6rem;
+}
+
+/* Drum Wheel Assembly */
+.picker-wheels-assembly[b-nur59syydc] {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    padding: 0.5rem 0;
+}
+
+/* Wheel Column */
+.wheel-column[b-nur59syydc] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 5;
+    min-width: 80px;
+}
+
+.wheel-label[b-nur59syydc] {
+    font-size: 0.68rem;
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    color: #bae6fd;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.35rem;
+}
+
+.wheel-arrow-btn[b-nur59syydc] {
+    width: 44px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    background: rgba(3, 40, 75, 0.85);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    color: #bae6fd;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.wheel-arrow-btn:hover[b-nur59syydc] {
+    background: #0284c7;
+    border-color: #38bdf8;
+    color: #ffffff;
+    transform: scale(1.05);
+}
+
+.wheel-arrow-btn:active[b-nur59syydc] {
+    transform: scale(0.92);
+}
+
+.wheel-slot-container[b-nur59syydc] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    margin: 0.4rem 0;
+    font-family: ui-monospace, SFMono-Regular, monospace;
+}
+
+.wheel-num-preview[b-nur59syydc] {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.35);
+    line-height: 1;
+}
+
+.wheel-num-active[b-nur59syydc] {
+    font-size: 2.65rem;
+    font-weight: 900;
+    color: #ffffff;
+    line-height: 1.1;
+}
+
+.wheel-separator[b-nur59syydc] {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #38bdf8;
+    margin-top: 1.25rem;
+    z-index: 5;
+}
+
+/* 12h AM/PM Switcher */
+.wheel-ampm-column[b-nur59syydc] {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 5;
+    margin-top: 1.25rem;
+}
+
+.picker-ampm-btn[b-nur59syydc] {
+    padding: 0.45rem 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 800;
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    cursor: pointer;
+}
+
+.ampm-active[b-nur59syydc] {
+    background: #0284c7;
+    border: 1.5px solid #38bdf8;
+    color: #ffffff;
+}
+
+.ampm-inactive[b-nur59syydc] {
+    background: rgba(3, 30, 60, 0.7);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    color: #bae6fd;
+}
+
+/* Actions Row */
+.picker-actions-row[b-nur59syydc] {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.85rem;
+    border-top: 1px solid rgba(56, 189, 248, 0.25);
+}

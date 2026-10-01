@@ -188,6 +188,21 @@ h1:focus {
     padding: 0;
 }
 
+.hmi-page.screen-alarm {
+    position: relative;
+    background: linear-gradient(180deg, #7f1d1d 0%, #450a0a 100%);
+}
+
+/* Red-alert dim veil: darkens the whole screen while the dashboard bg is red */
+.hmi-page.screen-alarm::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+    z-index: 9999;
+}
+
 .hmi-frame {
     width: 100%;
     max-width: 900px;
@@ -241,8 +256,21 @@ h1:focus {
 }
 
 .hmi-button {
-    padding: 9px 12px;
-    font-size: 12px;
+    padding: 0.5rem 1.15rem;
+    font-size: 0.85rem;
+}
+.hmi-button-cancel {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 0.5rem 1.15rem;
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    color: #bae6fd;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
 }
 
 .footer-actions {

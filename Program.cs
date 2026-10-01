@@ -24,6 +24,7 @@ builder.Services.AddScoped<AuthenticationStateProvider>(
     sp => sp.GetRequiredService<AppAuthStateProvider>());
 builder.Services.AddSingleton<CabinetStateService>();
 builder.Services.AddSingleton<HeaderStateService>();
+builder.Services.AddSingleton<IHmiAlertService, HmiAlertService>();
 builder.Services.AddServerSideBlazor()
     .AddCircuitOptions(options => { options.DetailedErrors = true; });
 

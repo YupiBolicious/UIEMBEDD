@@ -1,0 +1,258 @@
+@page "/op/quicktour"
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+<div class="hmi-shell">
+        <InnerTopBar Title="Quick Tour"/>
+
+        <main class="hmi-tour-workspace">
+            
+            <nav class="hmi-tour-sidebar" aria-label="Tour Topics">
+                
+                @foreach (var topic in TourTopics)
+                {
+                    var isSelected = SelectedIndex == topic.Index;
+                    <div class="hmi-nav-tab @(isSelected ? "tab-active" : "tab-collapsed")"
+                         @onclick="() => SelectTopic(topic.Index)"
+                         role="button"
+                         tabindex="0">
+                        
+                        <div class="tab-header">
+                            <span class="tab-title-text @(isSelected ? "tab-title-active" : "tab-title-inactive")">
+                                @topic.Title
+                            </span>
+                        </div>
+                        @if (isSelected)
+                        {
+                            <div class="tab-active-body">
+                                <div class="tab-subheading">@topic.Headline</div>
+                                <div class="tab-description">@topic.Description</div>
+                            </div>
+                        }
+                    </div>
+                }
+            </nav>
+
+            <!-- Right Column: Modern Clean Showcase Screen Stage -->
+            <section class="hmi-showcase-panel">
+                <!-- Step Indicator & Manual Nav Arrows Header -->
+                <div class="showcase-header">
+                    <div class="showcase-step-pill">
+                        <span>TOPIC @(SelectedIndex + 1) OF @TourTopics.Count</span>
+                    </div>
+
+                    <!-- Manual Previous / Next Navigation Controls -->
+                    <div class="manual-nav-group">
+                        <button type="button" 
+                                @onclick="PreviousTopic" 
+                                disabled="@(SelectedIndex <= 0)" 
+                                class="btn-manual-nav" 
+                                title="Previous Step">
+                            <svg class="w-4 h-4 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                            </svg>
+                        </button>
+                        <button type="button" 
+                                @onclick="NextTopic" 
+                                disabled="@(SelectedIndex >= TourTopics.Count - 1)" 
+                                class="btn-manual-nav" 
+                                title="Next Step">
+                            <svg class="w-4 h-4 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Showcase Feature Graphic Centerpiece based on Active Topic -->
+                <div class="showcase-center">
+                    @* @if (SelectedIndex == 0)
+                    {
+                        <!-- Topic 1: Home - Informative and Intuitive Control Centre -->
+                        <div class="preview-container">
+                            <div class="flex items-center justify-between pb-3 border-b border-sky-400/25">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-3 h-3 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]"></div>
+                                    <span class="text-sm font-bold text-white uppercase tracking-wider">Main Cabinet Operating Dashboard</span>
+                                </div>
+                                <span class="text-[11px] font-mono text-sky-300">CABINET IS SAFE</span>
+                            </div>
+
+                            <div class="preview-badges-grid">
+                                <div class="preview-chip">
+                                    <svg class="preview-chip-icon text-amber-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="3"/>
+                                        <path d="M12 9a3 3 0 0 0-3-3H6a3 3 0 0 0 3 3h3z"/>
+                                        <path d="M15 12a3 3 0 0 0 3-3V6a3 3 0 0 0-3 3v3z"/>
+                                        <path d="M12 15a3 3 0 0 0 3 3h3a3 3 0 0 0-3-3h-3z"/>
+                                        <path d="M9 12a3 3 0 0 0-3 3v3a3 3 0 0 0 3-3v-3z"/>
+                                    </svg>
+                                    <span class="preview-chip-title">Fan Blower</span>
+                                </div>
+                                <div class="preview-chip">
+                                    <svg class="preview-chip-icon text-amber-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                                        <circle cx="12" cy="12" r="4"/>
+                                    </svg>
+                                    <span class="preview-chip-title">Brightness</span>
+                                </div>
+                                <div class="preview-chip">
+                                    <svg class="preview-chip-icon text-sky-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                    </svg>
+                                    <span class="preview-chip-title">Sockets</span>
+                                </div>
+                                <div class="preview-chip">
+                                    <svg class="preview-chip-icon text-purple-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M12 3v3m0 12v3M5 12H2m20 0h-3M6.5 6.5L4.5 4.5m15 15l-2-2M6.5 17.5l-2 2m15-15l-2 2"/>
+                                        <circle cx="12" cy="12" r="5"/>
+                                    </svg>
+                                    <span class="preview-chip-title">UV & Mute</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else if (SelectedIndex == 1)
+                    {
+                        <!-- Topic 2: Navigation -->
+                        <div class="preview-container">
+                            <div class="flex items-center justify-between pb-3 border-b border-sky-400/25">
+                                <span class="text-sm font-bold text-white uppercase tracking-wider">Intuitive HMI Menu & Docks</span>
+                                <span class="text-[11px] font-mono text-sky-300">PAGINATED HMI TILES</span>
+                            </div>
+                            <div class="py-4 text-xs text-sky-100/90 leading-relaxed text-left">
+                                Seamless access to diagnostic telemetry, timers, log audits, and configuration utilities. Swipe horizontally or tap navigation indicators to switch between Operator and Admin panels.
+                            </div>
+                        </div>
+                    }
+                    else if (SelectedIndex == 2)
+                    {
+                        <!-- Topic 3: Login -->
+                        <div class="preview-container">
+                            <div class="flex items-center justify-between pb-3 border-b border-sky-400/25">
+                                <span class="text-sm font-bold text-white uppercase tracking-wider">Role-Based Access Control</span>
+                                <span class="text-[11px] font-mono text-emerald-300">SECURITY AUDITED</span>
+                            </div>
+                            <div class="py-4 text-xs text-sky-100/90 leading-relaxed text-left">
+                                Multi-tiered authentication system supporting Operator, Administrator, Service, and Guest profiles with dedicated PIN protection and audit trails.
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <!-- Topic 4: Network -->
+                        <div class="preview-container">
+                            <div class="flex items-center justify-between pb-3 border-b border-sky-400/25">
+                                <span class="text-sm font-bold text-white uppercase tracking-wider">Remote Modbus TCP/IP & Telemetry</span>
+                                <span class="text-[11px] font-mono text-emerald-300">MODBUS ONLINE</span>
+                            </div>
+                            <div class="py-4 text-xs text-sky-100/90 leading-relaxed text-left">
+                                Direct integration with Building Automation Systems (BAS/BMS) and remote PC data acquisition via Modbus TCP and wireless interfaces.
+                            </div>
+                        </div>
+                    } *@
+
+                </div>
+
+                <!-- Showcase Footer: Manual Topic Dots (Auto-play deleted, manual only) -->
+                <div class="showcase-footer">
+                    <div class="manual-dots-row">
+                        @for (int i = 0; i < TourTopics.Count; i++)
+                        {
+                            var index = i;
+                            <div class="dot-indicator @(SelectedIndex == index ? "dot-active" : "")"
+                                 @onclick="() => SelectTopic(index)"
+                                 role="button"
+                                 title="@TourTopics[index].Title"></div>
+                        }
+                    </div>
+                </div>
+
+            </section>
+
+        </main>
+
+        <!-- 3. Bottom HMI Navigation & Footer Dock -->
+        <footer class="hmi-footer">
+            <!-- Tactile Back Navigation Button verbatim from reference -->
+            <button type="button" @onclick="NavigateBack" class="hmi-button">
+                <svg>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                </svg>
+                <span>Back</span>
+            </button>
+        </footer>
+</div>
+
+@code {
+    public record TourTopicItem(int Index, string Title, string Headline, string Description);
+    [Parameter] public int SelectedIndex { get; set; } = 0;
+    [Parameter] public EventCallback<int> SelectedIndexChanged { get; set; }
+    [Parameter] public DateTime CurrentTime { get; set; } = new DateTime(2026, 9, 25, 10, 24, 0);
+    [Parameter] public EventCallback OnBack { get; set; }
+    private readonly List<TourTopicItem> TourTopics = new()
+    {
+        new(
+            0,
+            "Home",
+            "Informative and Intuitive Control Centre",
+            "Uncompromising safety by displaying secured cabinet operating indicators and alarms. Quick control of all the main functions such as fan, brightness, sockets, service/gas fixtures, UV, and mute feature."
+        ),
+        new(
+            1,
+            "Navigation",
+            "Effortless Menu & Setting Exploration",
+            "Quick access to diagnostic utilities, timer controls, booking schedule, maintenance cleaning modes, and operating role selection."
+        ),
+        new(
+            2,
+            "Login",
+            "Secured Role-Based Authentication",
+            "Multi-user management with PIN codes and custom privileges to protect critical experiments and prevent unauthorized blower deactivation."
+        ),
+        new(
+            3,
+            "Network",
+            "Modbus TCP & Remote Communication",
+            "Connect the cabinet to building management networks, export audit logs, and monitor velocity sensors through remote PC terminals."
+        )
+    };
+
+    private async Task SelectTopic(int index)
+    {
+        SelectedIndex = index;
+        if (SelectedIndexChanged.HasDelegate)
+        {
+            await SelectedIndexChanged.InvokeAsync(SelectedIndex);
+        }
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task NextTopic()
+    {
+        if (SelectedIndex < TourTopics.Count - 1)
+        {
+            await SelectTopic(SelectedIndex + 1);
+        }
+    }
+
+    private async Task PreviousTopic()
+    {
+        if (SelectedIndex > 0)
+        {
+            await SelectTopic(SelectedIndex - 1);
+        }
+    }
+
+    private async Task NavigateBack()
+    {
+        if (OnBack.HasDelegate)
+        {
+            await OnBack.InvokeAsync();
+        }
+        else
+        {
+            Navigation.NavigateTo("/operator");
+        }
+    }
+}

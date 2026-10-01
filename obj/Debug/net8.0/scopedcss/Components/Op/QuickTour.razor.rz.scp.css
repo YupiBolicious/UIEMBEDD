@@ -1,0 +1,298 @@
+/* 2. Main Tour Workspace (Sidebar + Showcase grid) */
+.hmi-tour-workspace[b-b9qp3acnos] {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    gap: 0.6rem;
+    align-items: stretch;
+    padding: 0.4rem 0;
+    z-index: 10;
+    overflow: hidden;
+}
+
+/* Left Sidebar Panels Container */
+.hmi-tour-sidebar[b-b9qp3acnos] {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.hmi-nav-tab[b-b9qp3acnos] {
+    background: linear-gradient(180deg, rgba(3, 30, 60, 0.85) 0%, rgba(2, 18, 38, 0.92) 100%);
+    border: 1.5px solid rgba(56, 189, 248, 0.35);
+    border-radius: 0.6rem;
+    padding: 0.45rem 0.55rem;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0, 10, 24, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.hmi-nav-tab:hover[b-b9qp3acnos] {
+    border-color: #38bdf8;
+    background: linear-gradient(180deg, rgba(4, 42, 85, 0.95) 0%, rgba(2, 26, 54, 0.98) 100%);
+    transform: translateX(2px);
+    box-shadow: 0 8px 20px rgba(2, 132, 199, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+.tab-active[b-b9qp3acnos] {
+    background: linear-gradient(180deg, rgba(4, 45, 92, 0.95) 0%, rgba(2, 28, 60, 0.98) 100%);
+    border: 2px solid #facc15;
+    box-shadow: 0 0 18px rgba(250, 204, 21, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.25);
+    flex: 1.4;
+}
+
+.tab-collapsed[b-b9qp3acnos] {
+    opacity: 0.78;
+    padding: 0.4rem 0.55rem;
+}
+
+.tab-collapsed:hover[b-b9qp3acnos] {
+    opacity: 1;
+}
+
+.tab-header[b-b9qp3acnos] {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tab-title-text[b-b9qp3acnos] {
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    transition: color 0.15s ease;
+}
+
+.tab-title-active[b-b9qp3acnos] {
+    color: #fde047;
+}
+
+.tab-title-inactive[b-b9qp3acnos] {
+    color: #bae6fd;
+}
+
+/* Sub-description inside active tab */
+.tab-active-body[b-b9qp3acnos] {
+    margin-top: 0.45rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    animation: fadeIn-b-b9qp3acnos 0.25s ease-out;
+}
+
+.tab-subheading[b-b9qp3acnos] {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.2;
+}
+
+.tab-description[b-b9qp3acnos] {
+    font-size: 0.65rem;
+    line-height: 1.3;
+    color: rgba(224, 242, 254, 0.88);
+}
+
+/* Right Feature Display Showcase Card */
+.hmi-showcase-panel[b-b9qp3acnos] {
+    background: linear-gradient(180deg, rgba(3, 26, 54, 0.9) 0%, rgba(1, 16, 34, 0.95) 100%);
+    border: 1.5px solid rgba(56, 189, 248, 0.4);
+    border-radius: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 10px 28px rgba(0, 10, 24, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.12);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Screen Slide Counter & Manual Controls Header */
+.showcase-header[b-b9qp3acnos] {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+}
+
+.showcase-step-pill[b-b9qp3acnos] {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    font-size: 0.58rem;
+    font-weight: 700;
+    color: #bae6fd;
+    background: rgba(2, 132, 199, 0.3);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    border-radius: 0.35rem;
+    padding: 0.15rem 0.45rem;
+}
+
+.manual-nav-group[b-b9qp3acnos] {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-manual-nav[b-b9qp3acnos] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 0.4rem;
+    background: rgba(3, 40, 75, 0.85);
+    border: 1px solid rgba(56, 189, 248, 0.45);
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-manual-nav:hover:not(:disabled)[b-b9qp3acnos] {
+    background: #0284c7;
+    border-color: #38bdf8;
+    transform: scale(1.05);
+}
+
+.btn-manual-nav:disabled[b-b9qp3acnos] {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+/* Showcase Graphic & Interactive Preview Center */
+.showcase-center[b-b9qp3acnos] {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.3rem 0;
+    text-align: center;
+    overflow: hidden;
+}
+
+.preview-container[b-b9qp3acnos] {
+    width: 100%;
+    max-width: 380px;
+    background: rgba(2, 20, 42, 0.75);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: 0.6rem;
+    padding: 0.5rem 0.7rem;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5), 0 6px 18px rgba(0, 15, 30, 0.4);
+}
+
+.preview-badges-grid[b-b9qp3acnos] {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.4rem;
+    margin-top: 0.45rem;
+}
+
+.preview-chip[b-b9qp3acnos] {
+    background: rgba(3, 35, 68, 0.9);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    border-radius: 0.4rem;
+    padding: 0.3rem 0.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.preview-chip-icon[b-b9qp3acnos] {
+    width: 18px;
+    height: 18px;
+    color: #38bdf8;
+}
+
+.preview-chip-title[b-b9qp3acnos] {
+    font-size: 0.55rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+/* Manual Slider Dots Indicator */
+.showcase-footer[b-b9qp3acnos] {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.35rem;
+    border-top: 1px solid rgba(56, 189, 248, 0.2);
+}
+
+.manual-dots-row[b-b9qp3acnos] {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.dot-indicator[b-b9qp3acnos] {
+    width: 8px;
+    height: 8px;
+    border-radius: 9999px;
+    background: rgba(56, 189, 248, 0.3);
+    border: 1px solid rgba(56, 189, 248, 0.5);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.dot-indicator.dot-active[b-b9qp3acnos] {
+    width: 24px;
+    background: #facc15;
+    border-color: #fef08a;
+    box-shadow: 0 0 8px rgba(250, 204, 21, 0.6);
+}
+
+/* 3. Bottom HMI Footer Dock */
+.hmi-footer[b-b9qp3acnos] {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.3rem;
+    border-top: 1px solid rgba(56, 189, 248, 0.25);
+    z-index: 10;
+}
+
+.hmi-btn-back[b-b9qp3acnos] {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.3rem 0.9rem;
+    border-radius: 0.45rem;
+    background: linear-gradient(90deg, #0284c7 0%, #0ea5e9 100%);
+    border: 1px solid #38bdf8;
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 0.72rem;
+    box-shadow: 0 3px 10px rgba(0, 25, 50, 0.45);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.hmi-btn-back:hover[b-b9qp3acnos] {
+    filter: brightness(1.12);
+}
+
+.hmi-btn-back:active[b-b9qp3acnos] {
+    transform: scale(0.96);
+}
+
+@keyframes pulseGlow-b-b9qp3acnos {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.9); }
+}
+
+@keyframes fadeIn-b-b9qp3acnos {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}

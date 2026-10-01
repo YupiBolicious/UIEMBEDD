@@ -1,0 +1,27 @@
+@page "/op/eventlog"
+@rendermode InteractiveServer
+
+<LogView Title="Event Log"
+         OptionsRoute="/op/options/eventlog"
+         TotalText="Total event is"
+         TotalPages="26"
+         TotalItems="1283"
+         Rows="PagedLogs"
+         Columns="Columns" />
+
+@code {
+    private List<LogView.LogColumn> Columns { get; set; } = new()
+    {
+        new() { Header = "Event", Width = "22%", Style = "text" },
+    };
+
+    private List<LogView.LogRowModel> PagedLogs { get; set; } = new()
+    {
+        new() { No = 1, Date = "2026-09-21", Time = "10:26:37", Values = new() { "UV Lamp cycle started" }, User = "Administrator" },
+        new() { No = 2, Date = "2026-09-21", Time = "10:25:37", Values = new() { "UV Lamp cycle finished" }, User = "Administrator" },
+        new() { No = 3, Date = "2026-09-21", Time = "10:24:37", Values = new() { "Pre-heat started" }, User = "Guest" },
+        new() { No = 4, Date = "2026-09-21", Time = "10:23:37", Values = new() { "Standby mode entered" }, User = "Guest" },
+        new() { No = 5, Date = "2026-09-21", Time = "10:22:37", Values = new() { "Door opened" }, User = "Guest" },
+        new() { No = 6, Date = "2026-09-21", Time = "10:21:37", Values = new() { "Door closed" }, User = "Guest" },
+    };
+}
