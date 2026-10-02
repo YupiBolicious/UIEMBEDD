@@ -1,50 +1,33 @@
-<svg class="@Class" width="@Width" height="@Height" viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg" @attributes="AdditionalAttributes">
-                                    <defs>
-                                        <linearGradient id="sashWallGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                            <stop offset="0%" stop-color="#38bdf8" />
-                                            <stop offset="100%" stop-color="#0284c7" />
-                                        </linearGradient>
-                                        <linearGradient id="chamberInteriorGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                                            <stop offset="0%" stop-color="#032a54" />
-                                            <stop offset="100%" stop-color="#084785" />
-                                        </linearGradient>
-                                        <linearGradient id="flowGreenGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                                            <stop offset="0%" stop-color="#22c55e" />
-                                            <stop offset="100%" stop-color="#4ade80" />
-                                        </linearGradient>
-                                        <filter id="greenGlow" x="-20%" y="-20%" width="140%" height="140%">
-                                            <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#22c55e" flood-opacity="0.6" />
-                                        </filter>
-                                    </defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="esco_bg_temp" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#071E3D"/>
+      <stop offset="100%" stop-color="#020B18"/>
+    </linearGradient>
+    <linearGradient id="flowEmerald" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10B981"/>
+      <stop offset="100%" stop-color="#34D399"/>
+    </linearGradient>
+    <filter id="emerald_glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#10B981" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+  <!-- ESCO Outer Bezel -->
+  <rect x="2" y="2" width="116" height="116" rx="24" fill="url(#esco_bg_temp)" stroke="#0E3A66" stroke-width="2"/>
+  <rect x="5" y="5" width="110" height="110" rx="21" fill="none" stroke="#00D2FF" stroke-width="1" stroke-opacity="0.25"/>
 
-                                    <!-- Slanted 3D Cabinet Work-Chamber Opening -->
-                                    <path d="M 12 10 L 60 22 L 60 76 L 12 82 Z" fill="url(#chamberInteriorGrad)" stroke="#38bdf8" stroke-width="1.8" />
-                                    <!-- Inner baffle lines -->
-                                    <line x1="28" y1="14" x2="28" y2="80" stroke="#0ea5e9" stroke-width="1" opacity="0.4" stroke-dasharray="3 3" />
-                                    <line x1="44" y1="18" x2="44" y2="78" stroke="#0ea5e9" stroke-width="1" opacity="0.4" stroke-dasharray="3 3" />
+  <!-- Exhaust Vent Panel Frame in perspective -->
+  <rect x="26" y="30" width="6" height="60" rx="3" fill="#00D2FF"/>
+  <path d="M32 33 L78 40 L78 80 L32 87 Z" fill="#04162C" stroke="#0E3A66" stroke-width="2"/>
+  
+  <!-- Louvre slats / grid markers -->
+  <line x1="48" y1="36" x2="48" y2="84" stroke="#00D2FF" stroke-width="1.5" stroke-dasharray="3 3" stroke-opacity="0.8"/>
+  <line x1="64" y1="38" x2="64" y2="82" stroke="#00D2FF" stroke-width="1.5" stroke-dasharray="3 3" stroke-opacity="0.8"/>
+  <line x1="78" y1="40" x2="78" y2="80" stroke="#00D2FF" stroke-width="2.5"/>
 
-                                    <!-- Upper Outward Green Airflow Vector (Exiting Sash Rightward) -->
-                                    <g>
-                                        <!-- Vector Stem (Thick Green Bar) -->
-                                        <rect x="18" y="27" width="34" height="12" rx="2" fill="url(#flowGreenGrad)" />
-                                        <!-- Arrowhead -->
-                                        <polygon points="52,21 72,33 52,45" fill="#4ade80" />
-                                    </g>
-
-                                    <!-- Lower Outward Green Airflow Vector (Exiting Sash Rightward) -->
-                                    <g>
-                                        <!-- Vector Stem (Thick Green Bar) -->
-                                        <rect x="18" y="55" width="34" height="12" rx="2" fill="url(#flowGreenGrad)" />
-                                        <!-- Arrowhead -->
-                                        <polygon points="52,49 72,61 52,73" fill="#4ade80" />
-                                    </g>
-
-                                    <!-- Left Cabinet Structural Bezel Frame -->
-                                    <rect x="8" y="8" width="6" height="76" rx="2" fill="#0284c7" stroke="#38bdf8" stroke-width="1" />
+  <!-- Dual Emerald Green Temperature Outflow Arrows -->
+  <g filter="url(#emerald_glow)">
+    <path d="M34 50 L88 50 L77 42 M88 50 L77 58" fill="none" stroke="url(#flowEmerald)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M34 70 L88 70 L77 62 M88 70 L77 78" fill="none" stroke="url(#flowEmerald)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
 </svg>
-@code {
-    [Parameter] public string Width { get; set; } = "100%";
-    [Parameter] public string Height { get; set; } = "100%";
-    [Parameter] public string? Class { get; set; }
-    public Dictionary<string, object>? AdditionalAttributes { get; set; }
-}

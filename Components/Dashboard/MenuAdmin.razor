@@ -5,6 +5,7 @@
 @inject NavigationManager Nav
 @inject AppAuthStateProvider Auth
 @implements IDisposable
+@using UiEmbed.Components.Icons
 
 <main class="hmi-shell">
     <div class="screen-gloss"></div>
@@ -23,9 +24,9 @@
                     @foreach (var tile in Page1Tiles)
                     {
                         <button class="menu-tile" @onclick="() => OnTileClick(tile)" type="button">
-                             <div class="tile-icon">
-                                <img src="@tile.Icon" alt="@tile.Label" draggable="false" />
-                            </div>
+                        <div class="tile-icon-bg">
+                            <DynamicComponent Type="GetIconType(tile.Icon)" />
+                        </div>
                             <span class="tile-label">@tile.Label</span>
                         </button>
                     }
@@ -35,9 +36,9 @@
                     @foreach (var tile in Page2Tiles)
                     {
                         <button class="menu-tile" @onclick="() => OnTileClick(tile)" type="button">  
-                            <div class="tile-icon">
-                                <img src="@tile.Icon" alt="@tile.Label" draggable="false" />
-                            </div>
+                        <div class="tile-icon-bg">
+                            <DynamicComponent Type="GetIconType(tile.Icon)" />
+                        </div>
                             <span class="tile-label">@tile.Label</span>
                         </button>
                     }
@@ -48,9 +49,9 @@
                     @foreach (var tile in Page3Tiles)
                     {
                         <button class="menu-tile" @onclick="() => OnTileClick(tile)" type="button">
-                           <div class="tile-icon">
-                                <img src="@tile.Icon" alt="@tile.Label" draggable="false" />
-                            </div>
+                        <div class="tile-icon-bg">
+                            <DynamicComponent Type="GetIconType(tile.Icon)" />
+                        </div>
                             <span class="tile-label">@tile.Label</span>
                         </button>
                     }
@@ -93,6 +94,33 @@
     private double _touchStartX;
     private bool _showPin;
     private string _pendingRole = "";
+    private static readonly Dictionary<string, Type> IconTypes = new()
+{
+    ["shutdown"] = typeof(Shutdown),
+    ["users"] = typeof(Users),
+    ["logout"] = typeof(Shutdown),
+    ["languages"] = typeof(Languages),
+    ["cabinetname"] = typeof(CabinetName),
+    ["timezone"] = typeof(TimeZoneIcon),
+    ["date"] = typeof(DateIcon),
+    ["clock"] = typeof(ClockIcon),
+    ["fan"] = typeof(PinShadow),
+    ["operation"] = typeof(Operation),
+    ["airflow"] = typeof(Airflow),
+    ["airflowout"] = typeof(AirflowOut),
+    ["mute"] = typeof(Mute),
+    ["warmup"] = typeof(Warmup),
+    ["postpurge"] = typeof(PostPurge),
+    ["wifi"] = typeof(Wifi),
+    ["modbus"] = typeof(Modbus)
+};
+
+private Type GetIconType(string icon)
+{
+    return IconTypes.TryGetValue(icon, out var type)
+        ? type
+        : null;
+}
 
     private static MenuTile[] Page1Tiles { get; } = CreatePage1();
     private static MenuTile[] Page2Tiles { get; } = CreatePage2();
@@ -193,32 +221,30 @@
 
 private static MenuTile[] CreatePage1() => new[]
 {
-    new MenuTile("Shut Down", Icon:"/images/Shutdown.png", Route:"/admin/shutdown"),
-    new MenuTile("Users", Icon:"/images/User%20Mgnt.png", Route:"/user-registration"),
-    new MenuTile("Logout Time", Icon:"/images/logout-time.png", Route:"/admin/logout"),
-    new MenuTile("Languages", Icon:"/images/Language.png", Route :"/admin/language"),
-    new MenuTile("Cabinet Name", Icon:"/images/Cabinet%20Name.png", Route :"/admin/cabinetname"),
-    new MenuTile("TimeZone", Icon:"/images/Time%20Zone.png", Route :"/admin/timezone"),
-    new MenuTile("Date", Icon:"/images/Set-Date.png", Route :"/admin/datesetting"),
-    new MenuTile("Time", Icon:"/images/Set-Time.png", Route :"/admin/timesetting"),
+    new MenuTile("Shut Down", Icon: "shutdown", Route: "/admin/shutdown"),
+    new MenuTile("Users", Icon: "users", Route: "/user-registration"),
+    new MenuTile("Logout Time", Icon: "logout", Route: "/admin/logout"),
+    new MenuTile("Languages", Icon: "languages", Route: "/admin/language"),
+    new MenuTile("Cabinet Name", Icon: "cabinetname", Route: "/admin/cabinetname"),
+    new MenuTile("TimeZone", Icon: "timezone", Route: "/admin/timezone"),
+    new MenuTile("Date", Icon: "date", Route: "/admin/datesetting"),
+    new MenuTile("Time", Icon: "clock", Route: "/admin/timesetting"),
 };
 
 private static MenuTile[] CreatePage2() => new[]
 {
-    new MenuTile("Fan PIN", Icon:"/images/Blower-PIN.png", Route :"/admin/faninput"),
-    new MenuTile("Operation Mode", Icon: "/images/Set-User-Mode.png", Route :"/admin/opmode"),
-    new MenuTile("Airflow Monitor", Icon: "/images/Airflow-Monitor.png", Route :"/admin/airflow"),
-    new MenuTile("Airflow Out Temperature", Icon: "/images/Airflow-Out.png", Route :"/admin/airflowout"),
-    new MenuTile("Mute Timer", Icon: "/images/Mute-Timer.png", Route :"/admin/mutetimer"),
-    
-    // Explicitly target Icon using named parameters:
-    new MenuTile("Warmup Timer", Icon: "/images/warm-up_logo.png", Route :"/admin/warmup"),
-    new MenuTile("Post Purge Timer", Icon: "/images/Post-Purge.png", Route :"/admin/postpurge"),
-    new MenuTile("Network", Icon: "/images/wifi.png", Route :"/admin/wifi"),
+    new MenuTile("Fan PIN", Icon: "fan", Route: "/admin/faninput"),
+    new MenuTile("Operation Mode", Icon: "operation", Route: "/admin/opmode"),
+    new MenuTile("Airflow Monitor", Icon: "airflow", Route: "/admin/airflow"),
+    new MenuTile("Airflow Out Temperature", Icon: "airflowout", Route: "/admin/airflowout"),
+    new MenuTile("Mute Timer", Icon: "mute", Route: "/admin/mutetimer"),
+    new MenuTile("Warmup Timer", Icon: "warmup", Route: "/admin/warmup"),
+    new MenuTile("Post Purge Timer", Icon: "postpurge", Route: "/admin/postpurge"),
+    new MenuTile("Network", Icon: "wifi", Route: "/admin/wifi"),
 };
 
 private static MenuTile[] CreatePage3() => new[] 
 {
-    new MenuTile("Remote Modbus", Icon: "/images/Remote-modbus.png", Route :"/admin/modbus")  
+    new MenuTile("Remote Modbus", Icon: "modbus", Route: "/admin/modbus")  
 };
 }

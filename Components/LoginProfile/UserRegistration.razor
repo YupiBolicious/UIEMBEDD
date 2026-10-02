@@ -147,10 +147,10 @@
                 <span>Back</span>
             </button>
             <!-- Tactile Submit Registration Button -->
-            <button type="button" 
-                    @onclick="SubmitRegistration" 
-                    disabled="@(!IsConfirmed)"
-                    class="hmi-button @(IsConfirmed ? "submit-active" : "submit-disabled")">
+            <button type="button"
+                    @onclick="SubmitRegistration"
+                    disabled="@(!CanSubmit)"
+                    class="hmi-button @(CanSubmit ? "submit-active" : "submit-disabled")">
                 <!-- User ID Badge Icon verbatim from reference -->
                 <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 5v14M5 12h14" />
@@ -177,6 +177,15 @@
 
     [Parameter] public EventCallback<UserRegistrationModel> OnSubmit { get; set; }
     [Parameter] public EventCallback OnBack { get; set; }
+
+    private bool CanSubmit =>
+        IsConfirmed &&
+        !string.IsNullOrWhiteSpace(Model.FullName) &&
+        !string.IsNullOrWhiteSpace(Model.Username) &&
+        !string.IsNullOrWhiteSpace(Model.Password) &&
+        !string.IsNullOrWhiteSpace(Model.ConfirmPassword) &&
+        !string.IsNullOrWhiteSpace(Model.Email) &&
+        !string.IsNullOrWhiteSpace(Model.UserLevel);
 
     private async Task SubmitRegistration()
     {

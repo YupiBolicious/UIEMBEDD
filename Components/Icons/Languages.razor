@@ -1,32 +1,23 @@
-<svg viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-                <linearGradient id="bubbleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stop-color="#1e88e5" />
-                    <stop offset="100%" stop-color="#1565c0" />
-                </linearGradient>
-                <radialGradient id="globeGrad" cx="40%" cy="40%" r="60%">
-                    <stop offset="0%" stop-color="#ffffff" />
-                    <stop offset="60%" stop-color="#e3f2fd" />
-                    <stop offset="100%" stop-color="#bbdefb" />
-                </radialGradient>
-                <filter id="bubbleDrop" x="-10%" y="-10%" width="120%" height="120%">
-                    <feDropShadow dx="0" dy="2.5" stdDeviation="2.5" flood-color="#000000" flood-opacity="0.3" />
-                </filter>
-            </defs>
-            <!-- Blue Chat Bubble with pointer -->
-            <path d="M 20 18 C 13.5 18, 10 21.5, 10 28 L 10 70 C 10 76.5, 13.5 80, 20 80 L 32 80 L 25 91 L 43 80 L 82 80 C 88.5 80, 92 76.5, 92 70 L 92 28 C 92 21.5, 88.5 18, 82 18 Z" 
-                  fill="url(#bubbleGrad)" filter="url(#bubbleDrop)" stroke="#0d47a1" stroke-width="1.5" />
-            
-            <!-- Globe Circle Base inside bubble -->
-            <g transform="translate(2, -1)">
-                <circle cx="50" cy="48" r="24" fill="url(#globeGrad)" stroke="#f57c00" stroke-width="2.5" />
-                
-                <!-- Orange / Gold Latitude Lines -->
-                <ellipse cx="50" cy="48" rx="24" ry="10" fill="none" stroke="#ff9800" stroke-width="2" />
-                <line x1="26" y1="48" x2="74" y2="48" stroke="#f57c00" stroke-width="2.2" />
-                
-                <!-- Longitude Ellipses -->
-                <ellipse cx="50" cy="48" rx="14" ry="24" fill="none" stroke="#ff9800" stroke-width="2" />
-                <line x1="50" y1="24" x2="50" y2="72" stroke="#f57c00" stroke-width="2.2" />
-            </g>
-        </svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="bgGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </linearGradient>
+    <linearGradient id="chatGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#1D4ED8"/>
+    </linearGradient>
+  </defs>
+  <!-- Background Tile -->
+  <rect width="120" height="120" rx="28" fill="url(#bgGrad4)"/>
+  <rect x="1" y="1" width="118" height="118" rx="27" fill="none" stroke="#334155" stroke-width="1.5" stroke-opacity="0.8"/>
+  
+  <!-- Speech Bubble -->
+  <path d="M30 36 C30 28 36 24 44 24 L76 24 C84 24 90 28 90 36 L90 64 C90 72 84 76 76 76 L52 76 L36 88 L38 76 C33 76 30 72 30 64 Z" fill="url(#chatGrad)"/>
+  
+  <!-- Globe inside bubble -->
+  <circle cx="60" cy="50" r="16" fill="none" stroke="#FFFFFF" stroke-width="2.5"/>
+  <ellipse cx="60" cy="50" rx="7" ry="16" fill="none" stroke="#FFFFFF" stroke-width="2"/>
+  <line x1="44" y1="50" x2="76" y2="50" stroke="#FFFFFF" stroke-width="2"/>
+</svg>

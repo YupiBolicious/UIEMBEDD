@@ -1,32 +1,41 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 120">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
   <defs>
-    <filter id="dt-shadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#000" flood-opacity="0.25"/>
-    </filter>
-    <linearGradient id="dt-cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="100%" stop-color="#e6ecef"/>
+    <linearGradient id="bgGrad7" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </linearGradient>
+    <linearGradient id="calHeader" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0EA5E9"/>
+      <stop offset="100%" stop-color="#0284C7"/>
     </linearGradient>
   </defs>
-
-  <rect width="140" height="120" rx="16" fill="url(#dt-cardGrad)" filter="url(#dt-shadow)"/>
-  <rect x="35" y="30" width="70" height="60" rx="6" fill="#1e90ff"/>
-  <rect x="35" y="30" width="70" height="16" rx="6" fill="#00bfff"/>
-  <rect x="35" y="40" width="70" height="6" fill="#00bfff"/>
-  <g fill="#ffffff" opacity="0.9">
-    <rect x="42" y="52" width="10" height="8" rx="1"/>
-    <rect x="56" y="52" width="10" height="8" rx="1"/>
-    <rect x="70" y="52" width="10" height="8" rx="1"/>
-    <rect x="84" y="52" width="10" height="8" rx="1"/>
-    
-    <rect x="42" y="64" width="10" height="8" rx="1"/>
-    <rect x="56" y="64" width="10" height="8" rx="1"/>
-    <rect x="70" y="64" width="10" height="8" rx="1"/>
-    <rect x="84" y="64" width="10" height="8" rx="1"/>
-
-    <rect x="42" y="76" width="10" height="8" rx="1"/>
-    <rect x="56" y="76" width="10" height="8" rx="1"/>
-    <rect x="70" y="76" width="10" height="8" rx="1"/>
-    <rect x="84" y="76" width="10" height="8" rx="1"/>
-  </g>
+  <!-- Background Tile -->
+  <rect width="120" height="120" rx="28" fill="url(#bgGrad7)"/>
+  <rect x="1" y="1" width="118" height="118" rx="27" fill="none" stroke="#334155" stroke-width="1.5" stroke-opacity="0.8"/>
+  
+  <!-- Calendar Base -->
+  <rect x="32" y="32" width="56" height="58" rx="10" fill="#FFFFFF"/>
+  
+  <!-- Calendar Header -->
+  <path d="M32 42 C32 36.5 36.5 32 42 32 L78 32 C83.5 32 88 36.5 88 42 L88 48 L32 48 Z" fill="url(#calHeader)"/>
+  
+  <!-- Rings / Binder Pegs -->
+  <rect x="44" y="27" width="4" height="9" rx="2" fill="#64748B"/>
+  <rect x="72" y="27" width="4" height="9" rx="2" fill="#64748B"/>
+  
+  <!-- Calendar Grid Dots / Mini-cells -->
+  <circle cx="43" cy="58" r="2.5" fill="#38BDF8"/>
+  <circle cx="54" cy="58" r="2.5" fill="#38BDF8"/>
+  <circle cx="66" cy="58" r="2.5" fill="#38BDF8"/>
+  <circle cx="77" cy="58" r="2.5" fill="#38BDF8"/>
+  
+  <circle cx="43" cy="68" r="2.5" fill="#38BDF8"/>
+  <circle cx="54" cy="68" r="2.5" fill="#38BDF8"/>
+  <circle cx="66" cy="68" r="2.5" fill="#0284C7"/>
+  <circle cx="77" cy="68" r="2.5" fill="#38BDF8"/>
+  
+  <circle cx="43" cy="78" r="2.5" fill="#38BDF8"/>
+  <circle cx="54" cy="78" r="2.5" fill="#38BDF8"/>
+  <circle cx="66" cy="78" r="2.5" fill="#38BDF8"/>
+  <circle cx="77" cy="78" r="2.5" fill="#CBD5E1"/>
 </svg>

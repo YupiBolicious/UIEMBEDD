@@ -1,38 +1,33 @@
- <svg viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-                <linearGradient id="topArrowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="#38bdf8" />
-                    <stop offset="100%" stop-color="#0284c7" />
-                </linearGradient>
-                <linearGradient id="bottomArrowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="#0284c7" />
-                    <stop offset="100%" stop-color="#0369a1" />
-                </linearGradient>
-                <linearGradient id="glassLensGrad" x1="30%" y1="20%" x2="80%" y2="90%">
-                    <stop offset="0%" stop-color="#ffffff" stop-opacity="0.7" />
-                    <stop offset="60%" stop-color="#e0f2fe" stop-opacity="0.3" />
-                    <stop offset="100%" stop-color="#bae6fd" stop-opacity="0.5" />
-                </linearGradient>
-                <filter id="magShadow" x="-25%" y="-25%" width="150%" height="150%">
-                    <feDropShadow dx="0" dy="3.5" stdDeviation="3" flood-color="#ea580c" flood-opacity="0.3" />
-                </filter>
-            </defs>
-            <!-- Flow Direction Arrows in Background -->
-            <!-- Upper Inflow Arrow (pointing right) -->
-            <path d="M 16 33 L 64 33 M 60 25 L 75 33 L 60 41" fill="none" stroke="url(#topArrowGrad)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
-            
-            <!-- Lower Inflow/Downflow Arrow (pointing right) -->
-            <path d="M 16 67 L 64 67 M 60 59 L 75 67 L 60 75" fill="none" stroke="url(#bottomArrowGrad)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="esco_bg_mon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#071E3D"/>
+      <stop offset="100%" stop-color="#020B18"/>
+    </linearGradient>
+    <linearGradient id="esco_lens" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00E5FF" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#0284C7" stop-opacity="0.1"/>
+    </linearGradient>
+    <filter id="lens_glow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3.5" flood-color="#00E5FF" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+  <!-- ESCO Outer Bezel -->
+  <rect x="2" y="2" width="116" height="116" rx="24" fill="url(#esco_bg_mon)" stroke="#0E3A66" stroke-width="2"/>
+  <rect x="5" y="5" width="110" height="110" rx="21" fill="none" stroke="#00D2FF" stroke-width="1" stroke-opacity="0.25"/>
 
-            <!-- Prominent Inspection Magnifying Glass -->
-            <g filter="url(#magShadow)">
-                <!-- Lens Ring (Bright Orange rim as in physical HMI) -->
-                <circle cx="48" cy="40" r="23" fill="url(#glassLensGrad)" stroke="#f97316" stroke-width="4.5" />
-                <!-- Lens Glare Reflection -->
-                <path d="M 33 32 A 18 18 0 0 1 54 23" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+  <!-- Horizontal Airflow Stream Vectors -->
+  <!-- Top airflow streamline -->
+  <path d="M26 44 L64 44 M57 38 L65 44 L57 50" fill="none" stroke="#00E5FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Bottom airflow streamline -->
+  <path d="M26 76 L52 76 M45 70 L53 76 L45 82" fill="none" stroke="#0284C7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 
-                <!-- Angled Handle pointing down-right -->
-                <line x1="64" y1="56" x2="79" y2="76" stroke="#ea580c" stroke-width="7" stroke-linecap="round" />
-                <line x1="65" y1="57" x2="78" y2="74" stroke="#fdba74" stroke-width="2.5" stroke-linecap="round" />
-            </g>
-        </svg>
+  <!-- Monitoring Inspection Lens -->
+  <g filter="url(#lens_glow)">
+    <circle cx="64" cy="56" r="21" fill="url(#esco_lens)" stroke="#00E5FF" stroke-width="3.5"/>
+    <circle cx="64" cy="56" r="17.5" fill="none" stroke="#FFFFFF" stroke-width="1.2" stroke-opacity="0.5"/>
+    <!-- Diagnostic crosshair or lens glint -->
+    <path d="M79 71 L94 86" stroke="#00D2FF" stroke-width="5.5" stroke-linecap="round"/>
+    <line x1="82" y1="74" x2="91" y2="83" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+  </g>
+</svg>

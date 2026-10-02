@@ -23,7 +23,7 @@
                     @foreach (var tile in Page1Tiles)
                     {
                         <button class="menu-tile" @onclick="() => OnTileClick(tile)" type="button">
-                            <div class="tile-icon">
+                            <div class="tile-icon-bg">
                                 <img src="@tile.Icon" alt="@tile.Label" draggable="false" />
                             </div>
                             <span class="tile-label">@tile.Label</span>

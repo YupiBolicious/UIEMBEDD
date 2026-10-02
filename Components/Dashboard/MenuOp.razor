@@ -23,7 +23,7 @@
                     @foreach (var tile in Page1Tiles)
                     {
                         <button class="menu-tile" @onclick="() => OnTileClick(tile)" type="button">
-                            <div class="tile-icon">
+                            <div class="tile-icon-bg">
                                 <img src="@tile.Icon" alt="@tile.Label" draggable="false" />
                             </div>
                             <span class="tile-label">@tile.Label</span>
@@ -35,9 +35,9 @@
                     @foreach (var tile in Page2Tiles)
                     {
                         <button class="menu-tile" @onclick="() => OnTileClick(tile)" type="button">
-                            <div class="tile-icon">
-                                <img src="@tile.Icon" alt="@tile.Label" draggable="false" />
-                            </div>
+                            <div class="tile-icon-bg">
+                            <DynamicComponent Type="GetIconType(tile.Icon)" />
+                        </div>
                             <span class="tile-label">@tile.Label</span>
                         </button>
                     }
@@ -83,6 +83,33 @@
     private static MenuTile[] Page1Tiles { get; } = CreatePage1();
     private static MenuTile[] Page2Tiles { get; } = CreatePage2();
 
+    private static readonly Dictionary<string, Type> IconTypes = new()
+    {
+        ["exptimer"] = typeof(Shutdown),
+        ["lightintensity"] = typeof(Users),
+        ["lcdbrightness"] = typeof(Shutdown),
+        ["languages"] = typeof(Languages),
+        ["cabinetname"] = typeof(CabinetName),
+        ["timezone"] = typeof(TimeZoneIcon),
+        ["date"] = typeof(DateIcon),
+        ["clock"] = typeof(ClockIcon),
+        ["fan"] = typeof(PinShadow),
+        ["operation"] = typeof(Operation),
+        ["airflow"] = typeof(Airflow),
+        ["airflowout"] = typeof(AirflowOut),
+        ["mute"] = typeof(Mute),
+        ["warmup"] = typeof(Warmup),
+        ["postpurge"] = typeof(PostPurge),
+        ["wifi"] = typeof(Wifi),
+        ["modbus"] = typeof(Modbus)
+    };
+
+    private Type GetIconType(string icon)
+    {
+        return IconTypes.TryGetValue(icon, out var type)
+            ? type
+            : null;
+    }
     protected override void OnInitialized()
     {
         Header.ShowStatus();

@@ -1,36 +1,47 @@
-  <svg viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
- <g filter="url(#pinShadow)">
-                <!-- Background Safe Dial / Vault Wheel silhouette -->
-                <circle cx="50" cy="50" r="30" fill="none" stroke="#cbd5e1" stroke-width="3.5" stroke-dasharray="8 6" opacity="0.8" />
-                <circle cx="50" cy="50" r="16" fill="none" stroke="#94a3b8" stroke-width="2" opacity="0.6" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="bgGrad_fanpin" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </linearGradient>
+    <linearGradient id="cyanAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </linearGradient>
+  </defs>
+  <!-- Background Tile -->
+  <rect width="120" height="120" rx="28" fill="url(#bgGrad_fanpin)"/>
+  <rect x="1" y="1" width="118" height="118" rx="27" fill="none" stroke="#334155" stroke-width="1.5" stroke-opacity="0.8"/>
+  
+  <!-- Dashed outer circular dial / fan pin boundary -->
+  <circle cx="60" cy="60" r="30" fill="none" stroke="#0284C7" stroke-width="2.5" stroke-dasharray="4 4" stroke-opacity="0.6"/>
 
-                <!-- Floating Password / PIN Entry Box -->
-                <rect x="15" y="32" width="70" height="36" rx="6" fill="url(#pinDisplayGrad)" stroke="#0284c7" stroke-width="2" />
-                
-                <!-- 4 Blue Security Asterisks (* * * *) -->
-                <!-- Asterisk 1 -->
-                <g transform="translate(26, 50)" stroke="#0284c7" stroke-width="2.6" stroke-linecap="round">
-                    <line x1="0" y1="-6.5" x2="0" y2="6.5" />
-                    <line x1="-5.5" y1="-3.2" x2="5.5" y2="3.2" />
-                    <line x1="-5.5" y1="3.2" x2="5.5" y2="-3.2" />
-                </g>
-                <!-- Asterisk 2 -->
-                <g transform="translate(42, 50)" stroke="#0284c7" stroke-width="2.6" stroke-linecap="round">
-                    <line x1="0" y1="-6.5" x2="0" y2="6.5" />
-                    <line x1="-5.5" y1="-3.2" x2="5.5" y2="3.2" />
-                    <line x1="-5.5" y1="3.2" x2="5.5" y2="-3.2" />
-                </g>
-                <!-- Asterisk 3 -->
-                <g transform="translate(58, 50)" stroke="#0284c7" stroke-width="2.6" stroke-linecap="round">
-                    <line x1="0" y1="-6.5" x2="0" y2="6.5" />
-                    <line x1="-5.5" y1="-3.2" x2="5.5" y2="3.2" />
-                    <line x1="-5.5" y1="3.2" x2="5.5" y2="-3.2" />
-                </g>
-                <!-- Asterisk 4 -->
-                <g transform="translate(74, 50)" stroke="#0284c7" stroke-width="2.6" stroke-linecap="round">
-                    <line x1="0" y1="-6.5" x2="0" y2="6.5" />
-                    <line x1="-5.5" y1="-3.2" x2="5.5" y2="3.2" />
-                    <line x1="-5.5" y1="3.2" x2="5.5" y2="-3.2" />
-                </g>
-            </g>
-        </svg>
+  <!-- PIN Entry Capsule Bar -->
+  <rect x="28" y="47" width="64" height="26" rx="8" fill="#1E293B" stroke="#38BDF8" stroke-width="2"/>
+
+  <!-- 4 Asterisk PIN dots / stars -->
+  <!-- Star 1 -->
+  <g transform="translate(40, 60)" stroke="#38BDF8" stroke-width="2.2" stroke-linecap="round">
+    <line x1="0" y1="-5" x2="0" y2="5"/>
+    <line x1="-4.3" y1="-2.5" x2="4.3" y2="2.5"/>
+    <line x1="-4.3" y1="2.5" x2="4.3" y2="-2.5"/>
+  </g>
+  <!-- Star 2 -->
+  <g transform="translate(53, 60)" stroke="#38BDF8" stroke-width="2.2" stroke-linecap="round">
+    <line x1="0" y1="-5" x2="0" y2="5"/>
+    <line x1="-4.3" y1="-2.5" x2="4.3" y2="2.5"/>
+    <line x1="-4.3" y1="2.5" x2="4.3" y2="-2.5"/>
+  </g>
+  <!-- Star 3 -->
+  <g transform="translate(67, 60)" stroke="#38BDF8" stroke-width="2.2" stroke-linecap="round">
+    <line x1="0" y1="-5" x2="0" y2="5"/>
+    <line x1="-4.3" y1="-2.5" x2="4.3" y2="2.5"/>
+    <line x1="-4.3" y1="2.5" x2="4.3" y2="-2.5"/>
+  </g>
+  <!-- Star 4 -->
+  <g transform="translate(80, 60)" stroke="#38BDF8" stroke-width="2.2" stroke-linecap="round">
+    <line x1="0" y1="-5" x2="0" y2="5"/>
+    <line x1="-4.3" y1="-2.5" x2="4.3" y2="2.5"/>
+    <line x1="-4.3" y1="2.5" x2="4.3" y2="-2.5"/>
+  </g>
+</svg>

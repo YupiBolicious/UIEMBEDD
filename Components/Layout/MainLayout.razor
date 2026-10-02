@@ -22,8 +22,8 @@
 
     private string PageClass =>
         (Nav.Uri is "/" or "") && State.Condition is CabinetCondition.AirflowFail
-            or CabinetCondition.SashUnsafe
-            or CabinetCondition.EnvTempHigh ? "screen-alarm" : "";
+            or CabinetCondition.EnvTempHigh
+            or CabinetCondition.SashUnsafe ? "screen-alarm" : "";
 
     public void Dispose() => State.OnChange -= OnStateChanged;
 }

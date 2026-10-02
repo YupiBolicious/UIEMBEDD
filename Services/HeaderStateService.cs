@@ -7,11 +7,6 @@ public enum HeaderMode
     Hidden
 }
 
-/// <summary>
-/// Controls the dynamic zone of the persistent header. The ESCO brand block
-/// always renders; views opt into Status (cabinet banner), Title (custom
-/// text), or Hidden (logo only, the default).
-/// </summary>
 public sealed class HeaderStateService
 {
     private HeaderMode _mode = HeaderMode.Hidden;

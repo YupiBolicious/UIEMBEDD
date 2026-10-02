@@ -1,34 +1,50 @@
-<svg viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-                <linearGradient id="greenArrowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#4ade80" />
-                    <stop offset="60%" stop-color="#22c55e" />
-                    <stop offset="100%" stop-color="#15803d" />
-                </linearGradient>
-                <filter id="warmShadow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="0" dy="3" stdDeviation="2.5" flood-color="#15803d" flood-opacity="0.25" />
-                </filter>
-            </defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="esco_bg_wu" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#071E3D"/>
+      <stop offset="100%" stop-color="#020B18"/>
+    </linearGradient>
+    <linearGradient id="flameGrad_esco" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#EA580C"/>
+      <stop offset="50%" stop-color="#F97316"/>
+      <stop offset="100%" stop-color="#FDE047"/>
+    </linearGradient>
+    <linearGradient id="arcGrad_esco" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00E5FF"/>
+      <stop offset="60%" stop-color="#0284C7"/>
+      <stop offset="100%" stop-color="#F97316"/>
+    </linearGradient>
+    <filter id="thermal_glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3.5" flood-color="#F97316" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+  <!-- ESCO Outer Bezel -->
+  <rect x="2" y="2" width="116" height="116" rx="24" fill="url(#esco_bg_wu)" stroke="#0E3A66" stroke-width="2"/>
+  <rect x="5" y="5" width="110" height="110" rx="21" fill="none" stroke="#00D2FF" stroke-width="1" stroke-opacity="0.25"/>
 
-            <g filter="url(#warmShadow)">
-                <!-- Esco Cabinet Outline Housing -->
-                <rect x="20" y="19" width="60" height="62" rx="4" fill="#ffffff" stroke="#94a3b8" stroke-width="1.8" />
-                <!-- Blue Upper Sash / Air Plenum Band -->
-                <rect x="21" y="38" width="58" height="11" fill="#0284c7" />
-                
-                <!-- Circular Green Warmup Arrow Arc -->
-                <g transform="translate(50, 56)">
-                    <!-- Segmented progress tick marks along circular arc -->
-                    <path d="M 0 -17 A 17 17 0 1 1 -15 7" fill="none" stroke="url(#greenArrowGrad)" stroke-width="5.5" stroke-linecap="round" />
-                    
-                    <!-- Arrowhead at top-left pointing clockwise -->
-                    <polygon points="-5,-23 5,-17 -3,-12" fill="#16a34a" />
+  <!-- Stopwatch Hardware Crown & Button -->
+  <rect x="54" y="14" width="12" height="5" rx="2.5" fill="#38BDF8"/>
+  <rect x="57" y="19" width="6" height="4" fill="#0284C7"/>
+  <g transform="rotate(35 60 64)">
+    <rect x="56" y="18" width="8" height="4" rx="1.5" fill="#38BDF8"/>
+  </g>
 
-                    <!-- Segment divisions for progress feel -->
-                    <circle cx="15" cy="-7" r="1.5" fill="#ffffff" />
-                    <circle cx="16" cy="6" r="1.5" fill="#ffffff" />
-                    <circle cx="9" cy="14" r="1.5" fill="#ffffff" />
-                    <circle cx="-5" cy="16" r="1.5" fill="#ffffff" />
-                </g>
-            </g>
-        </svg>
+  <!-- Timer Gauge Dial & Track -->
+  <circle cx="60" cy="64" r="32" fill="#04142B" stroke="#0E3A66" stroke-width="4"/>
+
+  <!-- Calibration Tick Marks -->
+  <line x1="60" y1="36" x2="60" y2="40" stroke="#00D2FF" stroke-width="2" stroke-linecap="round"/>
+  <line x1="88" y1="64" x2="84" y2="64" stroke="#00D2FF" stroke-width="2" stroke-linecap="round"/>
+  <line x1="60" y1="92" x2="60" y2="88" stroke="#00D2FF" stroke-width="2" stroke-linecap="round"/>
+  <line x1="32" y1="64" x2="36" y2="64" stroke="#00D2FF" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- 270° Warm-Up Progress Arc -->
+  <path d="M 60 32 A 32 32 0 1 1 28 64" fill="none" stroke="url(#arcGrad_esco)" stroke-width="4.5" stroke-linecap="round"/>
+  <polygon points="24,61 32,61 28,53" fill="#F97316"/>
+
+  <!-- Glowing Thermal Flame Element -->
+  <g filter="url(#thermal_glow)">
+    <path d="M 60 50 C 65 56, 70 59, 70 67 C 70 73, 65 77, 60 77 C 55 77, 50 73, 50 67 C 50 61, 55 57, 57 54 C 58 57, 60 58, 60 60 C 60 58, 60 53, 60 50 Z" fill="url(#flameGrad_esco)"/>
+    <circle cx="60" cy="69" r="3" fill="#FEF08A"/>
+  </g>
+</svg>

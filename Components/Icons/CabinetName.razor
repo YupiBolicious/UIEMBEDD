@@ -1,25 +1,26 @@
-<svg viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-                <linearGradient id="cabBodyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stop-color="#ffffff" />
-                    <stop offset="100%" stop-color="#eceff1" />
-                </linearGradient>
-                <filter id="cabShadow" x="-10%" y="-10%" width="120%" height="125%">
-                    <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000000" flood-opacity="0.25" />
-                </filter>
-            </defs>
-            <!-- Biosafety Cabinet Top / Header Representation -->
-            <g filter="url(#cabShadow)">
-                <rect x="22" y="16" width="56" height="42" rx="4" fill="url(#cabBodyGrad)" stroke="#78909c" stroke-width="2" />
-                <!-- Blue Banner Stripe -->
-                <rect x="23" y="32" width="54" height="12" fill="#1565c0" />
-                <!-- White Central Notch / Filter Sash Mark -->
-                <rect x="44" y="35" width="12" height="6" rx="1" fill="#ffffff" />
-            </g>
-            
-            <!-- Bottom ABC Identification Card -->
-            <g filter="url(#cabShadow)">
-                <rect x="16" y="52" width="68" height="32" rx="4" fill="#ffffff" stroke="#90a4ae" stroke-width="1.8" />
-                <text x="50" y="75" font-family="'Segoe UI', Roboto, 'Arial Rounded MT Bold', sans-serif" font-weight="700" font-size="20" letter-spacing="2" fill="#546e7a" text-anchor="middle">ABC</text>
-            </g>
-        </svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="esco_bg_cab" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#071E3D"/>
+      <stop offset="100%" stop-color="#020B18"/>
+    </linearGradient>
+    <linearGradient id="cabCardTop" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00E5FF"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </linearGradient>
+    <filter id="cab_glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#00E5FF" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  <!-- ESCO Outer Bezel -->
+  <rect x="2" y="2" width="116" height="116" rx="24" fill="url(#esco_bg_cab)" stroke="#0E3A66" stroke-width="2"/>
+  <rect x="5" y="5" width="110" height="110" rx="21" fill="none" stroke="#00D2FF" stroke-width="1" stroke-opacity="0.25"/>
+
+  <!-- Badge Container Card -->
+  <g filter="url(#cab_glow)">
+    <rect x="32" y="32" width="56" height="24" rx="8" fill="url(#cabCardTop)"/>
+    <rect x="52" y="38" width="16" height="4" rx="2" fill="#E0F2FE"/>
+    <path d="M32 50 L88 50 L88 82 C88 87 84 90 79 90 L41 90 C36 90 32 87 32 82 Z" fill="#04162C" stroke="#00D2FF" stroke-width="1.5"/>
+    <text x="60" y="77" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="900" fill="#00E5FF" text-anchor="middle" letter-spacing="1.5">ABC</text>
+  </g>
+</svg>

@@ -43,8 +43,8 @@
     private void OnStateChanged() => InvokeAsync(StateHasChanged);
 
     private string ShellClass => State.Condition is CabinetCondition.AirflowFail
-        or CabinetCondition.SashUnsafe
-        or CabinetCondition.EnvTempHigh ? "hmi-alert" : "";
+        or CabinetCondition.EnvTempHigh
+        or CabinetCondition.SashUnsafe ? "hmi-alert" : "";
 
     public void Dispose()
     {
