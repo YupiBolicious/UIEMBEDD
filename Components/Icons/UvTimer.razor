@@ -1,6 +1,97 @@
-<svg fill="none" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 12H28M12 44H28" stroke="#D97706" stroke-linecap="round" stroke-width="2.5"></path>
-    <path d="M14 12V18L19 28L14 38V44H26V38L21 28L26 18V12H14Z" fill="#FDE68A" stroke="#B45309" stroke-width="1.8"></path>
-    <path d="M16 38L20 30L24 38H16Z" fill="#F59E0B"></path>
-    <text fill="#F59E0B" font-family="Arial, sans-serif" font-size="18" font-weight="900" stroke="#B45309" stroke-width="0.5" x="27" y="36">UV</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <!-- ESCO Deep Navy Glass Background -->
+    <linearGradient id="esco_bg_uv_timer" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#071E3D"/>
+      <stop offset="100%" stop-color="#020B18"/>
+    </linearGradient>
+
+    <!-- Dial Ring Gradient -->
+    <linearGradient id="uvClockDialGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00E5FF"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </linearGradient>
+
+    <!-- Precision Telemetry Emerald Green Hand Gradient -->
+    <linearGradient id="uvClockHandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34D399"/>
+      <stop offset="100%" stop-color="#10B981"/>
+    </linearGradient>
+
+    <!-- UV Badge Gradient -->
+    <linearGradient id="uvTextGradTimer" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00E5FF"/>
+      <stop offset="100%" stop-color="#38BDF8"/>
+    </linearGradient>
+
+    <!-- Ambient Neon Dial Glow -->
+    <filter id="uv_clock_glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3.5" flood-color="#00E5FF" flood-opacity="0.5"/>
+    </filter>
+
+    <!-- Telemetry Hand Glow -->
+    <filter id="uv_hand_glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="2.5" flood-color="#10B981" flood-opacity="0.7"/>
+    </filter>
+
+    <!-- UV Badge Pill Glow -->
+    <filter id="uv_pill_glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#00E5FF" flood-opacity="0.8"/>
+    </filter>
+  </defs>
+
+  <!-- ESCO Outer Bezel -->
+  <rect x="2" y="2" width="116" height="116" rx="24" fill="url(#esco_bg_uv_timer)" stroke="#0E3A66" stroke-width="2"/>
+  <rect x="5" y="5" width="110" height="110" rx="21" fill="none" stroke="#00D2FF" stroke-width="1" stroke-opacity="0.25"/>
+
+  <!-- Instrument Clock Dial Gauge Frame -->
+  <g filter="url(#uv_clock_glow)">
+    <!-- Outer Track Dial Ring -->
+    <circle cx="60" cy="55" r="33" fill="#04162C" stroke="#0E3A66" stroke-width="2.5"/>
+    <circle cx="60" cy="55" r="33" fill="none" stroke="#00D2FF" stroke-width="1.8"/>
+
+    <!-- Subtle Inset Gauge Scale -->
+    <circle cx="60" cy="55" r="27" fill="#020B18" stroke="#00D2FF" stroke-width="1" stroke-opacity="0.3" stroke-dasharray="2 2"/>
+
+    <!-- Calibrated Hour Ticks (12, 3, 9 major ticks, 6 o'clock modified for badge clearance) -->
+    <!-- 12 o'clock -->
+    <line x1="60" y1="27" x2="60" y2="34" stroke="#00E5FF" stroke-width="2.8" stroke-linecap="round"/>
+    <!-- 3 o'clock -->
+    <line x1="88" y1="55" x2="81" y2="55" stroke="#00E5FF" stroke-width="2.8" stroke-linecap="round"/>
+    <!-- 9 o'clock -->
+    <line x1="32" y1="55" x2="39" y2="55" stroke="#00E5FF" stroke-width="2.8" stroke-linecap="round"/>
+
+    <!-- Minor Calibration Pips -->
+    <circle cx="73" cy="32" r="1.5" fill="#38BDF8"/>
+    <circle cx="83" cy="42" r="1.5" fill="#38BDF8"/>
+    <circle cx="83" cy="68" r="1.5" fill="#38BDF8"/>
+    <circle cx="37" cy="68" r="1.5" fill="#38BDF8"/>
+    <circle cx="37" cy="42" r="1.5" fill="#38BDF8"/>
+    <circle cx="47" cy="32" r="1.5" fill="#38BDF8"/>
+  </g>
+
+  <!-- Precision Clock Hands (Hour, Minute & Sweep Indicator) -->
+  <g filter="url(#uv_hand_glow)">
+    <!-- Hour Hand pointing to ~10:10 position -->
+    <line x1="60" y1="55" x2="46" y2="38" stroke="url(#uvClockHandGrad)" stroke-width="4.5" stroke-linecap="round"/>
+    
+    <!-- Minute Hand pointing to ~2:08 position -->
+    <line x1="60" y1="55" x2="77" y2="41" stroke="url(#uvClockHandGrad)" stroke-width="3.2" stroke-linecap="round"/>
+
+    <!-- Central Precision Bezel Pivot Hub -->
+    <circle cx="60" cy="55" r="4.2" fill="#04162C" stroke="#00E5FF" stroke-width="1.8"/>
+    <circle cx="60" cy="55" r="2" fill="#FFFFFF"/>
+    
+    <!-- Fine Sweep Seconds Needle Indicator (Amber telemetry needle) -->
+    <line x1="60" y1="55" x2="60" y2="70" stroke="#F59E0B" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="60" cy="70" r="1.3" fill="#F59E0B"/>
+  </g>
+
+  <!-- Glowing UV Identification Badge Capsule -->
+  <g filter="url(#uv_pill_glow)">
+    <!-- Sub-dial Bezel Card Capsule overlapping the bottom of the dial -->
+    <rect x="42" y="74" width="36" height="17" rx="5" fill="#031326" stroke="#00E5FF" stroke-width="1.8"/>
+    <!-- Crisp bold UV typography -->
+    <text x="60" y="86.5" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="900" fill="#00E5FF" letter-spacing="1.5" text-anchor="middle">UV</text>
+  </g>
 </svg>

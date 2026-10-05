@@ -1,9 +1,76 @@
-<svg fill="none" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-    <rect fill="#0284C7" height="28" rx="2" stroke="#0369A1" stroke-width="2" width="40" x="12" y="14"></rect>
-    <rect fill="#FFFFFF" height="20" width="32" x="16" y="18"></rect>
-    <path d="M22 34 A 10 10 0 0 1 42 34" fill="#86EFAC" stroke="#22C55E" stroke-width="2"></path>
-    <line stroke="#15803D" stroke-linecap="round" stroke-width="2" x1="32" x2="39" y1="34" y2="25"></line>
-    <circle cx="32" cy="34" fill="#15803D" r="2"></circle>
-    <rect fill="#0369A1" height="4" width="8" x="28" y="42"></rect>
-    <line stroke="#0369A1" stroke-linecap="round" stroke-width="2" x1="20" x2="44" y1="46" y2="46"></line>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <!-- ESCO Deep Navy Glass Background -->
+    <linearGradient id="bg_lcd_clean_hand" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#071E3D"/>
+      <stop offset="100%" stop-color="#020B18"/>
+    </linearGradient>
+
+    <!-- Monitor Screen Inner Display Glass Gradient -->
+    <linearGradient id="screenGlass_hand" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B3364"/>
+      <stop offset="60%" stop-color="#041E3E"/>
+      <stop offset="100%" stop-color="#021024"/>
+    </linearGradient>
+
+    <!-- Cleaning Cloth / Wipe Gradient (Deep navy/cyan tech card) -->
+    <linearGradient id="wipeClothCardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0A3668"/>
+      <stop offset="100%" stop-color="#031A38"/>
+    </linearGradient>
+
+    <!-- Glow Filters -->
+    <filter id="monitor_cyan_glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#00E5FF" flood-opacity="0.45"/>
+    </filter>
+
+    <filter id="hand_wipe_glow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3.5" flood-color="#00E5FF" flood-opacity="0.6"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="1.5" flood-color="#38BDF8" flood-opacity="0.8"/>
+    </filter>
+
+    <filter id="streak_glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#00E5FF" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- ESCO Standard Squircle Bezel (120x120, rx=24) -->
+  <rect x="2" y="2" width="116" height="116" rx="24" fill="url(#bg_lcd_clean_hand)" stroke="#0E3A66" stroke-width="2"/>
+  <rect x="5" y="5" width="110" height="110" rx="21" fill="none" stroke="#00D2FF" stroke-width="1" stroke-opacity="0.25"/>
+
+  <!-- LCD Screen / Monitor Chassis -->
+  <g filter="url(#monitor_cyan_glow)">
+    <!-- Monitor Outer Display Chassis -->
+    <rect x="18" y="22" width="84" height="58" rx="8" fill="#04162C" stroke="#00D2FF" stroke-width="1.8"/>
+
+    <!-- Inner Active Display Panel -->
+    <rect x="22.5" y="26.5" width="75" height="49" rx="5.5" fill="url(#screenGlass_hand)" stroke="#0E3A66" stroke-width="1.2"/>
+
+    <!-- Stand Pedestal & Base Foot -->
+    <rect x="56" y="80" width="8" height="7" fill="#082A52" stroke="#00D2FF" stroke-width="1.2"/>
+    <path d="M 43 91 C 43 88.5 45.5 87 48 87 L 72 87 C 74.5 87 77 88.5 77 91 L 79 93 L 41 93 Z" fill="#04162C" stroke="#00D2FF" stroke-width="1.4"/>
+  </g>
+
+  <!-- Wipe Swipe Streaks across the Screen (Matching Reference {{DATA:IMAGE:IMAGE_1}}) -->
+  <g filter="url(#streak_glow)">
+    <!-- Upper swipe streak 1 -->
+    <path d="M 42 35 C 52 30 62 30 72 32" fill="none" stroke="#00E5FF" stroke-width="2" stroke-linecap="round" opacity="0.85"/>
+    <!-- Upper swipe streak 2 -->
+    <path d="M 50 40 C 58 37 64 38 68 39" fill="none" stroke="#38BDF8" stroke-width="1.6" stroke-linecap="round" opacity="0.7"/>
+    <!-- Lower sweeping arc -->
+    <path d="M 33 58 C 45 52 56 50 67 52" fill="none" stroke="#00E5FF" stroke-width="2.2" stroke-linecap="round" opacity="0.9"/>
+  </g>
+
+  <!-- Angled Cleaning Cloth Sheet held by Operator Hand (Directly replicating reference {{DATA:IMAGE:IMAGE_1}}) -->
+  <g filter="url(#hand_wipe_glow)">
+    <!-- Rectangular angled cleaning wipe / cloth -->
+    <!-- Transformed to match the tilted angle in the reference icon -->
+    <g transform="rotate(-26 78 54)">
+      <!-- Microfiber Cloth Base -->
+      <rect x="63" y="34" width="30" height="38" rx="2" fill="url(#wipeClothCardGrad)" stroke="#00E5FF" stroke-width="1.8"/>
+      <!-- Internal subtle weave / crease line -->
+      <line x1="63" y1="44" x2="93" y2="44" stroke="#0E3A66" stroke-width="1" stroke-dasharray="2 2"/>
+      <line x1="63" y1="56" x2="93" y2="56" stroke="#0E3A66" stroke-width="1" stroke-dasharray="2 2"/>
+    </g>
+  </g>
 </svg>

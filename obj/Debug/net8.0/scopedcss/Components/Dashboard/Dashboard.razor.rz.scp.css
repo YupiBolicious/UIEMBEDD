@@ -44,6 +44,23 @@
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), 0 0 0 2px #b91c1c, inset 0 0 12px rgba(252, 165, 165, 0.25);
 }
 
+/* Dim-black veil: darkens all dashboard content when an alarm condition is active.
+   Sits above dashboard content (z-index ≤ 50) but below StateTestHook (z-index 60). */
+.hmi-shell.hmi-alert[b-u959wy7f20]::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    pointer-events: none;
+    z-index: 60;
+    animation: alarm-dim-b-u959wy7f20 1s ease-in-out infinite alternate;
+}
+
+@keyframes alarm-dim-b-u959wy7f20 {
+    from { opacity: 0.35; }
+    to { opacity: 1; }
+}
+
 @media (max-width: 1024px) {
     .hmi-shell[b-u959wy7f20] {
         max-width: 100%;

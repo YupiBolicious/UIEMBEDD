@@ -86,6 +86,5 @@ C:\Users\luthiah.nabilah\UiEmbed\obj\Debug\net8.0\scopedcss\Components\Admin\Tim
 C:\Users\luthiah.nabilah\UiEmbed\obj\Debug\net8.0\scopedcss\Components\Admin\Wifi.razor.rz.scp.css
 C:\Users\luthiah.nabilah\UiEmbed\obj\Debug\net8.0\scopedcss\Components\Admin\Logout.razor.rz.scp.css
 C:\Users\luthiah.nabilah\UiEmbed\obj\Debug\net8.0\scopedcss\Components\Admin\Shutdown.razor.rz.scp.css
-C:\Users\luthiah.nabilah\UiEmbed\obj\Debug\net8.0\scopedcss\Components\Dashboard\LcdCleaning.razor.rz.scp.css
 C:\Users\luthiah.nabilah\UiEmbed\obj\Debug\net8.0\scopedcss\Components\Dashboard\StateTestHook.razor.rz.scp.css
 C:\Users\luthiah.nabilah\UiEmbed\obj\Debug\net8.0\scopedcss\Components\Service\AlertModal.razor.rz.scp.css

@@ -1,41 +1,50 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
   <defs>
-    <linearGradient id="bgGrad7" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#1E293B"/>
-      <stop offset="100%" stop-color="#0F172A"/>
+    <linearGradient id="esco_bg_date" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#071E3D"/>
+      <stop offset="100%" stop-color="#020B18"/>
     </linearGradient>
-    <linearGradient id="calHeader" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0EA5E9"/>
+    <linearGradient id="calHeaderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00E5FF"/>
       <stop offset="100%" stop-color="#0284C7"/>
     </linearGradient>
+    <filter id="date_glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3.5" flood-color="#00E5FF" flood-opacity="0.45"/>
+    </filter>
   </defs>
-  <!-- Background Tile -->
-  <rect width="120" height="120" rx="28" fill="url(#bgGrad7)"/>
-  <rect x="1" y="1" width="118" height="118" rx="27" fill="none" stroke="#334155" stroke-width="1.5" stroke-opacity="0.8"/>
-  
-  <!-- Calendar Base -->
-  <rect x="32" y="32" width="56" height="58" rx="10" fill="#FFFFFF"/>
-  
-  <!-- Calendar Header -->
-  <path d="M32 42 C32 36.5 36.5 32 42 32 L78 32 C83.5 32 88 36.5 88 42 L88 48 L32 48 Z" fill="url(#calHeader)"/>
-  
-  <!-- Rings / Binder Pegs -->
-  <rect x="44" y="27" width="4" height="9" rx="2" fill="#64748B"/>
-  <rect x="72" y="27" width="4" height="9" rx="2" fill="#64748B"/>
-  
-  <!-- Calendar Grid Dots / Mini-cells -->
-  <circle cx="43" cy="58" r="2.5" fill="#38BDF8"/>
-  <circle cx="54" cy="58" r="2.5" fill="#38BDF8"/>
-  <circle cx="66" cy="58" r="2.5" fill="#38BDF8"/>
-  <circle cx="77" cy="58" r="2.5" fill="#38BDF8"/>
-  
-  <circle cx="43" cy="68" r="2.5" fill="#38BDF8"/>
-  <circle cx="54" cy="68" r="2.5" fill="#38BDF8"/>
-  <circle cx="66" cy="68" r="2.5" fill="#0284C7"/>
-  <circle cx="77" cy="68" r="2.5" fill="#38BDF8"/>
-  
-  <circle cx="43" cy="78" r="2.5" fill="#38BDF8"/>
-  <circle cx="54" cy="78" r="2.5" fill="#38BDF8"/>
-  <circle cx="66" cy="78" r="2.5" fill="#38BDF8"/>
-  <circle cx="77" cy="78" r="2.5" fill="#CBD5E1"/>
+  <!-- ESCO Outer Bezel -->
+  <rect x="2" y="2" width="116" height="116" rx="24" fill="url(#esco_bg_date)" stroke="#0E3A66" stroke-width="2"/>
+  <rect x="5" y="5" width="110" height="110" rx="21" fill="none" stroke="#00D2FF" stroke-width="1" stroke-opacity="0.25"/>
+
+  <!-- Calendar Container Frame -->
+  <g filter="url(#date_glow)">
+    <!-- Calendar Card Body -->
+    <rect x="33" y="34" width="54" height="54" rx="8" fill="#04162C" stroke="#00D2FF" stroke-width="1.8"/>
+    
+    <!-- Top Header Banner -->
+    <path d="M33 42 C33 37.5 36.5 34 41 34 L79 34 C83.5 34 87 37.5 87 42 L87 48 L33 48 Z" fill="url(#calHeaderGrad)"/>
+    
+    <!-- Top Binder Pegs / Rings -->
+    <rect x="44" y="29" width="4" height="8" rx="2" fill="#E0F2FE"/>
+    <rect x="72" y="29" width="4" height="8" rx="2" fill="#E0F2FE"/>
+
+    <!-- Calendar Day Dots Grid (3x4 matrix in cyan) -->
+    <!-- Row 1 -->
+    <circle cx="43" cy="57" r="2.2" fill="#38BDF8"/>
+    <circle cx="54" cy="57" r="2.2" fill="#38BDF8"/>
+    <circle cx="66" cy="57" r="2.2" fill="#38BDF8"/>
+    <circle cx="77" cy="57" r="2.2" fill="#38BDF8"/>
+    
+    <!-- Row 2 -->
+    <circle cx="43" cy="68" r="2.2" fill="#38BDF8"/>
+    <circle cx="54" cy="68" r="2.2" fill="#00E5FF"/>
+    <circle cx="66" cy="68" r="2.5" fill="#34D399"/> <!-- Active day highlight in emerald -->
+    <circle cx="77" cy="68" r="2.2" fill="#38BDF8"/>
+    
+    <!-- Row 3 -->
+    <circle cx="43" cy="79" r="2.2" fill="#38BDF8"/>
+    <circle cx="54" cy="79" r="2.2" fill="#38BDF8"/>
+    <circle cx="66" cy="79" r="2.2" fill="#38BDF8"/>
+    <circle cx="77" cy="79" r="2.2" fill="#38BDF8"/>
+  </g>
 </svg>

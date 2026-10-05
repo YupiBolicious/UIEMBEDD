@@ -1,19 +1,68 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
   <defs>
-    <linearGradient id="bgGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#1E293B"/>
-      <stop offset="100%" stop-color="#0F172A"/>
+    <!-- ESCO Tile Background: Deep Navy Glass Gradient matching other icons in grid -->
+    <linearGradient id="esco_users_bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#071E3D"/>
+      <stop offset="100%" stop-color="#020B18"/>
     </linearGradient>
-    <linearGradient id="userGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#60A5FA"/>
-      <stop offset="100%" stop-color="#3B82F6"/>
+
+    <!-- Inner dark recessed plate -->
+    <linearGradient id="esco_users_plate" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#061830"/>
+      <stop offset="100%" stop-color="#020C1A"/>
     </linearGradient>
+
+    <!-- Electric Cyan User Gradient (Matching Cabinet Name, Date, TimeZone cyan neon style) -->
+    <linearGradient id="cyan_user_grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#00E5FF"/>
+    </linearGradient>
+
+    <!-- Cyan Glow Filter matching other icons -->
+    <filter id="users_cyan_glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#00E5FF" flood-opacity="0.75"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="1" flood-color="#BAE6FD" flood-opacity="0.85"/>
+    </filter>
   </defs>
-  <!-- Background Tile -->
-  <rect width="120" height="120" rx="28" fill="url(#bgGrad2)"/>
-  <rect x="1" y="1" width="118" height="118" rx="27" fill="none" stroke="#334155" stroke-width="1.5" stroke-opacity="0.8"/>
+
+  <!-- ESCO Standard Squircle Bezel (120x120, rx=24) matching all other menu tiles -->
+  <rect x="2" y="2" width="116" height="116" rx="24" fill="url(#esco_users_bg)" stroke="#0E3A66" stroke-width="2"/>
+  <rect x="5" y="5" width="110" height="110" rx="21" fill="none" stroke="#00D2FF" stroke-width="1" stroke-opacity="0.35"/>
   
-  <!-- User Head & Torso -->
-  <circle cx="60" cy="46" r="16" fill="url(#userGrad)"/>
-  <path d="M34 88 C34 72 45 68 60 68 C75 68 86 72 86 88 C86 91 83 93 79 93 L41 93 C37 93 34 91 34 88 Z" fill="url(#userGrad)"/>
+  <!-- Aligned Users Icon Silhouette & Precision Neon Contours matching the suite -->
+  <g filter="url(#users_cyan_glow)">
+    <!-- User Head Circle with crisp cyan stroke outline and translucent glowing glass fill -->
+    <circle cx="60" cy="43" r="13" 
+            fill="#03254A" 
+            fill-opacity="0.7" 
+            stroke="url(#cyan_user_grad)" 
+            stroke-width="2.8"/>
+
+    <!-- Subtle specular highlight on head -->
+    <path d="M 53 38 C 55 35 65 35 67 38" 
+          fill="none" 
+          stroke="#FFFFFF" 
+          stroke-width="1" 
+          stroke-linecap="round" 
+          opacity="0.7"/>
+
+    <!-- User Torso & Shoulder Contour with crisp cyan stroke outline and matching translucent glass fill -->
+    <path d="M 37 77 C 37 66 45 61 60 61 C 75 61 83 66 83 77 C 83 79.5 81.5 81 78 81 L 42 81 C 38.5 81 37 79.5 37 77 Z" 
+          fill="#03254A" 
+          fill-opacity="0.7" 
+          stroke="url(#cyan_user_grad)" 
+          stroke-width="2" 
+          stroke-linejoin="round"/>
+
+    <!-- Subtle ergonomic collar/shoulder accent line -->
+    <path d="M 46 76 C 50 69 70 69 74 76" 
+          fill="none" 
+          stroke="url(#cyan_user_grad)" 
+          stroke-width="1" 
+          stroke-linecap="round" 
+          opacity="0.5"/>
+  </g>
+
+  <!-- Ambient cyan soft floor glow -->
+  <ellipse cx="60" cy="78" rx="18" ry="4" fill="#00E5FF" fill-opacity="0.15" filter="blur(4px)"/>
 </svg>

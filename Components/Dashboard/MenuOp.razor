@@ -5,6 +5,7 @@
 @inject NavigationManager Nav
 @inject AppAuthStateProvider Auth
 @implements IDisposable
+@using UiEmbed.Components.Icons
 
 <main class="hmi-shell">
     <div class="screen-gloss"></div>
@@ -20,12 +21,12 @@
                  @ontouchend="OnTouchEnd">
 
                 <div class="menu-page">
-                    @foreach (var tile in Page1Tiles)
+                  @foreach (var tile in Page1Tiles)
                     {
                         <button class="menu-tile" @onclick="() => OnTileClick(tile)" type="button">
-                            <div class="tile-icon-bg">
-                                <img src="@tile.Icon" alt="@tile.Label" draggable="false" />
-                            </div>
+                        <div class="tile-icon-bg">
+                            <DynamicComponent Type="GetIconType(tile.Icon)" />
+                        </div>
                             <span class="tile-label">@tile.Label</span>
                         </button>
                     }
@@ -35,7 +36,7 @@
                     @foreach (var tile in Page2Tiles)
                     {
                         <button class="menu-tile" @onclick="() => OnTileClick(tile)" type="button">
-                            <div class="tile-icon-bg">
+                        <div class="tile-icon-bg">
                             <DynamicComponent Type="GetIconType(tile.Icon)" />
                         </div>
                             <span class="tile-label">@tile.Label</span>
@@ -85,28 +86,25 @@
 
     private static readonly Dictionary<string, Type> IconTypes = new()
     {
-        ["exptimer"] = typeof(Shutdown),
-        ["lightintensity"] = typeof(Users),
-        ["lcdbrightness"] = typeof(Shutdown),
-        ["languages"] = typeof(Languages),
-        ["cabinetname"] = typeof(CabinetName),
-        ["timezone"] = typeof(TimeZoneIcon),
-        ["date"] = typeof(DateIcon),
-        ["clock"] = typeof(ClockIcon),
-        ["fan"] = typeof(PinShadow),
-        ["operation"] = typeof(Operation),
-        ["airflow"] = typeof(Airflow),
-        ["airflowout"] = typeof(AirflowOut),
-        ["mute"] = typeof(Mute),
-        ["warmup"] = typeof(Warmup),
-        ["postpurge"] = typeof(PostPurge),
-        ["wifi"] = typeof(Wifi),
-        ["modbus"] = typeof(Modbus)
+        ["timericon"] = typeof(TimerIcon),
+        ["light"] = typeof(Light),
+        ["lcdbrightness"] = typeof(LcdBrightness),
+        ["lcd"] = typeof(LcdCleaning),
+        ["bookingschedule"] = typeof(BookingSchedule),
+        ["datalog"] = typeof(DataLog),
+        ["alarmlog"] = typeof(AlarmLog),
+        ["eventlog"] = typeof(EventLog),
+        ["uvtimer"] = typeof(UvTimer),
+        ["fanscheduler"] = typeof(FanScheduler),
+        ["uvscheduler"] = typeof(UvScheduler),
+        ["lightscheduler"] = typeof(LightScheduler),
+        ["eloutletscheduler"] = typeof(ElOutletScheduler),
+        ["about"] = typeof(About)
     };
 
-    private Type GetIconType(string icon)
+   private Type? GetIconType(string? icon)
     {
-        return IconTypes.TryGetValue(icon, out var type)
+        return icon is not null && IconTypes.TryGetValue(icon, out var type)
             ? type
             : null;
     }
@@ -143,7 +141,8 @@
             default:
                 break;
         }
-    }
+    } 
+
 
     private static string RouteFor(string role) => role switch
     {
@@ -208,23 +207,23 @@
 
     private static MenuTile[] CreatePage1() => new[]
     {
-        new MenuTile("Experiment Timer", "/images/Experiment-Timer.png", Route: "/op/exptimer/main"),
-        new MenuTile("Light Intensity", "/images/Light-Intensity.png", Route: "/op/lightintensity"),
-        new MenuTile("LCD Brightness", "/images/Adjust-Brightness.png", Route: "/op/lcdbrightness"),
-        new MenuTile("LCD Cleaning", "/images/Clear-LCD.png", Route: "/op/lcdcleaning"),
-        new MenuTile("Booking Schedule", "/images/Booking-Sched.png", Route: "/op/bookingschedule"),
-        new MenuTile("Data Log", "/images/log-button_2.png", Route:"/op/datalog"),
-        new MenuTile("Alarm Log", "/images/log-button_2.png", Route: "/op/alarmlog"),
-        new MenuTile("Event Log", "/images/log-button_2.png", Route: "/op/eventlog"),
+        new MenuTile("Experiment Timer", "timericon", Route: "/op/exptimer/main"),
+        new MenuTile("Light Intensity", "light", Route: "/op/lightintensity"),
+        new MenuTile("LCD Brightness", "lcdbrightness", Route: "/op/lcdbrightness"),
+        new MenuTile("LCD Cleaning", "lcd", Route: "/op/lcdcleaning"),
+        new MenuTile("Booking Schedule", "bookingschedule", Route: "/op/bookingschedule"),
+        new MenuTile("Data Log", "datalog", Route:"/op/datalog"),
+        new MenuTile("Alarm Log", "alarmlog", Route: "/op/alarmlog"),
+        new MenuTile("Event Log", "eventlog", Route: "/op/eventlog"),
     };
 
     private static MenuTile[] CreatePage2() => new[]
     {
-        new MenuTile("UV Timer", "/images/UV_Timer.png", Route: "/op/uvtimer"),
-        new MenuTile("Fan Scheduler", "/images/Fan_Schedule.png", Route: "/op/fanscheduler"),
-        new MenuTile("UV Scheduler", "/images/UV_Sched.png", Route: "/op/uvscheduler"),
-        new MenuTile("Light Scheduler", "/images/Light_Sched.png", Route: "/op/lightscheduler"),
-        new MenuTile("El-Outlet Scheduler", "/images/Socket_Sched.png", Route: "/op/outletscheduler"),
-        new MenuTile("About", "/images/about-us.png", Route: "/op/about"),
+        new MenuTile("UV Timer", "uvtimer", Route: "/op/uvtimer"),
+        new MenuTile("Fan Scheduler", "fanscheduler", Route: "/op/fanscheduler"),
+        new MenuTile("UV Scheduler", "uvscheduler", Route: "/op/uvscheduler"),
+        new MenuTile("Light Scheduler", "lightscheduler", Route: "/op/lightscheduler"),
+        new MenuTile("El-Outlet Scheduler", "eloutletscheduler", Route: "/op/outletscheduler"),
+        new MenuTile("About", "about", Route: "/op/about"),
     };
 }

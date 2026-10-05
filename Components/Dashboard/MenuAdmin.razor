@@ -98,7 +98,7 @@
 {
     ["shutdown"] = typeof(Shutdown),
     ["users"] = typeof(Users),
-    ["logout"] = typeof(Shutdown),
+    ["logout"] = typeof(Logout),
     ["languages"] = typeof(Languages),
     ["cabinetname"] = typeof(CabinetName),
     ["timezone"] = typeof(TimeZoneIcon),
@@ -115,9 +115,9 @@
     ["modbus"] = typeof(Modbus)
 };
 
-private Type GetIconType(string icon)
+private Type? GetIconType(string? icon)
 {
-    return IconTypes.TryGetValue(icon, out var type)
+    return icon is not null && IconTypes.TryGetValue(icon, out var type)
         ? type
         : null;
 }

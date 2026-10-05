@@ -188,20 +188,6 @@ h1:focus {
     padding: 0;
 }
 
-.hmi-page.screen-alarm {
-    position: relative;
-    background: linear-gradient(180deg, #7f1d1d 0%, #450a0a 100%);
-}
-
-/* Red-alert dim veil: darkens the whole screen while the dashboard bg is red */
-.hmi-page.screen-alarm::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.4);
-    pointer-events: none;
-    z-index: 9999;
-}
 
 .hmi-frame {
     width: 100%;
@@ -340,10 +326,6 @@ h1:focus {
     padding: 24px;
 }
 /* ===== Menu View (shared by MenuOp / MenuAdmin) ===== */
-
-/* ===== ESCO Biosafety Cabinet - Menu View (Operator Mode) ===== */
-/* Ported from Stitch design: constrained HMI touchscreen terminal */
-
 .menuop-terminal {
     --hmi-gloss: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 40%, rgba(0, 0, 0, 0) 60%);
 
@@ -436,7 +418,9 @@ h1:focus {
     width: calc(100% / var(--page-count, 2));
     height: 100%;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 135px);
+    column-gap: 12px;
+    justify-content: center;
     grid-template-rows: repeat(2, 1fr);
     gap: 8px 10px;
     padding: 0 24px;
@@ -466,20 +450,49 @@ h1:focus {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
+    height: 100%;
     width: 100px;
+    min-width: 0;
     background: none;
     border: none;
     cursor: pointer;
     padding: 0;
     font-family: inherit;
     color: inherit;
+    margin-top: 4px;
+}
+.tile-icon-bg {
+    box-sizing: border-box;
+    flex: 0 0 80px;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.tile-label {
+    flex: 0 0 auto;
+    width: 100%;
 }
 
 @media (min-width: 640px) {
     .menu-tile {
         width: 112px;
     }
+
+    .tile-icon-bg {
+        flex-basis: 96px;
+        width: 96px;
+        height: 96px;
+    }
 }
+
+/* @media (min-width: 640px) {
+    .menu-tile {
+        width: 112px;
+    }
+} */
 
 .menu-tile:focus {
     outline: none;
@@ -488,6 +501,13 @@ h1:focus {
 .menu-tile:active .tile-icon {
     transform: scale(0.94);
     filter: brightness(0.92);
+}
+
+@media (max-width: 639px) {
+    .menu-page {
+        grid-template-columns: repeat(4, 100px);
+        column-gap: 6px;
+    }
 }
 
 @media (min-width: 640px) {
@@ -510,23 +530,7 @@ h1:focus {
     }
 }
 
-.tile-icon-bg {
-  width: 80px;
-  height: 80px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px;
-}
 
-@media (min-width: 640px) {
-  .tile-icon-bg {
-    width: 96px;
-    height: 96px;
-  }
-}
 
 .tile-label {
     margin-top: 6px;
@@ -536,7 +540,15 @@ h1:focus {
     color: #f1f5f9;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
     text-align: center;
-    white-space: nowrap;
+    
+    /* Allow multi-line wrapping */
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.25;
+    
+    /* Ensure label width doesn't exceed tile width */
+    max-width: 100%;
 }
 
 @media (min-width: 640px) {

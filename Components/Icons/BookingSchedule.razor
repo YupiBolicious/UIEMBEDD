@@ -1,14 +1,82 @@
-<svg fill="none" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-    <rect fill="#F8FAFC" height="34" rx="3" stroke="#0284C7" stroke-width="2" width="24" x="12" y="12"></rect>
-    <path d="M16 20L19 23L24 18" stroke="#0284C7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
-    <path d="M16 28L19 31L24 26" stroke="#0284C7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
-    <line stroke="#94A3B8" stroke-linecap="round" stroke-width="2" x1="16" x2="26" y1="36" y2="36"></line>
-    <rect fill="#FFFFFF" height="26" rx="3" stroke="#EF4444" stroke-width="1.8" width="26" x="26" y="24"></rect>
-    <rect fill="#EF4444" height="8" width="26" x="26" y="24"></rect>
-    <circle cx="32" cy="38" fill="#E2E8F0" r="1.2"></circle>
-    <circle cx="38" cy="38" fill="#E2E8F0" r="1.2"></circle>
-    <circle cx="44" cy="38" fill="#E2E8F0" r="1.2"></circle>
-    <circle cx="32" cy="44" fill="#E2E8F0" r="1.2"></circle>
-    <circle cx="38" cy="44" fill="#E2E8F0" r="1.2"></circle>
-    <circle cx="44" cy="44" fill="#E2E8F0" r="1.2"></circle>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <!-- ESCO Deep Navy Glass Background -->
+    <linearGradient id="bg_booking" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#071E3D"/>
+      <stop offset="100%" stop-color="#020B18"/>
+    </linearGradient>
+
+    <!-- Calendar Header Gradient -->
+    <linearGradient id="calBookGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00E5FF"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </linearGradient>
+
+    <!-- Emerald Telemetry Reservation Gradient -->
+    <linearGradient id="userPinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34D399"/>
+      <stop offset="100%" stop-color="#10B981"/>
+    </linearGradient>
+
+    <filter id="book_cal_glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3.5" flood-color="#00E5FF" flood-opacity="0.45"/>
+    </filter>
+
+    <filter id="res_glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#10B981" flood-opacity="0.6"/>
+    </filter>
+
+    <filter id="badge_glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="2.5" flood-color="#F59E0B" flood-opacity="0.7"/>
+    </filter>
+  </defs>
+
+  <!-- ESCO Outer Bezel -->
+  <rect x="2" y="2" width="116" height="116" rx="24" fill="url(#bg_booking)" stroke="#0E3A66" stroke-width="2"/>
+  <rect x="5" y="5" width="110" height="110" rx="21" fill="none" stroke="#00D2FF" stroke-width="1" stroke-opacity="0.25"/>
+
+  <!-- Calendar Schedule Chassis -->
+  <g filter="url(#book_cal_glow)">
+    <!-- Calendar Card Base -->
+    <rect x="20" y="25" width="80" height="70" rx="10" fill="#04162C" stroke="#00D2FF" stroke-width="1.8"/>
+
+    <!-- Calendar Header Banner -->
+    <path d="M 20 35 C 20 29.5 24.5 25 30 25 L 90 25 C 95.5 25 100 29.5 100 35 L 100 42 L 20 42 Z" fill="url(#calBookGrad)"/>
+
+    <!-- Binder Loops / Pegs -->
+    <rect x="32" y="20" width="4.5" height="9" rx="2" fill="#E0F2FE"/>
+    <rect x="58" y="20" width="4.5" height="9" rx="2" fill="#E0F2FE"/>
+    <rect x="84" y="20" width="4.5" height="9" rx="2" fill="#E0F2FE"/>
+
+    <!-- Calendar Internal Dot-Matrix Day Grid -->
+    <circle cx="34" cy="51" r="2" fill="#38BDF8" opacity="0.6"/>
+    <circle cx="48" cy="51" r="2" fill="#38BDF8" opacity="0.6"/>
+    <circle cx="62" cy="51" r="2" fill="#38BDF8" opacity="0.6"/>
+    
+    <circle cx="34" cy="62" r="2" fill="#38BDF8" opacity="0.6"/>
+    <circle cx="48" cy="62" r="2" fill="#38BDF8" opacity="0.6"/>
+    
+    <circle cx="34" cy="73" r="2" fill="#38BDF8" opacity="0.6"/>
+    <circle cx="48" cy="73" r="2" fill="#38BDF8" opacity="0.6"/>
+  </g>
+
+  <!-- Reserved User / Personnel Booking Badge Overlay (Right side of calendar) -->
+  <g filter="url(#res_glow)">
+    <!-- Circular Booking Chamber -->
+    <circle cx="74" cy="67" r="18" fill="#020B18" stroke="#00E5FF" stroke-width="1.8"/>
+    <circle cx="74" cy="67" r="15" fill="#04162C"/>
+
+    <!-- User Profile Silhouette (Head & Torso) -->
+    <!-- Head -->
+    <circle cx="74" cy="61" r="4.8" fill="url(#userPinGrad)"/>
+    <!-- Shoulders / Torso -->
+    <path d="M 64.5 76 C 64.5 71 68.5 69 74 69 C 79.5 69 83.5 71 83.5 76 Z" fill="url(#userPinGrad)"/>
+  </g>
+
+  <!-- Live Booking Verified Check / Time Pill Badge -->
+  <g filter="url(#badge_glow)">
+    <circle cx="85" cy="54" r="6.5" fill="#F59E0B" stroke="#04162C" stroke-width="1.5"/>
+    <!-- Precision Clock / Reservation tick -->
+    <path d="M 82 54 L 84.5 56.5 L 88.5 51.5" fill="none" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
 </svg>

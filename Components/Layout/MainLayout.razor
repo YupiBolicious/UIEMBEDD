@@ -20,10 +20,16 @@
 
     private void OnStateChanged() => InvokeAsync(StateHasChanged);
 
-    private string PageClass =>
+    @* private string PageClass =>
         (Nav.Uri is "/" or "") && State.Condition is CabinetCondition.AirflowFail
             or CabinetCondition.EnvTempHigh
-            or CabinetCondition.SashUnsafe ? "screen-alarm" : "";
+            or CabinetCondition.SashUnsafe ? "screen-alarm" : ""; *@
 
+private string PageClass =>
+    (State.Condition is CabinetCondition.EnvTempHigh
+        or CabinetCondition.SashUnsafe
+        or CabinetCondition.AirflowFail)
+        ? "screen-alarm"
+        : string.Empty;
     public void Dispose() => State.OnChange -= OnStateChanged;
 }

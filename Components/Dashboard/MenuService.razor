@@ -5,6 +5,7 @@
 @inject NavigationManager Nav
 @inject AppAuthStateProvider Auth
 @implements IDisposable
+@using UiEmbed.Components.Icons
 
 <main class="hmi-shell">
     <div class="screen-gloss"></div>
@@ -24,7 +25,7 @@
                     {
                         <button class="menu-tile" @onclick="() => OnTileClick(tile)" type="button">
                             <div class="tile-icon-bg">
-                                <img src="@tile.Icon" alt="@tile.Label" draggable="false" />
+                                <DynamicComponent Type="GetIconType(tile.Icon)" />
                             </div>
                             <span class="tile-label">@tile.Label</span>
                         </button>
@@ -65,6 +66,18 @@ private int _menuPage = 1;
     private bool _showPin;
     private string _pendingRole = "";
  
+     private static readonly Dictionary<string, Type> IconTypes = new()
+{
+    ["component"] = typeof(Component),
+    ["maintenance"] = typeof(Maintenance)
+};
+
+    private Type? GetIconType(string? icon)
+    {
+        return icon is not null && IconTypes.TryGetValue(icon, out var type)
+            ? type
+            : null;
+    }
     private static MenuTile[] Page1Tiles { get; } = CreatePage1();
 
     protected override void OnInitialized()
@@ -165,8 +178,8 @@ private int _menuPage = 1;
     public record MenuTile(string Label, string Icon, string Route ="");
     private static MenuTile[] CreatePage1() => new[]
     {
-        new MenuTile("Replaceable Components Record", "/images/Commissioning_icon.png", Route:"/service/componentrecord"),
-        new MenuTile("Preventive Maintenance", "/images/preventive-maintenance.png", Route:"/service/maintenance")
+        new MenuTile("Replaceable Components Record", "component", Route:"/service/componentrecord"),
+        new MenuTile("Preventive Maintenance", "maintenance", Route:"/service/maintenance")
 
        };
 }

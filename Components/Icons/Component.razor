@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <!-- ESCO Deep Navy Obsidian Glass Background -->
+    <linearGradient id="esco_bg_rc" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#071E3D"/>
+      <stop offset="100%" stop-color="#020B18"/>
+    </linearGradient>
+
+    <!-- Industrial Cabinet Unit Fill & Trim -->
+    <linearGradient id="escoFactoryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284C7"/>
+      <stop offset="100%" stop-color="#03487A"/>
+    </linearGradient>
+
+    <!-- Maintenance Wrench Gradient (ESCO Industrial Orange/Amber) -->
+    <linearGradient id="escoWrenchGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF7A00"/>
+      <stop offset="100%" stop-color="#EA580C"/>
+    </linearGradient>
+
+    <!-- Glowing Effects -->
+    <filter id="gear_glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#00E5FF" flood-opacity="0.5"/>
+    </filter>
+
+    <filter id="wrench_glow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3.5" flood-color="#FF7A00" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- ESCO Outer Bezel -->
+  <rect x="2" y="2" width="116" height="116" rx="24" fill="url(#esco_bg_rc)" stroke="#0E3A66" stroke-width="2"/>
+  <rect x="5" y="5" width="110" height="110" rx="21" fill="none" stroke="#00D2FF" stroke-width="1" stroke-opacity="0.25"/>
+
+  <!-- 1. Background Precision Engineering Cog / Gear -->
+  <g filter="url(#gear_glow)" opacity="0.85">
+    <path d="M 44 26 L 48 26 L 49 29.5 L 52.5 31 L 55.5 28.5 L 58.5 31.5 L 56 34.5 L 57.5 38 L 61 39 L 61 43 L 57.5 44 L 56 47.5 L 58.5 50.5 L 55.5 53.5 L 52.5 51 L 49 52.5 L 48 56 L 44 56 L 43 52.5 L 39.5 51 L 36.5 53.5 L 33.5 50.5 L 36 47.5 L 34.5 44 L 31 43 L 31 39 L 34.5 38 L 36 34.5 L 33.5 31.5 L 36.5 28.5 L 39.5 31 L 43 29.5 Z" fill="#0A2D54" stroke="#00E5FF" stroke-width="1.5"/>
+    <circle cx="46" cy="41" r="5.5" fill="#04142B" stroke="#00D2FF" stroke-width="1.5"/>
+  </g>
+
+  <!-- 2. ESCO Facility / Unit Module Block (Foreground Left) -->
+  <g id="esco_factory_block">
+    <!-- Base Cabinet / Facility Body -->
+    <path d="M 22 52 L 56 52 C 58 52 59 53 59 55 L 59 86 C 59 88 58 89 56 89 L 22 89 C 20 89 19 88 19 86 L 19 55 C 19 53 20 52 22 52 Z" fill="#04162B" stroke="#00D2FF" stroke-width="1.8"/>
+
+    <!-- Exhaust Chimney / Vent stack -->
+    <path d="M 23 52 L 23 44 C 23 42 25 41 27 41 L 29 41 C 31 41 33 42 33 44 L 33 52 Z" fill="#08294D" stroke="#00D2FF" stroke-width="1.5"/>
+    <!-- Exhaust Vapor Ring -->
+    <path d="M 26 37 Q 30 35 34 37 Q 36 34 40 36" fill="none" stroke="#38BDF8" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
+
+    <!-- Modular Segment Grid / Windows -->
+    <rect x="23" y="56" width="6" height="6" rx="1.2" fill="#00E5FF"/>
+    <rect x="32" y="56" width="6" height="6" rx="1.2" fill="#00E5FF"/>
+    <rect x="41" y="56" width="6" height="6" rx="1.2" fill="#00E5FF"/>
+    <rect x="50" y="56" width="6" height="6" rx="1.2" fill="#00E5FF"/>
+
+    <!-- ESCO Brand Typography Badge -->
+    <rect x="23" y="68" width="33" height="16" rx="2" fill="url(#escoFactoryGrad)"/>
+    <text x="39.5" y="80" font-family="system-ui, -apple-system, sans-serif" font-size="9" font-weight="900" font-style="italic" fill="#FFFFFF" text-anchor="middle" letter-spacing="1">ESCO</text>
+  </g>
+
+  <!-- 3. Precision Industrial Service Wrench (Right) -->
+  <g id="esco_service_wrench" filter="url(#wrench_glow)">
+    <!-- Wrench Tool Body (Vertical industrial spanner) -->
+    <path d="M 78 24 C 73 24 69 28 69 33 C 69 36 70.5 38.5 73 40 L 73 78 C 70.5 79.5 69 82 69 85 C 69 91 74 95 80 95 C 86 95 91 91 91 85 C 91 82 89.5 79.5 87 78 L 87 40 C 89.5 38.5 91 36 91 33 C 91 28 87 24 82 24 C 81 24 80 24.5 79 25 L 81 31 L 79 33 L 74 31 L 78 24 Z" fill="url(#escoWrenchGrad)" stroke="#FFE082" stroke-width="1"/>
+    <!-- Bottom hanging hole -->
+    <circle cx="80" cy="86" r="3.2" fill="#04162B" stroke="#FFE082" stroke-width="1.2"/>
+    <!-- Precision metallic ridge line -->
+    <line x1="80" y1="44" x2="80" y2="74" stroke="#FFF7ED" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+  </g>
+</svg>

@@ -67,6 +67,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJY29uc1xBaXJmbG93VGVtcC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/luthiah.nabilah/UiEmbed/Components/Icons/AlarmLog.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJY29uc1xBbGFybUxvZy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/luthiah.nabilah/UiEmbed/Components/Icons/BookingSchedule.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJY29uc1xCb29raW5nU2NoZWR1bGUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
@@ -83,6 +87,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJY29uc1xDbG9ja0ljb24ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/luthiah.nabilah/UiEmbed/Components/Icons/Component.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJY29uc1xDb21wb25lbnQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/luthiah.nabilah/UiEmbed/Components/Icons/DataLog.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJY29uc1xEYXRhTG9nLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
@@ -93,6 +101,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/luthiah.nabilah/UiEmbed/Components/Icons/ElOutletScheduler.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJY29uc1xFbE91dGxldFNjaGVkdWxlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/luthiah.nabilah/UiEmbed/Components/Icons/EventLog.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJY29uc1xFdmVudExvZy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/luthiah.nabilah/UiEmbed/Components/Icons/ExpTimer.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJY29uc1xFeHBUaW1lci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/luthiah.nabilah/UiEmbed/Components/Icons/FanScheduler.razor]
@@ -117,6 +133,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/luthiah.nabilah/UiEmbed/Components/Icons/LightScheduler.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJY29uc1xMaWdodFNjaGVkdWxlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/luthiah.nabilah/UiEmbed/Components/Icons/Logout.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJY29uc1xMb2dvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/luthiah.nabilah/UiEmbed/Components/Icons/Maintenance.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJY29uc1xNYWludGVuYW5jZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/luthiah.nabilah/UiEmbed/Components/Icons/Modbus.razor]
@@ -318,10 +342,6 @@ build_metadata.AdditionalFiles.CssScope = b-yw9n7u3d2s
 [C:/Users/luthiah.nabilah/UiEmbed/Components/Dashboard/InfoSubBar.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xEYXNoYm9hcmRcSW5mb1N1YkJhci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-r7yqw0txgz
-
-[C:/Users/luthiah.nabilah/UiEmbed/Components/Dashboard/LcdCleaning.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xEYXNoYm9hcmRcTGNkQ2xlYW5pbmcucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = b-z0jxs6rmue
 
 [C:/Users/luthiah.nabilah/UiEmbed/Components/Dashboard/StateTestHook.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xEYXNoYm9hcmRcU3RhdGVUZXN0SG9vay5yYXpvcg==

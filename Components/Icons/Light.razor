@@ -1,7 +1,78 @@
-<svg fill="none" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-    <path d="M18 28 A14 14 0 0 1 46 28" fill="none" stroke="#22C55E" stroke-linecap="round" stroke-width="4"></path>
-    <path d="M40 18 A14 14 0 0 1 46 28" fill="none" stroke="#3B82F6" stroke-linecap="round" stroke-width="4"></path>
-    <line stroke="#1E40AF" stroke-linecap="round" stroke-width="2.2" x1="32" x2="40" y1="26" y2="18"></line>
-    <path d="M29 44H35M30 47H34" stroke="#94A3B8" stroke-linecap="round" stroke-width="1.6"></path>
-    <path d="M29 40C28 38.5 26 36.5 26 34C26 30.7 28.7 28 32 28C35.3 28 38 30.7 38 34C38 36.5 36 38.5 35 40L29 40Z" fill="#FFFFFF" stroke="#64748B" stroke-width="1.5"></path>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <!-- ESCO Deep Navy Glass Background -->
+    <linearGradient id="bg_light_int" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#071E3D"/>
+      <stop offset="100%" stop-color="#020B18"/>
+    </linearGradient>
+
+    <!-- Warm Amber Radiant Bulb Gradient -->
+    <linearGradient id="bulbWarmGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF082"/>
+      <stop offset="60%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+
+    <!-- Slider / Level Track Gradient -->
+    <linearGradient id="trackGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0284C7"/>
+      <stop offset="50%" stop-color="#00E5FF"/>
+      <stop offset="100%" stop-color="#34D399"/>
+    </linearGradient>
+
+    <filter id="bulb_int_glow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#F59E0B" flood-opacity="0.65"/>
+    </filter>
+
+    <filter id="track_glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#00E5FF" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- ESCO Outer Bezel -->
+  <rect x="2" y="2" width="116" height="116" rx="24" fill="url(#bg_light_int)" stroke="#0E3A66" stroke-width="2"/>
+  <rect x="5" y="5" width="110" height="110" rx="21" fill="none" stroke="#00D2FF" stroke-width="1" stroke-opacity="0.25"/>
+
+  <!-- Radiant Light Bulb with Stepped Intensity Waves -->
+  <g filter="url(#bulb_int_glow)">
+    <!-- Radiating Luminous Beams (Graduated Intensity) -->
+    <line x1="60" y1="21" x2="60" y2="15" stroke="#FDE047" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="77" y1="26" x2="82" y2="22" stroke="#FDE047" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="43" y1="26" x2="38" y2="22" stroke="#FDE047" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="85" y1="41" x2="91" y2="40" stroke="#FDE047" stroke-width="2" stroke-linecap="round"/>
+    <line x1="35" y1="41" x2="29" y2="40" stroke="#FDE047" stroke-width="2" stroke-linecap="round"/>
+
+    <!-- Concentric Beam Waves (Intensity Indicators) -->
+    <path d="M 33 55 A 32 32 0 0 1 87 55" fill="none" stroke="#00E5FF" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.6"/>
+
+    <!-- Light Bulb Silhouette -->
+    <path d="M 53 59 L 67 59 L 68 54 C 72 50 74 45 74 41 C 74 33.5 67.5 27 60 27 C 52.5 27 46 33.5 46 41 C 46 45 48 50 52 54 Z" fill="url(#bulbWarmGrad)" stroke="#FEF08A" stroke-width="1"/>
+    
+    <!-- Bulb Base / Screw Thread & Contact -->
+    <rect x="54" y="60" width="12" height="2.5" rx="0.8" fill="#94A3B8"/>
+    <rect x="55.5" y="63.5" width="9" height="2" rx="0.6" fill="#64748B"/>
+    <path d="M 57 66 L 63 66 L 61.5 68.5 L 58.5 68.5 Z" fill="#38BDF8"/>
+
+    <!-- Luminous Core Filament Highlight -->
+    <circle cx="60" cy="39" r="4.5" fill="#FFFFFF"/>
+  </g>
+
+  <!-- Stepped Intensity Level Indicator / Slider Bar -->
+  <g filter="url(#track_glow)">
+    <!-- Baseline Gauge Track -->
+    <rect x="25" y="77" width="70" height="7" rx="3.5" fill="#04162B" stroke="#0E3A66" stroke-width="1.5"/>
+    <!-- Active Illuminated Level (70% fill) -->
+    <rect x="26.5" y="78.5" width="48" height="4" rx="2" fill="url(#trackGrad)"/>
+
+    <!-- Slider Thumb / Control Hub -->
+    <circle cx="74" cy="80.5" r="6" fill="#03162E" stroke="#00E5FF" stroke-width="2"/>
+    <circle cx="74" cy="80.5" r="2.5" fill="#FFFFFF"/>
+
+    <!-- Stepped Calibration Pips (1 to 5 dots) -->
+    <circle cx="32" cy="91" r="1.8" fill="#00E5FF"/>
+    <circle cx="46" cy="91" r="1.8" fill="#00E5FF"/>
+    <circle cx="60" cy="91" r="1.8" fill="#00E5FF"/>
+    <circle cx="74" cy="91" r="2.2" fill="#34D399"/>
+    <circle cx="88" cy="91" r="1.8" fill="#0E3A66"/>
+  </g>
 </svg>

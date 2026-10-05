@@ -11,8 +11,6 @@ else
     <div class="hmi-shell">
         <InnerTopBar Title="Shutdown"/>
             <main class="hmi-cleaning-workspace">
-
-                <!-- Left Column: Capacitive Cleaning Mode Activation Card -->
                 <div class="hmi-wipe-trigger-card">
                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
                             <path 
@@ -122,9 +120,6 @@ else
                         @onclick="ExecuteShutdown" 
                         class="hmi-button @(!AgreeShutdown ? "apply-disabled" : "apply-active")"
                         disabled="@(!AgreeShutdown)">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <Shutdown/>
-                    </svg>
                     <span>Shutdown</span>
                 </button>
             </footer>

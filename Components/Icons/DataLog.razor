@@ -1,8 +1,95 @@
-<svg fill="none" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-    <path d="M16 22H32L36 26H50V44H16V22Z" fill="#CBD5E1"></path>
-    <path d="M14 26H30L34 30H48V48H14V26Z" fill="#E2E8F0"></path>
-    <path d="M12 30H28L32 34H46V52H12V30Z" fill="#38BDF8" stroke="#0284C7" stroke-width="1.5"></path>
-    <path d="M12 34H46V52H12V34Z" fill="#0284C7"></path>
-    <polygon fill="#0EA5E9" points="12,34 24,52 46,52 38,34"></polygon>
-    <rect fill="#FACC15" height="3" width="10" x="28" y="24"></rect>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <!-- ESCO Deep Navy Glass Background -->
+    <linearGradient id="bg_datalog_stack" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#071E3D"/>
+      <stop offset="100%" stop-color="#020B18"/>
+    </linearGradient>
+
+    <!-- Top Document Surface Gradient -->
+    <linearGradient id="topSheetGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06254A"/>
+      <stop offset="100%" stop-color="#021226"/>
+    </linearGradient>
+
+    <!-- Header Accent Gradient -->
+    <linearGradient id="docHeaderAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00E5FF"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </linearGradient>
+
+    <!-- Emerald Graph / Telemetry Gradient -->
+    <linearGradient id="emeraldGraphGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34D399"/>
+      <stop offset="100%" stop-color="#10B981"/>
+    </linearGradient>
+
+    <!-- Cyan Glow Filter -->
+    <filter id="stack_cyan_glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3.5" flood-color="#00E5FF" flood-opacity="0.45"/>
+    </filter>
+
+    <filter id="emerald_spark_glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="2.5" flood-color="#10B981" flood-opacity="0.7"/>
+    </filter>
+  </defs>
+
+  <!-- ESCO Standard Squircle Bezel (120x120, rx=24) -->
+  <rect x="2" y="2" width="116" height="116" rx="24" fill="url(#bg_datalog_stack)" stroke="#0E3A66" stroke-width="2"/>
+  <rect x="5" y="5" width="110" height="110" rx="21" fill="none" stroke="#00D2FF" stroke-width="1" stroke-opacity="0.25"/>
+
+  <!-- Back Sheet / Bottom Stack Layer (Offset bottom-left) -->
+  <g opacity="0.45">
+    <rect x="22" y="38" width="52" height="58" rx="6" fill="#020E1D" stroke="#00E5FF" stroke-width="1.3"/>
+    <line x1="28" y1="46" x2="44" y2="46" stroke="#00E5FF" stroke-width="1.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Middle Sheet Layer (Offset mid-step) -->
+  <g opacity="0.75">
+    <rect x="29" y="30" width="52" height="58" rx="6" fill="#03162C" stroke="#00D2FF" stroke-width="1.5"/>
+    <line x1="35" y1="38" x2="52" y2="38" stroke="#38BDF8" stroke-width="1.8" stroke-linecap="round"/>
+    <line x1="35" y1="44" x2="68" y2="44" stroke="#0E3A66" stroke-width="1.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Foreground / Top Sheet with Corner Fold & Live Telemetry -->
+  <g filter="url(#stack_cyan_glow)">
+    <!-- Top Sheet Body with top-right corner bevel for fold -->
+    <path d="M 36 22 L 74 22 L 88 36 L 88 80 C 88 83 85.5 85.5 82.5 85.5 L 42 85.5 C 38.7 85.5 36 82.8 36 79.5 Z" fill="url(#topSheetGrad)" stroke="#00E5FF" stroke-width="1.8"/>
+
+    <!-- Folded Corner Flap -->
+    <path d="M 74 22 L 74 36 L 88 36 Z" fill="#0A325C" stroke="#00D2FF" stroke-width="1.5" stroke-linejoin="round"/>
+
+    <!-- Document Header Badge / Identification Pill -->
+    <rect x="42" y="28" width="24" height="4.5" rx="2" fill="url(#docHeaderAccent)"/>
+
+    <!-- Structured Data Log Entry Rows -->
+    <line x1="42" y1="39" x2="68" y2="39" stroke="#38BDF8" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+    <line x1="42" y1="46" x2="80" y2="46" stroke="#0E3A66" stroke-width="2" stroke-linecap="round"/>
+  </g>
+
+  <!-- Live Mini Telemetry Trend Chart Inside Top Log Sheet -->
+  <g filter="url(#emerald_spark_glow)">
+    <!-- Mini Inset Chart Display Box -->
+    <rect x="42" y="53" width="40" height="24" rx="4" fill="#010A14" stroke="#0E3A66" stroke-width="1.2"/>
+
+    <!-- Grid Guide Dotted Lines -->
+    <line x1="42" y1="65" x2="82" y2="65" stroke="#0E3A66" stroke-width="1" stroke-dasharray="2 2"/>
+    <line x1="62" y1="53" x2="62" y2="77" stroke="#0E3A66" stroke-width="1" stroke-dasharray="2 2"/>
+
+    <!-- Glowing Emerald Trend Curve -->
+    <path d="M 45 71 L 53 66 L 61 69 L 71 59 L 78 57" fill="none" stroke="url(#emeraldGraphGrad)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Trend Data Nodes -->
+    <circle cx="45" cy="71" r="1.6" fill="#00E5FF"/>
+    <circle cx="53" cy="66" r="1.6" fill="#00E5FF"/>
+    <circle cx="61" cy="69" r="1.6" fill="#00E5FF"/>
+    <circle cx="71" cy="59" r="1.6" fill="#00E5FF"/>
+    <circle cx="78" cy="57" r="2.2" fill="#FFFFFF"/>
+  </g>
+
+  <!-- High-Precision Telemetry Tag Pill (Bottom Right Corner) -->
+  <g filter="url(#stack_cyan_glow)">
+    <rect x="52" y="87" width="44" height="15" rx="4" fill="#020E1E" stroke="#00D2FF" stroke-width="1.3"/>
+    <text x="74" y="98" font-family="system-ui, -apple-system, sans-serif" font-size="6" font-weight="800" fill="#00E5FF" letter-spacing="1" text-anchor="middle">DATALOG</text>
+  </g>
 </svg>
