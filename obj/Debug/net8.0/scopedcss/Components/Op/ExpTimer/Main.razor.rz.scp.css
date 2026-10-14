@@ -16,6 +16,15 @@
     align-items: center;
 }
 
+/* Icons are the tile: strip the default UA button chrome (white box) behind them */
+.hmi-option-item > button[b-8wlsgsli6p] {
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 0;
+    cursor: pointer;
+}
+
 .hmi-tile-compact[b-8wlsgsli6p] {
     width: 100px;  /* Reduced from w-32/w-44 */
     height: 100px;

@@ -91,12 +91,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJY29uc1xDb21wb25lbnQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/luthiah.nabilah/UiEmbed/Components/Icons/Contact.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJY29uc1xDb250YWN0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/luthiah.nabilah/UiEmbed/Components/Icons/DataLog.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJY29uc1xEYXRhTG9nLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/luthiah.nabilah/UiEmbed/Components/Icons/DateIcon.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJY29uc1xEYXRlSWNvbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/luthiah.nabilah/UiEmbed/Components/Icons/Diagnostic.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJY29uc1xEaWFnbm9zdGljLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/luthiah.nabilah/UiEmbed/Components/Icons/ElOutletScheduler.razor]
@@ -107,8 +115,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJY29uc1xFdmVudExvZy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/luthiah.nabilah/UiEmbed/Components/Icons/ExpTimer.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJY29uc1xFeHBUaW1lci5yYXpvcg==
+[C:/Users/luthiah.nabilah/UiEmbed/Components/Icons/ExpTimerIcon.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJY29uc1xFeHBUaW1lckljb24ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/luthiah.nabilah/UiEmbed/Components/Icons/FanScheduler.razor]
@@ -165,6 +173,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/luthiah.nabilah/UiEmbed/Components/Icons/QuickStart.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJY29uc1xRdWlja1N0YXJ0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/luthiah.nabilah/UiEmbed/Components/Icons/Quicktour.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJY29uc1xRdWlja3RvdXIucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/luthiah.nabilah/UiEmbed/Components/Icons/Shutdown.razor]

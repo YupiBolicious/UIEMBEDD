@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <!-- ESCO Standard Squircle Background Gradient -->
+    <linearGradient id="diag_bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#071E3D"/>
+      <stop offset="100%" stop-color="#020B18"/>
+    </linearGradient>
+
+    <!-- Inner Recessed Plate Gradient -->
+    <linearGradient id="diag_plate" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#061830"/>
+      <stop offset="100%" stop-color="#020C1A"/>
+    </linearGradient>
+
+    <!-- Stethoscope Warm Amber/Orange Neon Gradient -->
+    <linearGradient id="stethoscope_grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFA726"/>
+      <stop offset="50%" stop-color="#FB8C00"/>
+      <stop offset="100%" stop-color="#F57C00"/>
+    </linearGradient>
+
+    <!-- Cyan Sensor/Diaphragm Gradient -->
+    <linearGradient id="cyan_acc_grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#00E5FF"/>
+    </linearGradient>
+
+    <!-- Pulse ECG Line Gradient -->
+    <linearGradient id="ecg_grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00E5FF" stop-opacity="0.2"/>
+      <stop offset="50%" stop-color="#00E5FF"/>
+      <stop offset="100%" stop-color="#00E5FF" stop-opacity="0.2"/>
+    </linearGradient>
+
+    <!-- Warm Amber Glow Filter -->
+    <filter id="diag_glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#FB8C00" flood-opacity="0.75"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="1" flood-color="#FFE082" flood-opacity="0.8"/>
+    </filter>
+
+    <!-- Cyan Accent Glow Filter -->
+    <filter id="cyan_glow_subtle" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="2.5" flood-color="#00E5FF" flood-opacity="0.7"/>
+    </filter>
+  </defs>
+
+  <!-- ESCO Standard Squircle Bezel (120x120, rx=24) -->
+  <rect x="2" y="2" width="116" height="116" rx="24" fill="url(#diag_bg)" stroke="#0E3A66" stroke-width="2"/>
+  <rect x="5" y="5" width="110" height="110" rx="21" fill="none" stroke="#00D2FF" stroke-width="1" stroke-opacity="0.35"/>
+
+  <!-- Inner Recessed Panel -->
+  <rect x="16" y="16" width="88" height="88" rx="18" fill="url(#diag_plate)" stroke="#0A2C52" stroke-width="1.2"/>
+  <rect x="18" y="18" width="84" height="84" rx="16" fill="none" stroke="#00E5FF" stroke-width="0.8" stroke-opacity="0.2"/>
+
+  <!-- Subtle Concentric Telemetry Guide Ring -->
+  <circle cx="60" cy="60" r="33" fill="none" stroke="#0E3A66" stroke-width="1" stroke-dasharray="3 3" opacity="0.6"/>
+
+  <!-- Diagnostics Telemetry ECG Pulse Line in background -->
+  <path d="M 26 60 L 42 60 L 46 54 L 50 67 L 54 48 L 58 68 L 62 58 L 66 60 L 94 60" 
+        fill="none" 
+        stroke="url(#ecg_grad)" 
+        stroke-width="1.2" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"
+        opacity="0.45"/>
+
+  <!-- Diagnostics Stethoscope Device Glyph (Glowing Amber/Orange matching reference) -->
+  <g filter="url(#diag_glow)">
+    <!-- Eartips / Binaural tips -->
+    <circle cx="44" cy="36" r="3" fill="#FFE082"/>
+    <circle cx="58" cy="36" r="3" fill="#FFE082"/>
+
+    <!-- Binaural Tubes and Stem curving into Y-shape and single loop tube -->
+    <!-- Stethoscope path following the exact dynamic loop seen in reference -->
+    <path d="M 44 38 
+             C 44 47 50 51 51 57 
+             C 51 64 45 71 45 75 
+             C 45 81 50 85 57 85 
+             C 65 85 69 77 69 68 
+             C 69 57 76 53 82 53 
+             C 86 53 88 56 88 61 
+             C 88 68 84 73 78 73" 
+          fill="none" 
+          stroke="url(#stethoscope_grad)" 
+          stroke-width="4.2" 
+          stroke-linecap="round" 
+          stroke-linejoin="round"/>
+
+    <!-- Second binaural arm connected to Y-junction -->
+    <path d="M 58 38 
+             C 58 47 52 51 51 57" 
+          fill="none" 
+          stroke="url(#stethoscope_grad)" 
+          stroke-width="4.2" 
+          stroke-linecap="round"/>
+  </g>
+
+  <!-- Diaphragm / Chestpiece sensor at the end of stethoscope tube -->
+  <g filter="url(#cyan_glow_subtle)">
+    <circle cx="78" cy="73" r="7.5" fill="#04203D" stroke="url(#cyan_acc_grad)" stroke-width="2.5"/>
+    <circle cx="78" cy="73" r="3" fill="#00E5FF"/>
+  </g>
+
+  <!-- Ambient warm floor glow inside the tile -->
+  <ellipse cx="60" cy="80" rx="18" ry="4" fill="#FB8C00" fill-opacity="0.12" filter="blur(4px)"/>
+</svg>

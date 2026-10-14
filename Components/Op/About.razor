@@ -9,30 +9,28 @@
     <!-- Centered Viewport Wrapper -->
     <section class="hmi-timer-compact-viewport" data-purpose="mode-selection">
         
-        <!-- Option 1: Timer -->
+        <!-- Option 1: diagnostic -->
         <div class="hmi-option-item">
             <button type="button"
                     id="btn-timer"
-                    class="hmi-tile hmi-tile-compact"
                     title="Diagnostics"
                     data-purpose="open-timer-button"
                     @onclick="NavigateToDiagnostic">
-                <img src="/images/diagnostics.png" alt="Diagnostics" class="tile-icon" />
+                <Diagnostic/>
             </button>
             <span class="tile-label">
                 Diagnostics
             </span>
         </div>
 
-        <!-- Option 2: Stopwatch -->
+        <!-- Option 2: quick tour -->
         <div class="hmi-option-item">
             <button type="button"
                     id="btn-stopwatch"
-                    class="hmi-tile hmi-tile-compact"
                     title="QuickTour"
                     data-purpose="open-stopwatch-button"
                     @onclick="NavigateToTour">
-                <img src="/images/quick_tour.png" alt="Stopwatch" class="tile-icon" />
+                <Quicktour />
             </button>
             <span class="tile-label">
                 Quick Tour
@@ -42,11 +40,10 @@
         <div class="hmi-option-item">
             <button type="button"
                     id="btn-stopwatch"
-                    class="hmi-tile hmi-tile-compact"
                     title="ContactUs"
                     data-purpose="open-stopwatch-button"
                     @onclick="NavigateToContact">
-                <img src="/images/contact-us.png" alt="Stopwatch" class="tile-icon" />
+                <Contact/>
             </button>
             <span class="tile-label">
                 Contact Us

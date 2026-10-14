@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("UiEmbed")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0de2e84a4d658fa048d1dc44fc657c749f8e0a3d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c88af7d705ac5b70f5c15dda018b605091aaf666")]
 [assembly: System.Reflection.AssemblyProductAttribute("UiEmbed")]
 [assembly: System.Reflection.AssemblyTitleAttribute("UiEmbed")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

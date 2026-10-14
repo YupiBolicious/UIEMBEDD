@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <!-- ESCO Standard Squircle Background Gradient -->
+    <linearGradient id="qt_bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#071E3D"/>
+      <stop offset="100%" stop-color="#020B18"/>
+    </linearGradient>
+
+    <!-- Inner Recessed Plate Gradient -->
+    <linearGradient id="qt_plate" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#061830"/>
+      <stop offset="100%" stop-color="#020C1A"/>
+    </linearGradient>
+
+    <!-- Electric Cyan Gradient for Biosafety Cabinet Chassis -->
+    <linearGradient id="cabinet_cyan_grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#00E5FF"/>
+    </linearGradient>
+
+    <!-- Blue Info Badge Gradient -->
+    <linearGradient id="info_badge_grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0284C7"/>
+      <stop offset="100%" stop-color="#0369A1"/>
+    </linearGradient>
+
+    <!-- Cyan Glow Filter -->
+    <filter id="qt_cyan_glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#00E5FF" flood-opacity="0.75"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="1" flood-color="#BAE6FD" flood-opacity="0.85"/>
+    </filter>
+
+    <!-- Badge Shadow & Glow -->
+    <filter id="badge_glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="2.5" flood-color="#00D2FF" flood-opacity="0.6"/>
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- ESCO Standard Squircle Bezel (120x120, rx=24) -->
+  <rect x="2" y="2" width="116" height="116" rx="24" fill="url(#qt_bg)" stroke="#0E3A66" stroke-width="2"/>
+  <rect x="5" y="5" width="110" height="110" rx="21" fill="none" stroke="#00D2FF" stroke-width="1" stroke-opacity="0.35"/>
+
+  <!-- Inner Recessed Panel -->
+  <rect x="16" y="16" width="88" height="88" rx="18" fill="url(#qt_plate)" stroke="#0A2C52" stroke-width="1.2"/>
+  <rect x="18" y="18" width="84" height="84" rx="16" fill="none" stroke="#00E5FF" stroke-width="0.8" stroke-opacity="0.2"/>
+
+  <!-- Subtle Concentric Telemetry Guide Ring -->
+  <circle cx="60" cy="60" r="33" fill="none" stroke="#0E3A66" stroke-width="1" stroke-dasharray="3 3" opacity="0.6"/>
+
+  <!-- ESCO Biosafety Cabinet Isometric Silhouette (from Reference) -->
+  <g filter="url(#qt_cyan_glow)">
+    <!-- Cabinet Main Outer Body Housing -->
+    <!-- Angled canopy hood + upright front sash glass chamber + lower workstand -->
+    <path d="M 52 32 
+             L 81 32 
+             C 83 32 85 33.5 85 36 
+             L 85 79 
+             C 85 81.5 83 83 81 83 
+             L 53 83 
+             C 50.5 83 49 81.5 49 79 
+             L 49 46 
+             L 52 32 Z" 
+          fill="#032242" 
+          fill-opacity="0.65" 
+          stroke="url(#cabinet_cyan_grad)" 
+          stroke-width="2.2" 
+          stroke-linejoin="round"/>
+
+    <!-- Sloped Front Header / Filter Housing Panel -->
+    <path d="M 52 32 L 81 32 L 85 45 L 49 45 Z" 
+          fill="#08335E" 
+          fill-opacity="0.7" 
+          stroke="url(#cabinet_cyan_grad)" 
+          stroke-width="1.8"/>
+
+    <!-- Sash Glass Window & Work Zone Interior Aperture -->
+    <rect x="53" y="49" width="28" height="23" rx="2" 
+          fill="#021426" 
+          fill-opacity="0.85" 
+          stroke="url(#cabinet_cyan_grad)" 
+          stroke-width="1.4"/>
+
+    <!-- Stainless steel work surface line inside aperture -->
+    <line x1="55" y1="67" x2="79" y2="67" stroke="#00E5FF" stroke-width="1.2" opacity="0.8"/>
+    
+    <!-- Cabinet Lower Stand / Base Shelf divider -->
+    <line x1="49" y1="74" x2="85" y2="74" stroke="url(#cabinet_cyan_grad)" stroke-width="1.5"/>
+  </g>
+
+  <!-- Foreground Circular "i" (Information / Tour) Telemetry Badge matching reference position -->
+  <g filter="url(#badge_glow)">
+    <!-- Outer badge circle with vivid cyan glow -->
+    <circle cx="43" cy="62" r="15" fill="url(#info_badge_grad)" stroke="#00E5FF" stroke-width="2.4"/>
+    
+    <!-- Inner subtle ring -->
+    <circle cx="43" cy="62" r="12" fill="none" stroke="#38BDF8" stroke-width="0.8" opacity="0.5"/>
+
+    <!-- Radiant White Serif/Sans "i" Info Glyph -->
+    <!-- Dot of 'i' -->
+    <circle cx="43" cy="54.5" r="2.2" fill="#FFFFFF"/>
+    
+    <!-- Stem of 'i' with classic legible proportions -->
+    <path d="M 40.5 59.5 L 44 59.5 L 44 67.5 L 46 67.5 L 46 69.5 L 40.5 69.5 L 40.5 67.5 L 42 67.5 L 42 61.5 L 40.5 61.5 Z" 
+          fill="#FFFFFF"/>
+  </g>
+
+  <!-- Ambient cyan floor glow -->
+  <ellipse cx="60" cy="84" rx="20" ry="3" fill="#00E5FF" fill-opacity="0.15" filter="blur(4px)"/>
+</svg>
